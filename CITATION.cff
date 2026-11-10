@@ -10,7 +10,15 @@ repository-code: "https://github.com/namashworks/paralingo"
 url: "https://github.com/namashworks/paralingo"
 license: Apache-2.0
 version: 1.0.0
-date-released: "2026-11-11"
+date-released: "2026-11-10"
+doi: 10.5281/zenodo.24116090
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.24116090
+    description: "Concept DOI: all versions, always resolves to the latest"
+  - type: doi
+    value: 10.5281/zenodo.24116091
+    description: "Version 1.0.0"
 keywords:
   - voice agents
   - speech analysis

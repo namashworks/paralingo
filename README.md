@@ -2,6 +2,7 @@
 
 [![CI](https://github.com/namashworks/paralingo/actions/workflows/ci.yml/badge.svg)](https://github.com/namashworks/paralingo/actions/workflows/ci.yml)
 [![PyPI](https://img.shields.io/pypi/v/paralingo.svg)](https://pypi.org/project/paralingo/)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.24116090.svg)](https://doi.org/10.5281/zenodo.24116090)
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](pyproject.toml)
 
@@ -210,7 +211,22 @@ project name is not licensed for promoting derived products.
 
 **If this project helps you, please credit it:** link to `https://github.com/namashworks/paralingo`
 and name **Namash Aggarwal** as the original author. For papers, use GitHub's "Cite this repository"
-button (from [`CITATION.cff`](CITATION.cff)).
+button (from [`CITATION.cff`](CITATION.cff)), or copy this:
+
+> Aggarwal, N. (2026). *Paralingo: a shared speech-analysis file for AI voice agents* (Version 1.0.0)
+> [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.24116090
+
+```bibtex
+@software{aggarwal_paralingo_2026,
+  author    = {Aggarwal, Namash},
+  title     = {Paralingo: a shared speech-analysis file for AI voice agents},
+  year      = {2026},
+  version   = {1.0.0},
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.24116090},
+  url       = {https://github.com/namashworks/paralingo}
+}
+```
 
 ## Contributing
 
