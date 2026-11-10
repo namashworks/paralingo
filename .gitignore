@@ -1,0 +1,42 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+build/
+dist/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Environments
+.venv/
+venv/
+.env
+.env.*
+
+# Secrets: API key files must never be committed
+keys.json
+*.keys.json
+
+# Real speaker data (personal data) - keep out of Git
+/profiles/
+/recordings/
+*.speech.json
+*.speech.json.lock
+!examples/profiles/demo-caller.speech.json
+
+# Validation datasets and per-file outputs (third-party data licences)
+validation/data/
+validation/results/*.csv
+
+# Audio
+*.wav
+*.mp3
+*.flac
+
+# OS / editors / crash dumps
+*.stackdump
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

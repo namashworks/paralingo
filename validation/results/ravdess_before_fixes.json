@@ -1,0 +1,265 @@
+{
+  "files": 1440,
+  "paralingo_version": "1.0.0",
+  "machine": "Windows AMD64, Python 3.11.9",
+  "runtime_ms_per_file": {
+    "median": 192.8,
+    "p95": 443.9
+  },
+  "pitch_frames": {
+    "gross_pitch_error_pct": 4.79,
+    "files_with_gpe_over_10pct": 12.8,
+    "fine_error_pct": 0.83,
+    "voicing_decision_error_pct": 5.03,
+    "voicing_recall_pct": 97.7
+  },
+  "vs_praat": {
+    "f0_median_hz": {
+      "n": 1440,
+      "mean_ours": 208.055,
+      "mean_praat": 210.103,
+      "bias": -2.048,
+      "mae": 4.364,
+      "pearson_r": 0.994,
+      "within_tol_pct": 91.5,
+      "tol": "5%"
+    },
+    "f0_std_semitones": {
+      "n": 1440,
+      "mean_ours": 3.538,
+      "mean_praat": 3.44,
+      "bias": 0.098,
+      "mae": 0.742,
+      "pearson_r": 0.675,
+      "within_tol_pct": 49.0,
+      "tol": 0.5
+    },
+    "jitter_local_pct": {
+      "n": 1440,
+      "mean_ours": 6.252,
+      "mean_praat": 2.456,
+      "bias": 3.796,
+      "mae": 3.796,
+      "pearson_r": 0.685,
+      "within_tol_pct": 0.0,
+      "tol": 0.3
+    },
+    "shimmer_local_pct": {
+      "n": 1440,
+      "mean_ours": 14.027,
+      "mean_praat": 11.817,
+      "bias": 2.21,
+      "mae": 2.28,
+      "pearson_r": 0.838,
+      "within_tol_pct": 31.2,
+      "tol": 1.5
+    },
+    "hnr_db": {
+      "n": 1440,
+      "mean_ours": 9.5,
+      "mean_praat": 9.47,
+      "bias": 0.03,
+      "mae": 1.031,
+      "pearson_r": 0.848,
+      "within_tol_pct": 96.7,
+      "tol": 3.0
+    },
+    "pause_count": {
+      "n": 1440,
+      "mean_ours": 0.119,
+      "mean_praat": 0.097,
+      "bias": 0.023,
+      "mae": 0.13,
+      "pearson_r": 0.373,
+      "within_tol_pct": 87.6,
+      "tol": 0
+    },
+    "pause_total_s": {
+      "n": 1440,
+      "mean_ours": 0.06,
+      "mean_praat": 0.04,
+      "bias": 0.02,
+      "mae": 0.061,
+      "pearson_r": 0.438,
+      "within_tol_pct": 86.7,
+      "tol": 0.15
+    }
+  },
+  "praat_cpps_db": {
+    "mean": 6.78
+  },
+  "audio_quality_labels": {
+    "fair": 1,
+    "good": 1439
+  },
+  "indicator_false_alarms": {
+    "ours": {
+      "n": 1440,
+      "voice_strain_rule_fires_pct": 100.0,
+      "flat_prosody_rule_fires_pct": 0.1
+    },
+    "praat_values": {
+      "n": 1440,
+      "voice_strain_rule_fires_pct": 100.0,
+      "flat_prosody_rule_fires_pct": 0.3
+    }
+  },
+  "phone_channel": {
+    "files": 480,
+    "f0_median_vs_clean": {
+      "n": 480,
+      "mean_ours": 224.431,
+      "mean_praat": 204.85,
+      "bias": 19.581,
+      "mae": 21.639,
+      "pearson_r": 0.88,
+      "within_tol_pct": 48.3,
+      "tol": "5%"
+    },
+    "jitter_vs_clean": {
+      "n": 480,
+      "mean_ours": 6.579,
+      "mean_praat": 6.198,
+      "bias": 0.381,
+      "mae": 0.762,
+      "pearson_r": 0.64,
+      "within_tol_pct": 32.3,
+      "tol": 0.3
+    },
+    "shimmer_vs_clean": {
+      "n": 480,
+      "mean_ours": 15.979,
+      "mean_praat": 14.019,
+      "bias": 1.96,
+      "mae": 2.161,
+      "pearson_r": 0.799,
+      "within_tol_pct": 40.4,
+      "tol": 1.5
+    },
+    "hnr_vs_clean": {
+      "n": 480,
+      "mean_ours": 8.199,
+      "mean_praat": 9.517,
+      "bias": -1.318,
+      "mae": 1.404,
+      "pearson_r": 0.88,
+      "within_tol_pct": 94.6,
+      "tol": 3.0
+    },
+    "pause_count_vs_clean": {
+      "n": 480,
+      "mean_ours": 0.127,
+      "mean_praat": 0.108,
+      "bias": 0.019,
+      "mae": 0.119,
+      "pearson_r": 0.504,
+      "within_tol_pct": 88.8,
+      "tol": 0
+    },
+    "praat_jitter_phone_vs_clean": {
+      "n": 480,
+      "mean_ours": 2.554,
+      "mean_praat": 2.454,
+      "bias": 0.1,
+      "mae": 0.436,
+      "pearson_r": 0.721,
+      "within_tol_pct": 50.4,
+      "tol": 0.3
+    },
+    "praat_hnr_phone_vs_clean": {
+      "n": 480,
+      "mean_ours": 10.362,
+      "mean_praat": 9.454,
+      "bias": 0.908,
+      "mae": 1.292,
+      "pearson_r": 0.875,
+      "within_tol_pct": 94.4,
+      "tol": 3.0
+    },
+    "quality_labels": {
+      "fair": 30,
+      "good": 450
+    },
+    "indicator_false_alarms": {
+      "n": 480,
+      "voice_strain_rule_fires_pct": 100.0,
+      "flat_prosody_rule_fires_pct": 0.0
+    }
+  },
+  "emotion": {
+    "with_personal_baseline": {
+      "auc": 0.896,
+      "balanced_accuracy": 0.777,
+      "high_detected_pct": 95.1,
+      "low_correct_pct": 60.4,
+      "n_high": 768,
+      "n_low": 288
+    },
+    "without_baseline": {
+      "auc": 0.734,
+      "balanced_accuracy": 0.686,
+      "high_detected_pct": 73.7,
+      "low_correct_pct": 63.5,
+      "n_high": 768,
+      "n_low": 288
+    },
+    "auc_strong_intensity_only": 0.949,
+    "auc_by_sex": {
+      "female": 0.89,
+      "male": 0.909
+    },
+    "per_emotion_mean_arousal": {
+      "calm/strong": {
+        "n": 96,
+        "mean_arousal": -0.32
+      },
+      "sad/normal": {
+        "n": 96,
+        "mean_arousal": -0.017
+      },
+      "sad/strong": {
+        "n": 96,
+        "mean_arousal": 0.526
+      },
+      "happy/normal": {
+        "n": 96,
+        "mean_arousal": 0.692
+      },
+      "happy/strong": {
+        "n": 96,
+        "mean_arousal": 0.846
+      },
+      "surprised/normal": {
+        "n": 96,
+        "mean_arousal": 0.762
+      },
+      "surprised/strong": {
+        "n": 96,
+        "mean_arousal": 0.846
+      },
+      "fearful/normal": {
+        "n": 96,
+        "mean_arousal": 0.576
+      },
+      "fearful/strong": {
+        "n": 96,
+        "mean_arousal": 0.824
+      },
+      "angry/normal": {
+        "n": 96,
+        "mean_arousal": 0.647
+      },
+      "angry/strong": {
+        "n": 96,
+        "mean_arousal": 0.885
+      }
+    },
+    "label_counts": {
+      "subdued": 103,
+      "neutral": 109,
+      "energetic": 844
+    },
+    "n_scored": 1056
+  },
+  "wall_time_s": 1387.0
+}

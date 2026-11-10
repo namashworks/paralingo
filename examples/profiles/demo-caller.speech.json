@@ -1,0 +1,2372 @@
+{
+  "format": "paralingo",
+  "version": "1.0.0",
+  "profile_id": "prof_256b2c802671",
+  "created_at": "2026-11-10T16:11:35.093Z",
+  "updated_at": "2026-11-10T16:11:36.622Z",
+  "revision": 21,
+  "speaker": {
+    "speaker_id": "demo-caller",
+    "display_name": "Demo Caller",
+    "languages": [
+      "en-IN"
+    ],
+    "self_reported": {},
+    "notes": null
+  },
+  "consent": {
+    "recording": true,
+    "voice_analysis": true,
+    "health_indicators": true,
+    "store_transcripts": true,
+    "retention_days": 180,
+    "granted_at": "2026-11-10T16:11:35.095Z",
+    "granted_via": "verbal-consent-recorded"
+  },
+  "settings": {
+    "max_detailed_sessions": 20,
+    "max_utterances_per_session": 300
+  },
+  "baseline": {
+    "status": "provisional",
+    "sessions_used": 3,
+    "utterances_used": 12,
+    "speech_seconds_used": 41.84,
+    "metrics": {
+      "f0_mean_hz": {
+        "n": 11,
+        "mean": 237.81818,
+        "std": 41.52753,
+        "m2": 17245.356515,
+        "min": 196.5,
+        "max": 336.4
+      },
+      "f0_std_semitones": {
+        "n": 11,
+        "mean": 1.77364,
+        "std": 0.90501,
+        "m2": 8.190463,
+        "min": 0.59,
+        "max": 3.5
+      },
+      "f0_range_semitones": {
+        "n": 11,
+        "mean": 5.44636,
+        "std": 2.80803,
+        "m2": 78.850104,
+        "min": 1.72,
+        "max": 10.64
+      },
+      "rms_dbfs_mean": {
+        "n": 11,
+        "mean": -15.64455,
+        "std": 3.63339,
+        "m2": 132.015321,
+        "min": -18.28,
+        "max": -10.25
+      },
+      "hf_energy_ratio_db": {
+        "n": 11,
+        "mean": -11.99727,
+        "std": 2.1147,
+        "m2": 44.719637,
+        "min": -14.7,
+        "max": -7.88
+      },
+      "jitter_local_pct": {
+        "n": 11,
+        "mean": 0.31836,
+        "std": 0.07549,
+        "m2": 0.056983,
+        "min": 0.24,
+        "max": 0.428
+      },
+      "shimmer_local_pct": {
+        "n": 11,
+        "mean": 3.86345,
+        "std": 0.5837,
+        "m2": 3.407017,
+        "min": 2.693,
+        "max": 4.541
+      },
+      "hnr_db": {
+        "n": 11,
+        "mean": 34.91182,
+        "std": 0.6829,
+        "m2": 4.663574,
+        "min": 33.77,
+        "max": 35.94
+      },
+      "words_per_minute": {
+        "n": 12,
+        "mean": 159.85,
+        "std": 26.81236,
+        "m2": 7907.928639,
+        "min": 126.1,
+        "max": 204.0
+      },
+      "articulation_rate_sps": {
+        "n": 12,
+        "mean": 3.7725,
+        "std": 0.80702,
+        "m2": 7.16402,
+        "min": 2.72,
+        "max": 5.38
+      },
+      "pause_ratio": {
+        "n": 12,
+        "mean": 0.02899,
+        "std": 0.03662,
+        "m2": 0.014751,
+        "min": 0.0,
+        "max": 0.086
+      },
+      "mean_pause_s": {
+        "n": 12,
+        "mean": 0.12917,
+        "std": 0.15963,
+        "m2": 0.280294,
+        "min": 0.0,
+        "max": 0.31
+      },
+      "response_latency_s": {
+        "n": 12,
+        "mean": 0.51667,
+        "std": 0.29181,
+        "m2": 0.936671,
+        "min": 0.1,
+        "max": 1.1
+      },
+      "filler_rate_per_100w": {
+        "n": 12,
+        "mean": 1.3525,
+        "std": 3.186,
+        "m2": 111.656597,
+        "min": 0.0,
+        "max": 9.09
+      },
+      "stuttering_like_per_100_syllables": {
+        "n": 12,
+        "mean": 0.0,
+        "std": 0.0,
+        "m2": 0.0,
+        "min": 0.0,
+        "max": 0.0
+      },
+      "total_disfluency_per_100w": {
+        "n": 12,
+        "mean": 1.3525,
+        "std": 3.186,
+        "m2": 111.656597,
+        "min": 0.0,
+        "max": 9.09
+      },
+      "hedge_rate_per_100w": {
+        "n": 12,
+        "mean": 1.42833,
+        "std": 3.39114,
+        "m2": 126.497957,
+        "min": 0.0,
+        "max": 10.0
+      },
+      "words_per_turn": {
+        "n": 12,
+        "mean": 9.58333,
+        "std": 2.74552,
+        "m2": 82.916657,
+        "min": 6.0,
+        "max": 14.0
+      }
+    }
+  },
+  "accent": {
+    "current_estimate": {
+      "label": "Indian English",
+      "confidence": 0.65,
+      "votes": 0.65
+    },
+    "estimates": [
+      {
+        "label": "Indian English",
+        "confidence": 0.65,
+        "source": "accent-id-model-x",
+        "timestamp": "2026-11-10T16:11:36.622Z",
+        "session_id": null
+      }
+    ],
+    "phonetic_markers": [
+      {
+        "marker": "retroflex /t/, /d/",
+        "example": "order",
+        "count": 1,
+        "last_seen": "2026-11-10T16:11:36.622Z"
+      },
+      {
+        "marker": "syllable-timed rhythm",
+        "example": null,
+        "count": 1,
+        "last_seen": "2026-11-10T16:11:36.622Z"
+      }
+    ],
+    "intelligibility": 0.9
+  },
+  "sessions": [
+    {
+      "session_id": "sess_fe0c9bcef600",
+      "started_at": "2026-11-10T16:11:35.112Z",
+      "ended_at": "2026-11-10T16:11:35.630Z",
+      "status": "closed",
+      "agent_id": "demo-support-bot",
+      "channel": "phone",
+      "context": "Order status",
+      "utterances": [
+        {
+          "utterance_id": "utt_c5efda9fe56f",
+          "timestamp": "2026-11-10T16:11:35.245Z",
+          "transcript": "Hi, um, I'm calling about my order, it hasn't arrived yet.",
+          "acoustics": {
+            "duration_s": 5.23,
+            "speech_s": 4.45,
+            "voiced_ratio": 0.991,
+            "pitch": {
+              "f0_mean_hz": 206.5,
+              "f0_median_hz": 207.8,
+              "f0_std_hz": 22.91,
+              "f0_min_hz": 172.1,
+              "f0_max_hz": 242.4,
+              "f0_std_semitones": 1.93,
+              "f0_range_semitones": 5.94,
+              "terminal_contour": "level",
+              "terminal_slope_st_per_s": -1.57
+            },
+            "energy": {
+              "rms_dbfs_mean": -18.27,
+              "rms_dbfs_std": 1.61,
+              "dynamic_range_db": 3.51
+            },
+            "voice_quality": {
+              "jitter_local_pct": 0.24,
+              "shimmer_local_pct": 4.352,
+              "hnr_db": 35.45,
+              "pulses_analyzed": 903
+            },
+            "spectral": {
+              "centroid_hz": 350.0,
+              "hf_energy_ratio_db": -13.73
+            },
+            "audio_quality": {
+              "snr_db": 44.1,
+              "clipping_ratio": 0.0,
+              "noise_floor_dbfs": -62.3,
+              "quality": "good"
+            }
+          },
+          "timing": {
+            "pauses": {
+              "count": 1,
+              "total_s": 0.31,
+              "mean_s": 0.31,
+              "max_s": 0.31,
+              "long_count": 0,
+              "pause_ratio": 0.065,
+              "intervals_s": [
+                [
+                  2.59,
+                  2.9
+                ]
+              ]
+            },
+            "response_latency_s": 0.7,
+            "speech_s": 4.45,
+            "words_per_minute": 126.1,
+            "articulation_rate_sps": 3.82
+          },
+          "fluency": {
+            "filler_count": 1,
+            "fillers": {
+              "um": 1
+            },
+            "filler_rate_per_100w": 9.09,
+            "part_word_repetitions": 0,
+            "word_repetitions": 0,
+            "phrase_repetitions": 0,
+            "prolongations": 0,
+            "revisions": 0,
+            "incomplete_words": 0,
+            "stuttering_like_per_100_syllables": 0.0,
+            "total_disfluency_per_100w": 9.09
+          },
+          "lexical": {
+            "word_count": 11,
+            "content_word_count": 10,
+            "syllable_count": 17,
+            "unique_words": 10,
+            "type_token_ratio": 1.0,
+            "mean_word_length": 4.2,
+            "sentence_count": 1,
+            "mean_sentence_length_words": 10.0,
+            "hedges": {},
+            "hedge_rate_per_100w": 0.0,
+            "vague_word_count": 0,
+            "question_count": 0
+          },
+          "sentiment": {
+            "score": 0.0,
+            "positive_weight": 0.0,
+            "negative_weight": 0.0,
+            "method": "lexicon-negation-v1"
+          },
+          "external": {
+            "asr_confidence": 0.9
+          },
+          "emotion": {
+            "label": "neutral",
+            "arousal": -0.145,
+            "valence": 0.0,
+            "confidence": 0.4,
+            "method": "heuristic-prosody+lexicon-v1",
+            "cues": []
+          },
+          "skills": {
+            "fluency": 45.5,
+            "pace": 100.0,
+            "clarity": 95.0,
+            "expressiveness": 96.8,
+            "confidence": 72.7,
+            "vocabulary": null,
+            "responsiveness": 100.0,
+            "overall": 85.0
+          },
+          "baseline_deviations": {},
+          "flags": []
+        },
+        {
+          "utterance_id": "utt_8b41c413e1a4",
+          "timestamp": "2026-11-10T16:11:35.428Z",
+          "transcript": "It's, uh, order number four five two... I think it was placed last week.",
+          "acoustics": {
+            "duration_s": 6.423,
+            "speech_s": 5.65,
+            "voiced_ratio": 0.991,
+            "pitch": {
+              "f0_mean_hz": 196.5,
+              "f0_median_hz": 192.1,
+              "f0_std_hz": 25.1,
+              "f0_min_hz": 161.6,
+              "f0_max_hz": 235.3,
+              "f0_std_semitones": 2.22,
+              "f0_range_semitones": 6.51,
+              "terminal_contour": "level",
+              "terminal_slope_st_per_s": 0.53
+            },
+            "energy": {
+              "rms_dbfs_mean": -18.27,
+              "rms_dbfs_std": 1.67,
+              "dynamic_range_db": 3.55
+            },
+            "voice_quality": {
+              "jitter_local_pct": 0.242,
+              "shimmer_local_pct": 4.541,
+              "hnr_db": 35.54,
+              "pulses_analyzed": 1094
+            },
+            "spectral": {
+              "centroid_hz": 333.6,
+              "hf_energy_ratio_db": -14.7
+            },
+            "audio_quality": {
+              "snr_db": 43.9,
+              "clipping_ratio": 0.0,
+              "noise_floor_dbfs": -62.2,
+              "quality": "good"
+            }
+          },
+          "timing": {
+            "pauses": {
+              "count": 1,
+              "total_s": 0.31,
+              "mean_s": 0.31,
+              "max_s": 0.31,
+              "long_count": 0,
+              "pause_ratio": 0.052,
+              "intervals_s": [
+                [
+                  2.48,
+                  2.79
+                ]
+              ]
+            },
+            "response_latency_s": 1.1,
+            "speech_s": 5.65,
+            "words_per_minute": 130.9,
+            "articulation_rate_sps": 3.01
+          },
+          "fluency": {
+            "filler_count": 1,
+            "fillers": {
+              "uh": 1
+            },
+            "filler_rate_per_100w": 7.14,
+            "part_word_repetitions": 0,
+            "word_repetitions": 0,
+            "phrase_repetitions": 0,
+            "prolongations": 0,
+            "revisions": 0,
+            "incomplete_words": 0,
+            "stuttering_like_per_100_syllables": 0.0,
+            "total_disfluency_per_100w": 7.14
+          },
+          "lexical": {
+            "word_count": 14,
+            "content_word_count": 13,
+            "syllable_count": 17,
+            "unique_words": 13,
+            "type_token_ratio": 1.0,
+            "mean_word_length": 3.92,
+            "sentence_count": 2,
+            "mean_sentence_length_words": 6.5,
+            "hedges": {
+              "i think": 1
+            },
+            "hedge_rate_per_100w": 7.14,
+            "vague_word_count": 0,
+            "question_count": 0
+          },
+          "sentiment": {
+            "score": 0.0,
+            "positive_weight": 0.0,
+            "negative_weight": 0.0,
+            "method": "lexicon-negation-v1"
+          },
+          "external": {
+            "asr_confidence": 0.9
+          },
+          "emotion": {
+            "label": "neutral",
+            "arousal": -0.239,
+            "valence": 0.0,
+            "confidence": 0.43,
+            "method": "heuristic-prosody+lexicon-v1",
+            "cues": [
+              "articulation_rate_sps low (z=-1.8, population)"
+            ]
+          },
+          "skills": {
+            "fluency": 57.2,
+            "pace": 100.0,
+            "clarity": 91.3,
+            "expressiveness": 100.0,
+            "confidence": 35.7,
+            "vocabulary": null,
+            "responsiveness": 100.0,
+            "overall": 80.7
+          },
+          "baseline_deviations": {},
+          "flags": []
+        },
+        {
+          "utterance_id": "utt_9cae7180b362",
+          "timestamp": "2026-11-10T16:11:35.515Z",
+          "transcript": "Okay great, thank you, that's really helpful.",
+          "acoustics": {
+            "duration_s": 3.279,
+            "speech_s": 2.81,
+            "voiced_ratio": 0.993,
+            "pitch": {
+              "f0_mean_hz": 249.4,
+              "f0_median_hz": 250.0,
+              "f0_std_hz": 16.82,
+              "f0_min_hz": 224.8,
+              "f0_max_hz": 275.9,
+              "f0_std_semitones": 1.17,
+              "f0_range_semitones": 3.55,
+              "terminal_contour": "level",
+              "terminal_slope_st_per_s": 1.54
+            },
+            "energy": {
+              "rms_dbfs_mean": -18.22,
+              "rms_dbfs_std": 1.49,
+              "dynamic_range_db": 3.5
+            },
+            "voice_quality": {
+              "jitter_local_pct": 0.306,
+              "shimmer_local_pct": 3.553,
+              "hnr_db": 35.25,
+              "pulses_analyzed": 692
+            },
+            "spectral": {
+              "centroid_hz": 424.4,
+              "hf_energy_ratio_db": -10.84
+            },
+            "audio_quality": {
+              "snr_db": 43.1,
+              "clipping_ratio": 0.0,
+              "noise_floor_dbfs": -61.3,
+              "quality": "good"
+            }
+          },
+          "timing": {
+            "pauses": {
+              "count": 0,
+              "total_s": 0.0,
+              "mean_s": 0.0,
+              "max_s": 0.0,
+              "long_count": 0,
+              "pause_ratio": 0.0,
+              "intervals_s": []
+            },
+            "response_latency_s": 0.5,
+            "speech_s": 2.81,
+            "words_per_minute": 149.5,
+            "articulation_rate_sps": 4.27
+          },
+          "fluency": {
+            "filler_count": 0,
+            "fillers": {},
+            "filler_rate_per_100w": 0.0,
+            "part_word_repetitions": 0,
+            "word_repetitions": 0,
+            "phrase_repetitions": 0,
+            "prolongations": 0,
+            "revisions": 0,
+            "incomplete_words": 0,
+            "stuttering_like_per_100_syllables": 0.0,
+            "total_disfluency_per_100w": 0.0
+          },
+          "lexical": {
+            "word_count": 7,
+            "content_word_count": 7,
+            "syllable_count": 12,
+            "unique_words": 7,
+            "type_token_ratio": 1.0,
+            "mean_word_length": 5.14,
+            "sentence_count": 1,
+            "mean_sentence_length_words": 7.0,
+            "hedges": {},
+            "hedge_rate_per_100w": 0.0,
+            "vague_word_count": 0,
+            "question_count": 0
+          },
+          "sentiment": {
+            "score": 0.692,
+            "positive_weight": 4.5,
+            "negative_weight": 0.0,
+            "method": "lexicon-negation-v1"
+          },
+          "external": {
+            "asr_confidence": 0.9
+          },
+          "emotion": {
+            "label": "pleased",
+            "arousal": -0.118,
+            "valence": 0.692,
+            "confidence": 0.46,
+            "method": "heuristic-prosody+lexicon-v1",
+            "cues": [
+              "pause_ratio low (z=-2.0, population)",
+              "word sentiment +0.69"
+            ]
+          },
+          "skills": {
+            "fluency": 100.0,
+            "pace": 100.0,
+            "clarity": 95.0,
+            "expressiveness": 62.6,
+            "confidence": 100.0,
+            "vocabulary": null,
+            "responsiveness": 100.0,
+            "overall": 92.9
+          },
+          "baseline_deviations": {},
+          "flags": []
+        },
+        {
+          "utterance_id": "utt_dcc044cae009",
+          "timestamp": "2026-11-10T16:11:35.598Z",
+          "transcript": "No, that's all. Thanks so much, bye!",
+          "acoustics": {
+            "duration_s": 3.284,
+            "speech_s": 2.82,
+            "voiced_ratio": 0.993,
+            "pitch": {
+              "f0_mean_hz": 229.6,
+              "f0_median_hz": 228.6,
+              "f0_std_hz": 7.88,
+              "f0_min_hz": 217.1,
+              "f0_max_hz": 242.4,
+              "f0_std_semitones": 0.59,
+              "f0_range_semitones": 1.91,
+              "terminal_contour": "level",
+              "terminal_slope_st_per_s": 0.72
+            },
+            "energy": {
+              "rms_dbfs_mean": -18.25,
+              "rms_dbfs_std": 1.61,
+              "dynamic_range_db": 3.53
+            },
+            "voice_quality": {
+              "jitter_local_pct": 0.27,
+              "shimmer_local_pct": 3.91,
+              "hnr_db": 35.02,
+              "pulses_analyzed": 639
+            },
+            "spectral": {
+              "centroid_hz": 390.4,
+              "hf_energy_ratio_db": -12.45
+            },
+            "audio_quality": {
+              "snr_db": 43.6,
+              "clipping_ratio": 0.0,
+              "noise_floor_dbfs": -61.9,
+              "quality": "good"
+            }
+          },
+          "timing": {
+            "pauses": {
+              "count": 0,
+              "total_s": 0.0,
+              "mean_s": 0.0,
+              "max_s": 0.0,
+              "long_count": 0,
+              "pause_ratio": 0.0,
+              "intervals_s": []
+            },
+            "response_latency_s": 0.4,
+            "speech_s": 2.82,
+            "words_per_minute": 148.9,
+            "articulation_rate_sps": 3.19
+          },
+          "fluency": {
+            "filler_count": 0,
+            "fillers": {},
+            "filler_rate_per_100w": 0.0,
+            "part_word_repetitions": 0,
+            "word_repetitions": 0,
+            "phrase_repetitions": 0,
+            "prolongations": 0,
+            "revisions": 0,
+            "incomplete_words": 0,
+            "stuttering_like_per_100_syllables": 0.0,
+            "total_disfluency_per_100w": 0.0
+          },
+          "lexical": {
+            "word_count": 7,
+            "content_word_count": 7,
+            "syllable_count": 9,
+            "unique_words": 7,
+            "type_token_ratio": 1.0,
+            "mean_word_length": 3.71,
+            "sentence_count": 2,
+            "mean_sentence_length_words": 3.5,
+            "hedges": {},
+            "hedge_rate_per_100w": 0.0,
+            "vague_word_count": 0,
+            "question_count": 0
+          },
+          "sentiment": {
+            "score": 0.333,
+            "positive_weight": 1.0,
+            "negative_weight": 0.0,
+            "method": "lexicon-negation-v1"
+          },
+          "external": {
+            "asr_confidence": 0.9
+          },
+          "emotion": {
+            "label": "calm",
+            "arousal": -0.456,
+            "valence": 0.333,
+            "confidence": 0.5,
+            "method": "heuristic-prosody+lexicon-v1",
+            "cues": [
+              "f0_std_semitones low (z=-1.9, population)",
+              "articulation_rate_sps low (z=-1.6, population)",
+              "pause_ratio low (z=-2.0, population)",
+              "word sentiment +0.33"
+            ]
+          },
+          "skills": {
+            "fluency": 100.0,
+            "pace": 100.0,
+            "clarity": 92.7,
+            "expressiveness": 36.5,
+            "confidence": 100.0,
+            "vocabulary": null,
+            "responsiveness": 100.0,
+            "overall": 88.2
+          },
+          "baseline_deviations": {},
+          "flags": [
+            "flat_intonation"
+          ]
+        }
+      ],
+      "utterances_compacted": false,
+      "summary": {
+        "utterance_count": 4,
+        "total_speech_s": 15.73,
+        "total_words": 39,
+        "metrics_mean": {
+          "arousal": -0.2395,
+          "articulation_rate_sps": 3.5725,
+          "f0_mean_hz": 220.5,
+          "f0_range_semitones": 4.4775,
+          "f0_std_semitones": 1.4775,
+          "filler_rate_per_100w": 4.0575,
+          "hedge_rate_per_100w": 1.785,
+          "hf_energy_ratio_db": -12.93,
+          "hnr_db": 35.315,
+          "jitter_local_pct": 0.2645,
+          "mean_pause_s": 0.155,
+          "pause_ratio": 0.0292,
+          "response_latency_s": 0.675,
+          "rms_dbfs_mean": -18.2525,
+          "sentiment": 0.2562,
+          "shimmer_local_pct": 4.089,
+          "stuttering_like_per_100_syllables": 0.0,
+          "total_disfluency_per_100w": 4.0575,
+          "valence": 0.2562,
+          "words_per_minute": 138.85,
+          "words_per_turn": 9.75
+        },
+        "skills_mean": {
+          "pace": 100.0,
+          "clarity": 93.5,
+          "fluency": 75.7,
+          "expressiveness": 74.0,
+          "overall": 86.7,
+          "confidence": 77.1,
+          "responsiveness": 100.0
+        },
+        "dominant_emotion": "neutral",
+        "emotion_timeline": [
+          "neutral",
+          "neutral",
+          "pleased",
+          "calm"
+        ],
+        "deviations_from_baseline": {},
+        "indicators_evaluated": true,
+        "indicators_triggered": []
+      }
+    },
+    {
+      "session_id": "sess_a924342af13e",
+      "started_at": "2026-11-10T16:11:35.650Z",
+      "ended_at": "2026-11-10T16:11:36.062Z",
+      "status": "closed",
+      "agent_id": "demo-support-bot",
+      "channel": "phone",
+      "context": "Billing question",
+      "utterances": [
+        {
+          "utterance_id": "utt_3ab29408ed05",
+          "timestamp": "2026-11-10T16:11:35.742Z",
+          "transcript": "Hello, I have a question about my bill this month.",
+          "acoustics": {
+            "duration_s": 4.479,
+            "speech_s": 3.95,
+            "voiced_ratio": 1.0,
+            "pitch": {
+              "f0_mean_hz": 189.9,
+              "f0_median_hz": 190.4,
+              "f0_std_hz": 6.33,
+              "f0_min_hz": 179.8,
+              "f0_max_hz": 200.0,
+              "f0_std_semitones": 0.58,
+              "f0_range_semitones": 1.84,
+              "terminal_contour": "level",
+              "terminal_slope_st_per_s": -0.5
+            },
+            "energy": {
+              "rms_dbfs_mean": -18.12,
+              "rms_dbfs_std": 1.25,
+              "dynamic_range_db": 3.52
+            },
+            "voice_quality": {
+              "jitter_local_pct": 0.255,
+              "shimmer_local_pct": 4.711,
+              "hnr_db": 36.29,
+              "pulses_analyzed": 753
+            },
+            "spectral": {
+              "centroid_hz": 320.6,
+              "hf_energy_ratio_db": -15.74
+            },
+            "audio_quality": {
+              "snr_db": 6.4,
+              "clipping_ratio": 0.0,
+              "noise_floor_dbfs": -24.5,
+              "quality": "poor"
+            }
+          },
+          "timing": {
+            "pauses": {
+              "count": 0,
+              "total_s": 0.0,
+              "mean_s": 0.0,
+              "max_s": 0.0,
+              "long_count": 0,
+              "pause_ratio": 0.0,
+              "intervals_s": []
+            },
+            "response_latency_s": 0.6,
+            "speech_s": 3.95,
+            "words_per_minute": 151.9,
+            "articulation_rate_sps": 3.29
+          },
+          "fluency": {
+            "filler_count": 0,
+            "fillers": {},
+            "filler_rate_per_100w": 0.0,
+            "part_word_repetitions": 0,
+            "word_repetitions": 0,
+            "phrase_repetitions": 0,
+            "prolongations": 0,
+            "revisions": 0,
+            "incomplete_words": 0,
+            "stuttering_like_per_100_syllables": 0.0,
+            "total_disfluency_per_100w": 0.0
+          },
+          "lexical": {
+            "word_count": 10,
+            "content_word_count": 10,
+            "syllable_count": 13,
+            "unique_words": 10,
+            "type_token_ratio": 1.0,
+            "mean_word_length": 3.9,
+            "sentence_count": 1,
+            "mean_sentence_length_words": 10.0,
+            "hedges": {},
+            "hedge_rate_per_100w": 0.0,
+            "vague_word_count": 0,
+            "question_count": 0
+          },
+          "sentiment": {
+            "score": 0.0,
+            "positive_weight": 0.0,
+            "negative_weight": 0.0,
+            "method": "lexicon-negation-v1"
+          },
+          "external": {
+            "asr_confidence": 0.9
+          },
+          "emotion": {
+            "label": "neutral",
+            "arousal": -0.064,
+            "valence": 0.0,
+            "confidence": 0.28,
+            "method": "heuristic-prosody+lexicon-v1",
+            "cues": [
+              "articulation_rate_sps low (z=-1.5, population)",
+              "pause_ratio low (z=-2.0, population)"
+            ]
+          },
+          "skills": {
+            "fluency": 100.0,
+            "pace": 100.0,
+            "clarity": 91.2,
+            "expressiveness": null,
+            "confidence": 100.0,
+            "vocabulary": null,
+            "responsiveness": 100.0,
+            "overall": 98.2
+          },
+          "baseline_deviations": {},
+          "flags": [
+            "poor_audio",
+            "flat_intonation"
+          ]
+        },
+        {
+          "utterance_id": "utt_c8992bc38274",
+          "timestamp": "2026-11-10T16:11:35.860Z",
+          "transcript": "I was charged twice, I think, for the same thing.",
+          "acoustics": {
+            "duration_s": 4.829,
+            "speech_s": 4.05,
+            "voiced_ratio": 0.99,
+            "pitch": {
+              "f0_mean_hz": 209.2,
+              "f0_median_hz": 212.7,
+              "f0_std_hz": 22.68,
+              "f0_min_hz": 172.7,
+              "f0_max_hz": 242.4,
+              "f0_std_semitones": 1.91,
+              "f0_range_semitones": 5.87,
+              "terminal_contour": "level",
+              "terminal_slope_st_per_s": -1.91
+            },
+            "energy": {
+              "rms_dbfs_mean": -18.28,
+              "rms_dbfs_std": 1.62,
+              "dynamic_range_db": 3.55
+            },
+            "voice_quality": {
+              "jitter_local_pct": 0.244,
+              "shimmer_local_pct": 4.272,
+              "hnr_db": 34.59,
+              "pulses_analyzed": 831
+            },
+            "spectral": {
+              "centroid_hz": 354.6,
+              "hf_energy_ratio_db": -13.54
+            },
+            "audio_quality": {
+              "snr_db": 44.1,
+              "clipping_ratio": 0.0,
+              "noise_floor_dbfs": -62.3,
+              "quality": "good"
+            }
+          },
+          "timing": {
+            "pauses": {
+              "count": 1,
+              "total_s": 0.31,
+              "mean_s": 0.31,
+              "max_s": 0.31,
+              "long_count": 0,
+              "pause_ratio": 0.071,
+              "intervals_s": [
+                [
+                  2.64,
+                  2.95
+                ]
+              ]
+            },
+            "response_latency_s": 0.9,
+            "speech_s": 4.05,
+            "words_per_minute": 137.6,
+            "articulation_rate_sps": 2.72
+          },
+          "fluency": {
+            "filler_count": 0,
+            "fillers": {},
+            "filler_rate_per_100w": 0.0,
+            "part_word_repetitions": 0,
+            "word_repetitions": 0,
+            "phrase_repetitions": 0,
+            "prolongations": 0,
+            "revisions": 0,
+            "incomplete_words": 0,
+            "stuttering_like_per_100_syllables": 0.0,
+            "total_disfluency_per_100w": 0.0
+          },
+          "lexical": {
+            "word_count": 10,
+            "content_word_count": 10,
+            "syllable_count": 11,
+            "unique_words": 9,
+            "type_token_ratio": 0.9,
+            "mean_word_length": 3.7,
+            "sentence_count": 1,
+            "mean_sentence_length_words": 10.0,
+            "hedges": {
+              "i think": 1
+            },
+            "hedge_rate_per_100w": 10.0,
+            "vague_word_count": 1,
+            "question_count": 0
+          },
+          "sentiment": {
+            "score": 0.0,
+            "positive_weight": 0.0,
+            "negative_weight": 0.0,
+            "method": "lexicon-negation-v1"
+          },
+          "external": {
+            "asr_confidence": 0.9
+          },
+          "emotion": {
+            "label": "subdued",
+            "arousal": -0.386,
+            "valence": 0.0,
+            "confidence": 0.43,
+            "method": "heuristic-prosody+lexicon-v1",
+            "cues": [
+              "articulation_rate_sps low (z=-2.1, population)"
+            ]
+          },
+          "skills": {
+            "fluency": 100.0,
+            "pace": 100.0,
+            "clarity": 89.2,
+            "expressiveness": 96.0,
+            "confidence": 40.0,
+            "vocabulary": null,
+            "responsiveness": 100.0,
+            "overall": 87.5
+          },
+          "baseline_deviations": {},
+          "flags": []
+        },
+        {
+          "utterance_id": "utt_6d92bee829f2",
+          "timestamp": "2026-11-10T16:11:35.966Z",
+          "transcript": "Okay, so it will be refunded? That's good.",
+          "acoustics": {
+            "duration_s": 3.677,
+            "speech_s": 3.21,
+            "voiced_ratio": 0.994,
+            "pitch": {
+              "f0_mean_hz": 247.8,
+              "f0_median_hz": 246.2,
+              "f0_std_hz": 20.94,
+              "f0_min_hz": 216.3,
+              "f0_max_hz": 280.7,
+              "f0_std_semitones": 1.46,
+              "f0_range_semitones": 4.52,
+              "terminal_contour": "level",
+              "terminal_slope_st_per_s": 1.61
+            },
+            "energy": {
+              "rms_dbfs_mean": -18.19,
+              "rms_dbfs_std": 1.37,
+              "dynamic_range_db": 3.52
+            },
+            "voice_quality": {
+              "jitter_local_pct": 0.406,
+              "shimmer_local_pct": 3.566,
+              "hnr_db": 34.43,
+              "pulses_analyzed": 790
+            },
+            "spectral": {
+              "centroid_hz": 421.8,
+              "hf_energy_ratio_db": -10.9
+            },
+            "audio_quality": {
+              "snr_db": 43.2,
+              "clipping_ratio": 0.0,
+              "noise_floor_dbfs": -61.4,
+              "quality": "good"
+            }
+          },
+          "timing": {
+            "pauses": {
+              "count": 0,
+              "total_s": 0.0,
+              "mean_s": 0.0,
+              "max_s": 0.0,
+              "long_count": 0,
+              "pause_ratio": 0.0,
+              "intervals_s": []
+            },
+            "response_latency_s": 0.5,
+            "speech_s": 3.21,
+            "words_per_minute": 149.5,
+            "articulation_rate_sps": 4.05
+          },
+          "fluency": {
+            "filler_count": 0,
+            "fillers": {},
+            "filler_rate_per_100w": 0.0,
+            "part_word_repetitions": 0,
+            "word_repetitions": 0,
+            "phrase_repetitions": 0,
+            "prolongations": 0,
+            "revisions": 0,
+            "incomplete_words": 0,
+            "stuttering_like_per_100_syllables": 0.0,
+            "total_disfluency_per_100w": 0.0
+          },
+          "lexical": {
+            "word_count": 8,
+            "content_word_count": 8,
+            "syllable_count": 13,
+            "unique_words": 8,
+            "type_token_ratio": 1.0,
+            "mean_word_length": 4.0,
+            "sentence_count": 2,
+            "mean_sentence_length_words": 4.0,
+            "hedges": {},
+            "hedge_rate_per_100w": 0.0,
+            "vague_word_count": 0,
+            "question_count": 1
+          },
+          "sentiment": {
+            "score": 0.5,
+            "positive_weight": 2.0,
+            "negative_weight": 0.0,
+            "method": "lexicon-negation-v1"
+          },
+          "external": {
+            "asr_confidence": 0.9
+          },
+          "emotion": {
+            "label": "pleased",
+            "arousal": -0.102,
+            "valence": 0.5,
+            "confidence": 0.46,
+            "method": "heuristic-prosody+lexicon-v1",
+            "cues": [
+              "pause_ratio low (z=-2.0, population)",
+              "word sentiment +0.50"
+            ]
+          },
+          "skills": {
+            "fluency": 100.0,
+            "pace": 100.0,
+            "clarity": 95.0,
+            "expressiveness": 75.7,
+            "confidence": 100.0,
+            "vocabulary": null,
+            "responsiveness": 100.0,
+            "overall": 95.1
+          },
+          "baseline_deviations": {},
+          "flags": []
+        },
+        {
+          "utterance_id": "utt_35774a2eddb1",
+          "timestamp": "2026-11-10T16:11:36.040Z",
+          "transcript": "Perfect, thank you for your help.",
+          "acoustics": {
+            "duration_s": 2.888,
+            "speech_s": 2.42,
+            "voiced_ratio": 0.992,
+            "pitch": {
+              "f0_mean_hz": 197.7,
+              "f0_median_hz": 197.5,
+              "f0_std_hz": 6.69,
+              "f0_min_hz": 188.1,
+              "f0_max_hz": 207.8,
+              "f0_std_semitones": 0.59,
+              "f0_range_semitones": 1.72,
+              "terminal_contour": "level",
+              "terminal_slope_st_per_s": -0.87
+            },
+            "energy": {
+              "rms_dbfs_mean": -18.22,
+              "rms_dbfs_std": 1.41,
+              "dynamic_range_db": 3.51
+            },
+            "voice_quality": {
+              "jitter_local_pct": 0.245,
+              "shimmer_local_pct": 4.537,
+              "hnr_db": 35.94,
+              "pulses_analyzed": 472
+            },
+            "spectral": {
+              "centroid_hz": 333.6,
+              "hf_energy_ratio_db": -14.29
+            },
+            "audio_quality": {
+              "snr_db": 44.2,
+              "clipping_ratio": 0.0,
+              "noise_floor_dbfs": -62.4,
+              "quality": "good"
+            }
+          },
+          "timing": {
+            "pauses": {
+              "count": 0,
+              "total_s": 0.0,
+              "mean_s": 0.0,
+              "max_s": 0.0,
+              "long_count": 0,
+              "pause_ratio": 0.0,
+              "intervals_s": []
+            },
+            "response_latency_s": 0.4,
+            "speech_s": 2.42,
+            "words_per_minute": 148.8,
+            "articulation_rate_sps": 2.89
+          },
+          "fluency": {
+            "filler_count": 0,
+            "fillers": {},
+            "filler_rate_per_100w": 0.0,
+            "part_word_repetitions": 0,
+            "word_repetitions": 0,
+            "phrase_repetitions": 0,
+            "prolongations": 0,
+            "revisions": 0,
+            "incomplete_words": 0,
+            "stuttering_like_per_100_syllables": 0.0,
+            "total_disfluency_per_100w": 0.0
+          },
+          "lexical": {
+            "word_count": 6,
+            "content_word_count": 6,
+            "syllable_count": 7,
+            "unique_words": 6,
+            "type_token_ratio": 1.0,
+            "mean_word_length": 4.33,
+            "sentence_count": 1,
+            "mean_sentence_length_words": 6.0,
+            "hedges": {},
+            "hedge_rate_per_100w": 0.0,
+            "vague_word_count": 0,
+            "question_count": 0
+          },
+          "sentiment": {
+            "score": 0.5,
+            "positive_weight": 2.0,
+            "negative_weight": 0.0,
+            "method": "lexicon-negation-v1"
+          },
+          "external": {
+            "asr_confidence": 0.9
+          },
+          "emotion": {
+            "label": "calm",
+            "arousal": -0.508,
+            "valence": 0.5,
+            "confidence": 0.5,
+            "method": "heuristic-prosody+lexicon-v1",
+            "cues": [
+              "f0_std_semitones low (z=-1.9, population)",
+              "articulation_rate_sps low (z=-1.9, population)",
+              "pause_ratio low (z=-2.0, population)",
+              "word sentiment +0.50"
+            ]
+          },
+          "skills": {
+            "fluency": 100.0,
+            "pace": 100.0,
+            "clarity": 90.4,
+            "expressiveness": 36.5,
+            "confidence": 100.0,
+            "vocabulary": null,
+            "responsiveness": 100.0,
+            "overall": 87.8
+          },
+          "baseline_deviations": {},
+          "flags": [
+            "flat_intonation"
+          ]
+        }
+      ],
+      "utterances_compacted": false,
+      "summary": {
+        "utterance_count": 4,
+        "total_speech_s": 13.63,
+        "total_words": 34,
+        "metrics_mean": {
+          "arousal": -0.265,
+          "articulation_rate_sps": 3.2375,
+          "f0_mean_hz": 218.2333,
+          "f0_range_semitones": 4.0367,
+          "f0_std_semitones": 1.32,
+          "filler_rate_per_100w": 0.0,
+          "hedge_rate_per_100w": 2.5,
+          "hf_energy_ratio_db": -12.91,
+          "hnr_db": 34.9867,
+          "jitter_local_pct": 0.2983,
+          "mean_pause_s": 0.0775,
+          "pause_ratio": 0.0177,
+          "response_latency_s": 0.6,
+          "rms_dbfs_mean": -18.23,
+          "sentiment": 0.25,
+          "shimmer_local_pct": 4.125,
+          "stuttering_like_per_100_syllables": 0.0,
+          "total_disfluency_per_100w": 0.0,
+          "valence": 0.25,
+          "words_per_minute": 146.95,
+          "words_per_turn": 8.5
+        },
+        "skills_mean": {
+          "pace": 100.0,
+          "clarity": 91.4,
+          "fluency": 100.0,
+          "expressiveness": 69.4,
+          "overall": 92.1,
+          "confidence": 85.0,
+          "responsiveness": 100.0
+        },
+        "dominant_emotion": "neutral",
+        "emotion_timeline": [
+          "neutral",
+          "subdued",
+          "pleased",
+          "calm"
+        ],
+        "deviations_from_baseline": {},
+        "indicators_evaluated": true,
+        "indicators_triggered": []
+      }
+    },
+    {
+      "session_id": "sess_e7b758e37251",
+      "started_at": "2026-11-10T16:11:36.093Z",
+      "ended_at": "2026-11-10T16:11:36.590Z",
+      "status": "closed",
+      "agent_id": "demo-support-bot",
+      "channel": "phone",
+      "context": "Delivery problem (frustrated)",
+      "utterances": [
+        {
+          "utterance_id": "utt_386485420bd0",
+          "timestamp": "2026-11-10T16:11:36.197Z",
+          "transcript": "This is the third time I'm calling! The package is still not here.",
+          "acoustics": {
+            "duration_s": 4.647,
+            "speech_s": 3.87,
+            "voiced_ratio": 0.99,
+            "pitch": {
+              "f0_mean_hz": 275.8,
+              "f0_median_hz": 274.9,
+              "f0_std_hz": 55.46,
+              "f0_min_hz": 198.3,
+              "f0_max_hz": 366.6,
+              "f0_std_semitones": 3.5,
+              "f0_range_semitones": 10.64,
+              "terminal_contour": "level",
+              "terminal_slope_st_per_s": -2.87
+            },
+            "energy": {
+              "rms_dbfs_mean": -10.9,
+              "rms_dbfs_std": 1.6,
+              "dynamic_range_db": 3.53
+            },
+            "voice_quality": {
+              "jitter_local_pct": 0.394,
+              "shimmer_local_pct": 3.263,
+              "hnr_db": 33.77,
+              "pulses_analyzed": 1070
+            },
+            "spectral": {
+              "centroid_hz": 471.2,
+              "hf_energy_ratio_db": -9.75
+            },
+            "audio_quality": {
+              "snr_db": 45.9,
+              "clipping_ratio": 0.0,
+              "noise_floor_dbfs": -56.8,
+              "quality": "good"
+            }
+          },
+          "timing": {
+            "pauses": {
+              "count": 1,
+              "total_s": 0.31,
+              "mean_s": 0.31,
+              "max_s": 0.31,
+              "long_count": 0,
+              "pause_ratio": 0.074,
+              "intervals_s": [
+                [
+                  2.32,
+                  2.63
+                ]
+              ]
+            },
+            "response_latency_s": 0.2,
+            "speech_s": 3.87,
+            "words_per_minute": 186.6,
+            "articulation_rate_sps": 3.88
+          },
+          "fluency": {
+            "filler_count": 0,
+            "fillers": {},
+            "filler_rate_per_100w": 0.0,
+            "part_word_repetitions": 0,
+            "word_repetitions": 0,
+            "phrase_repetitions": 0,
+            "prolongations": 0,
+            "revisions": 0,
+            "incomplete_words": 0,
+            "stuttering_like_per_100_syllables": 0.0,
+            "total_disfluency_per_100w": 0.0
+          },
+          "lexical": {
+            "word_count": 13,
+            "content_word_count": 13,
+            "syllable_count": 15,
+            "unique_words": 11,
+            "type_token_ratio": 0.846,
+            "mean_word_length": 4.0,
+            "sentence_count": 2,
+            "mean_sentence_length_words": 6.5,
+            "hedges": {},
+            "hedge_rate_per_100w": 0.0,
+            "vague_word_count": 0,
+            "question_count": 0
+          },
+          "sentiment": {
+            "score": 0.0,
+            "positive_weight": 0.0,
+            "negative_weight": 0.0,
+            "method": "lexicon-negation-v1"
+          },
+          "external": {
+            "asr_confidence": 0.9
+          },
+          "emotion": {
+            "label": "energetic",
+            "arousal": 0.882,
+            "valence": 0.0,
+            "confidence": 0.55,
+            "method": "heuristic-prosody+lexicon-v1",
+            "cues": [
+              "f0_mean_hz high (z=+2.5, personal)",
+              "rms_dbfs_mean high (z=+4.0, personal)",
+              "hf_energy_ratio_db high (z=+2.0, personal)",
+              "f0_std_semitones high (z=+3.2, personal)"
+            ]
+          },
+          "skills": {
+            "fluency": 100.0,
+            "pace": 82.6,
+            "clarity": 95.0,
+            "expressiveness": 100.0,
+            "confidence": 100.0,
+            "vocabulary": null,
+            "responsiveness": 100.0,
+            "overall": 96.3
+          },
+          "baseline_deviations": {
+            "f0_mean_hz": 2.49,
+            "f0_std_semitones": 3.19,
+            "f0_range_semitones": 3.24,
+            "rms_dbfs_mean": 4.9,
+            "hf_energy_ratio_db": 2.03,
+            "words_per_minute": 3.64
+          },
+          "flags": [
+            "deviates_from_baseline"
+          ]
+        },
+        {
+          "utterance_id": "utt_e15d865c7cb1",
+          "timestamp": "2026-11-10T16:11:36.334Z",
+          "transcript": "No, no, I already did that, it doesn't work, it is ridiculous.",
+          "acoustics": {
+            "duration_s": 3.995,
+            "speech_s": 3.53,
+            "voiced_ratio": 0.994,
+            "pitch": {
+              "f0_mean_hz": 336.4,
+              "f0_median_hz": 333.4,
+              "f0_std_hz": 39.94,
+              "f0_min_hz": 277.0,
+              "f0_max_hz": 400.0,
+              "f0_std_semitones": 2.06,
+              "f0_range_semitones": 6.36,
+              "terminal_contour": "level",
+              "terminal_slope_st_per_s": 2.04
+            },
+            "energy": {
+              "rms_dbfs_mean": -10.25,
+              "rms_dbfs_std": 1.41,
+              "dynamic_range_db": 3.5
+            },
+            "voice_quality": {
+              "jitter_local_pct": 0.331,
+              "shimmer_local_pct": 2.693,
+              "hnr_db": 34.71,
+              "pulses_analyzed": 1188
+            },
+            "spectral": {
+              "centroid_hz": 578.3,
+              "hf_energy_ratio_db": -7.88
+            },
+            "audio_quality": {
+              "snr_db": 42.7,
+              "clipping_ratio": 0.0,
+              "noise_floor_dbfs": -53.0,
+              "quality": "good"
+            }
+          },
+          "timing": {
+            "pauses": {
+              "count": 0,
+              "total_s": 0.0,
+              "mean_s": 0.0,
+              "max_s": 0.0,
+              "long_count": 0,
+              "pause_ratio": 0.0,
+              "intervals_s": []
+            },
+            "response_latency_s": 0.1,
+            "speech_s": 3.53,
+            "words_per_minute": 204.0,
+            "articulation_rate_sps": 5.38
+          },
+          "fluency": {
+            "filler_count": 0,
+            "fillers": {},
+            "filler_rate_per_100w": 0.0,
+            "part_word_repetitions": 0,
+            "word_repetitions": 0,
+            "phrase_repetitions": 0,
+            "prolongations": 0,
+            "revisions": 0,
+            "incomplete_words": 0,
+            "stuttering_like_per_100_syllables": 0.0,
+            "total_disfluency_per_100w": 0.0
+          },
+          "lexical": {
+            "word_count": 12,
+            "content_word_count": 12,
+            "syllable_count": 19,
+            "unique_words": 10,
+            "type_token_ratio": 0.833,
+            "mean_word_length": 3.83,
+            "sentence_count": 1,
+            "mean_sentence_length_words": 12.0,
+            "hedges": {},
+            "hedge_rate_per_100w": 0.0,
+            "vague_word_count": 0,
+            "question_count": 0
+          },
+          "sentiment": {
+            "score": -0.333,
+            "positive_weight": 0.0,
+            "negative_weight": 1.0,
+            "method": "lexicon-negation-v1"
+          },
+          "external": {
+            "asr_confidence": 0.9
+          },
+          "emotion": {
+            "label": "angry",
+            "arousal": 0.95,
+            "valence": -0.333,
+            "confidence": 0.55,
+            "method": "heuristic-prosody+lexicon-v1",
+            "cues": [
+              "f0_mean_hz high (z=+4.0, personal)",
+              "rms_dbfs_mean high (z=+4.0, personal)",
+              "hf_energy_ratio_db high (z=+3.2, personal)",
+              "articulation_rate_sps high (z=+3.5, personal)",
+              "word sentiment -0.33"
+            ]
+          },
+          "skills": {
+            "fluency": 100.0,
+            "pace": 56.5,
+            "clarity": 95.0,
+            "expressiveness": 100.0,
+            "confidence": 100.0,
+            "vocabulary": null,
+            "responsiveness": 97.0,
+            "overall": 91.4
+          },
+          "baseline_deviations": {
+            "f0_mean_hz": 5.16,
+            "rms_dbfs_mean": 5.33,
+            "hf_energy_ratio_db": 3.22,
+            "words_per_minute": 5.09,
+            "articulation_rate_sps": 3.46
+          },
+          "flags": [
+            "fast_rate",
+            "deviates_from_baseline",
+            "emotion_angry"
+          ]
+        },
+        {
+          "utterance_id": "utt_55563739f9d1",
+          "timestamp": "2026-11-10T16:11:36.451Z",
+          "transcript": "I'm really frustrated, I need this today, I am so annoyed.",
+          "acoustics": {
+            "duration_s": 4.061,
+            "speech_s": 3.29,
+            "voiced_ratio": 0.991,
+            "pitch": {
+              "f0_mean_hz": 251.3,
+              "f0_median_hz": 250.0,
+              "f0_std_hz": 42.19,
+              "f0_min_hz": 190.5,
+              "f0_max_hz": 326.6,
+              "f0_std_semitones": 2.9,
+              "f0_range_semitones": 9.33,
+              "terminal_contour": "level",
+              "terminal_slope_st_per_s": 2.29
+            },
+            "energy": {
+              "rms_dbfs_mean": -11.01,
+              "rms_dbfs_std": 2.01,
+              "dynamic_range_db": 3.57
+            },
+            "voice_quality": {
+              "jitter_local_pct": 0.396,
+              "shimmer_local_pct": 3.616,
+              "hnr_db": 33.96,
+              "pulses_analyzed": 826
+            },
+            "spectral": {
+              "centroid_hz": 428.9,
+              "hf_energy_ratio_db": -10.94
+            },
+            "audio_quality": {
+              "snr_db": 47.1,
+              "clipping_ratio": 0.0,
+              "noise_floor_dbfs": -58.1,
+              "quality": "good"
+            }
+          },
+          "timing": {
+            "pauses": {
+              "count": 1,
+              "total_s": 0.31,
+              "mean_s": 0.31,
+              "max_s": 0.31,
+              "long_count": 0,
+              "pause_ratio": 0.086,
+              "intervals_s": [
+                [
+                  2.14,
+                  2.45
+                ]
+              ]
+            },
+            "response_latency_s": 0.2,
+            "speech_s": 3.29,
+            "words_per_minute": 183.3,
+            "articulation_rate_sps": 4.86
+          },
+          "fluency": {
+            "filler_count": 0,
+            "fillers": {},
+            "filler_rate_per_100w": 0.0,
+            "part_word_repetitions": 0,
+            "word_repetitions": 0,
+            "phrase_repetitions": 0,
+            "prolongations": 0,
+            "revisions": 0,
+            "incomplete_words": 0,
+            "stuttering_like_per_100_syllables": 0.0,
+            "total_disfluency_per_100w": 0.0
+          },
+          "lexical": {
+            "word_count": 11,
+            "content_word_count": 11,
+            "syllable_count": 16,
+            "unique_words": 10,
+            "type_token_ratio": 0.909,
+            "mean_word_length": 4.09,
+            "sentence_count": 1,
+            "mean_sentence_length_words": 11.0,
+            "hedges": {},
+            "hedge_rate_per_100w": 0.0,
+            "vague_word_count": 0,
+            "question_count": 0
+          },
+          "sentiment": {
+            "score": -0.6,
+            "positive_weight": 0.0,
+            "negative_weight": 3.0,
+            "method": "lexicon-negation-v1"
+          },
+          "external": {
+            "asr_confidence": 0.9
+          },
+          "emotion": {
+            "label": "angry",
+            "arousal": 0.84,
+            "valence": -0.6,
+            "confidence": 0.55,
+            "method": "heuristic-prosody+lexicon-v1",
+            "cues": [
+              "rms_dbfs_mean high (z=+4.0, personal)",
+              "f0_std_semitones high (z=+2.3, personal)",
+              "articulation_rate_sps high (z=+2.5, personal)",
+              "word sentiment -0.60"
+            ]
+          },
+          "skills": {
+            "fluency": 100.0,
+            "pace": 87.5,
+            "clarity": 95.0,
+            "expressiveness": 100.0,
+            "confidence": 100.0,
+            "vocabulary": null,
+            "responsiveness": 100.0,
+            "overall": 97.1
+          },
+          "baseline_deviations": {
+            "f0_std_semitones": 2.27,
+            "f0_range_semitones": 2.57,
+            "rms_dbfs_mean": 4.82,
+            "words_per_minute": 3.37,
+            "articulation_rate_sps": 2.55
+          },
+          "flags": [
+            "deviates_from_baseline",
+            "emotion_angry"
+          ]
+        },
+        {
+          "utterance_id": "utt_f9fde3bf22f5",
+          "timestamp": "2026-11-10T16:11:36.519Z",
+          "transcript": "Fine. Just send it again, please.",
+          "acoustics": {
+            "duration_s": 2.256,
+            "speech_s": 1.79,
+            "voiced_ratio": 0.989,
+            "pitch": {
+              "f0_mean_hz": 215.8,
+              "f0_median_hz": 216.1,
+              "f0_std_hz": 14.66,
+              "f0_min_hz": 194.4,
+              "f0_max_hz": 238.8,
+              "f0_std_semitones": 1.18,
+              "f0_range_semitones": 3.56,
+              "terminal_contour": "level",
+              "terminal_slope_st_per_s": -2.28
+            },
+            "energy": {
+              "rms_dbfs_mean": -12.23,
+              "rms_dbfs_std": 1.55,
+              "dynamic_range_db": 3.57
+            },
+            "voice_quality": {
+              "jitter_local_pct": 0.428,
+              "shimmer_local_pct": 4.195,
+              "hnr_db": 35.37,
+              "pulses_analyzed": 386
+            },
+            "spectral": {
+              "centroid_hz": 365.4,
+              "hf_energy_ratio_db": -12.95
+            },
+            "audio_quality": {
+              "snr_db": 48.4,
+              "clipping_ratio": 0.0,
+              "noise_floor_dbfs": -60.6,
+              "quality": "good"
+            }
+          },
+          "timing": {
+            "pauses": {
+              "count": 0,
+              "total_s": 0.0,
+              "mean_s": 0.0,
+              "max_s": 0.0,
+              "long_count": 0,
+              "pause_ratio": 0.0,
+              "intervals_s": []
+            },
+            "response_latency_s": 0.6,
+            "speech_s": 1.79,
+            "words_per_minute": 201.1,
+            "articulation_rate_sps": 3.91
+          },
+          "fluency": {
+            "filler_count": 0,
+            "fillers": {},
+            "filler_rate_per_100w": 0.0,
+            "part_word_repetitions": 0,
+            "word_repetitions": 0,
+            "phrase_repetitions": 0,
+            "prolongations": 0,
+            "revisions": 0,
+            "incomplete_words": 0,
+            "stuttering_like_per_100_syllables": 0.0,
+            "total_disfluency_per_100w": 0.0
+          },
+          "lexical": {
+            "word_count": 6,
+            "content_word_count": 6,
+            "syllable_count": 7,
+            "unique_words": 6,
+            "type_token_ratio": 1.0,
+            "mean_word_length": 4.17,
+            "sentence_count": 2,
+            "mean_sentence_length_words": 3.0,
+            "hedges": {},
+            "hedge_rate_per_100w": 0.0,
+            "vague_word_count": 0,
+            "question_count": 0
+          },
+          "sentiment": {
+            "score": 0.0,
+            "positive_weight": 0.0,
+            "negative_weight": 0.0,
+            "method": "lexicon-negation-v1"
+          },
+          "external": {
+            "asr_confidence": 0.9
+          },
+          "emotion": {
+            "label": "energetic",
+            "arousal": 0.55,
+            "valence": 0.0,
+            "confidence": 0.48,
+            "method": "heuristic-prosody+lexicon-v1",
+            "cues": [
+              "rms_dbfs_mean high (z=+4.0, personal)"
+            ]
+          },
+          "skills": {
+            "fluency": 100.0,
+            "pace": 60.9,
+            "clarity": 95.0,
+            "expressiveness": 63.1,
+            "confidence": 100.0,
+            "vocabulary": null,
+            "responsiveness": 100.0,
+            "overall": 86.5
+          },
+          "baseline_deviations": {
+            "rms_dbfs_mean": 4.01,
+            "words_per_minute": 4.85
+          },
+          "flags": [
+            "fast_rate",
+            "deviates_from_baseline"
+          ]
+        }
+      ],
+      "utterances_compacted": false,
+      "summary": {
+        "utterance_count": 4,
+        "total_speech_s": 12.48,
+        "total_words": 42,
+        "metrics_mean": {
+          "arousal": 0.8055,
+          "articulation_rate_sps": 4.5075,
+          "f0_mean_hz": 269.825,
+          "f0_range_semitones": 7.4725,
+          "f0_std_semitones": 2.41,
+          "filler_rate_per_100w": 0.0,
+          "hedge_rate_per_100w": 0.0,
+          "hf_energy_ratio_db": -10.38,
+          "hnr_db": 34.4525,
+          "jitter_local_pct": 0.3872,
+          "mean_pause_s": 0.155,
+          "pause_ratio": 0.04,
+          "response_latency_s": 0.275,
+          "rms_dbfs_mean": -11.0975,
+          "sentiment": -0.2333,
+          "shimmer_local_pct": 3.4417,
+          "stuttering_like_per_100_syllables": 0.0,
+          "total_disfluency_per_100w": 0.0,
+          "valence": -0.2333,
+          "words_per_minute": 193.75,
+          "words_per_turn": 10.5
+        },
+        "skills_mean": {
+          "pace": 71.9,
+          "clarity": 95.0,
+          "fluency": 100.0,
+          "expressiveness": 90.8,
+          "overall": 92.8,
+          "confidence": 100.0,
+          "responsiveness": 99.2
+        },
+        "dominant_emotion": "energetic",
+        "emotion_timeline": [
+          "energetic",
+          "angry",
+          "angry",
+          "energetic"
+        ],
+        "deviations_from_baseline": {
+          "f0_mean_hz": 2.22,
+          "rms_dbfs_mean": 4.76,
+          "words_per_minute": 4.24
+        },
+        "indicators_evaluated": true,
+        "indicators_triggered": []
+      }
+    }
+  ],
+  "observations": [
+    {
+      "observation_id": "obs_b0f09bdcaf61",
+      "timestamp": "2026-11-10T16:11:36.558Z",
+      "agent_id": "demo-support-bot",
+      "category": "emotion",
+      "observation": "Caller escalates quickly when asked to repeat steps already tried.",
+      "evidence": [
+        "'I already did that'",
+        "pitch & loudness well above baseline"
+      ],
+      "reasoning": "Repeated-contact frustration; skip basic troubleshooting next time.",
+      "confidence": 0.7,
+      "session_id": "sess_e7b758e37251",
+      "utterance_id": null,
+      "supersedes": null
+    }
+  ],
+  "assessments": {
+    "emotional_state": {
+      "current": {
+        "label": "energetic",
+        "arousal": 0.55,
+        "valence": 0.0,
+        "confidence": 0.48,
+        "method": "heuristic-prosody+lexicon-v1",
+        "cues": [
+          "rms_dbfs_mean high (z=+4.0, personal)"
+        ]
+      },
+      "recent_labels": [
+        "pleased",
+        "calm",
+        "neutral",
+        "subdued",
+        "pleased",
+        "calm",
+        "energetic",
+        "angry",
+        "angry",
+        "energetic"
+      ],
+      "trend": "worsening"
+    },
+    "communication_skills": {
+      "scores": {
+        "clarity": 93.3,
+        "confidence": 87.4,
+        "expressiveness": 78.1,
+        "fluency": 91.9,
+        "overall": 90.5,
+        "pace": 90.6,
+        "responsiveness": 99.7
+      },
+      "strengths": [
+        "responsiveness",
+        "clarity",
+        "fluency"
+      ],
+      "areas_to_improve": [],
+      "updated_at": "2026-11-10T16:11:36.590Z"
+    },
+    "speaking_style": {
+      "pace": "fast",
+      "pitch_expressiveness": "low",
+      "loudness": "normal",
+      "pausing": "sparse",
+      "verbosity": "moderate",
+      "directness": "balanced",
+      "mean_words_per_turn": 9.5,
+      "typical_response_latency_s": 0.45
+    },
+    "speech_indicators": []
+  },
+  "trends": {
+    "f0_mean_hz": [
+      {
+        "session_id": "sess_fe0c9bcef600",
+        "date": "2026-11-10T16:11:35.630Z",
+        "value": 220.5
+      },
+      {
+        "session_id": "sess_a924342af13e",
+        "date": "2026-11-10T16:11:36.062Z",
+        "value": 218.2333
+      },
+      {
+        "session_id": "sess_e7b758e37251",
+        "date": "2026-11-10T16:11:36.590Z",
+        "value": 269.825
+      }
+    ],
+    "f0_std_semitones": [
+      {
+        "session_id": "sess_fe0c9bcef600",
+        "date": "2026-11-10T16:11:35.630Z",
+        "value": 1.4775
+      },
+      {
+        "session_id": "sess_a924342af13e",
+        "date": "2026-11-10T16:11:36.062Z",
+        "value": 1.32
+      },
+      {
+        "session_id": "sess_e7b758e37251",
+        "date": "2026-11-10T16:11:36.590Z",
+        "value": 2.41
+      }
+    ],
+    "rms_dbfs_mean": [
+      {
+        "session_id": "sess_fe0c9bcef600",
+        "date": "2026-11-10T16:11:35.630Z",
+        "value": -18.2525
+      },
+      {
+        "session_id": "sess_a924342af13e",
+        "date": "2026-11-10T16:11:36.062Z",
+        "value": -18.23
+      },
+      {
+        "session_id": "sess_e7b758e37251",
+        "date": "2026-11-10T16:11:36.590Z",
+        "value": -11.0975
+      }
+    ],
+    "jitter_local_pct": [
+      {
+        "session_id": "sess_fe0c9bcef600",
+        "date": "2026-11-10T16:11:35.630Z",
+        "value": 0.2645
+      },
+      {
+        "session_id": "sess_a924342af13e",
+        "date": "2026-11-10T16:11:36.062Z",
+        "value": 0.2983
+      },
+      {
+        "session_id": "sess_e7b758e37251",
+        "date": "2026-11-10T16:11:36.590Z",
+        "value": 0.3872
+      }
+    ],
+    "shimmer_local_pct": [
+      {
+        "session_id": "sess_fe0c9bcef600",
+        "date": "2026-11-10T16:11:35.630Z",
+        "value": 4.089
+      },
+      {
+        "session_id": "sess_a924342af13e",
+        "date": "2026-11-10T16:11:36.062Z",
+        "value": 4.125
+      },
+      {
+        "session_id": "sess_e7b758e37251",
+        "date": "2026-11-10T16:11:36.590Z",
+        "value": 3.4417
+      }
+    ],
+    "hnr_db": [
+      {
+        "session_id": "sess_fe0c9bcef600",
+        "date": "2026-11-10T16:11:35.630Z",
+        "value": 35.315
+      },
+      {
+        "session_id": "sess_a924342af13e",
+        "date": "2026-11-10T16:11:36.062Z",
+        "value": 34.9867
+      },
+      {
+        "session_id": "sess_e7b758e37251",
+        "date": "2026-11-10T16:11:36.590Z",
+        "value": 34.4525
+      }
+    ],
+    "words_per_minute": [
+      {
+        "session_id": "sess_fe0c9bcef600",
+        "date": "2026-11-10T16:11:35.630Z",
+        "value": 138.85
+      },
+      {
+        "session_id": "sess_a924342af13e",
+        "date": "2026-11-10T16:11:36.062Z",
+        "value": 146.95
+      },
+      {
+        "session_id": "sess_e7b758e37251",
+        "date": "2026-11-10T16:11:36.590Z",
+        "value": 193.75
+      }
+    ],
+    "articulation_rate_sps": [
+      {
+        "session_id": "sess_fe0c9bcef600",
+        "date": "2026-11-10T16:11:35.630Z",
+        "value": 3.5725
+      },
+      {
+        "session_id": "sess_a924342af13e",
+        "date": "2026-11-10T16:11:36.062Z",
+        "value": 3.2375
+      },
+      {
+        "session_id": "sess_e7b758e37251",
+        "date": "2026-11-10T16:11:36.590Z",
+        "value": 4.5075
+      }
+    ],
+    "pause_ratio": [
+      {
+        "session_id": "sess_fe0c9bcef600",
+        "date": "2026-11-10T16:11:35.630Z",
+        "value": 0.0292
+      },
+      {
+        "session_id": "sess_a924342af13e",
+        "date": "2026-11-10T16:11:36.062Z",
+        "value": 0.0177
+      },
+      {
+        "session_id": "sess_e7b758e37251",
+        "date": "2026-11-10T16:11:36.590Z",
+        "value": 0.04
+      }
+    ],
+    "filler_rate_per_100w": [
+      {
+        "session_id": "sess_fe0c9bcef600",
+        "date": "2026-11-10T16:11:35.630Z",
+        "value": 4.0575
+      },
+      {
+        "session_id": "sess_a924342af13e",
+        "date": "2026-11-10T16:11:36.062Z",
+        "value": 0.0
+      },
+      {
+        "session_id": "sess_e7b758e37251",
+        "date": "2026-11-10T16:11:36.590Z",
+        "value": 0.0
+      }
+    ],
+    "stuttering_like_per_100_syllables": [
+      {
+        "session_id": "sess_fe0c9bcef600",
+        "date": "2026-11-10T16:11:35.630Z",
+        "value": 0.0
+      },
+      {
+        "session_id": "sess_a924342af13e",
+        "date": "2026-11-10T16:11:36.062Z",
+        "value": 0.0
+      },
+      {
+        "session_id": "sess_e7b758e37251",
+        "date": "2026-11-10T16:11:36.590Z",
+        "value": 0.0
+      }
+    ],
+    "hedge_rate_per_100w": [
+      {
+        "session_id": "sess_fe0c9bcef600",
+        "date": "2026-11-10T16:11:35.630Z",
+        "value": 1.785
+      },
+      {
+        "session_id": "sess_a924342af13e",
+        "date": "2026-11-10T16:11:36.062Z",
+        "value": 2.5
+      },
+      {
+        "session_id": "sess_e7b758e37251",
+        "date": "2026-11-10T16:11:36.590Z",
+        "value": 0.0
+      }
+    ],
+    "valence": [
+      {
+        "session_id": "sess_fe0c9bcef600",
+        "date": "2026-11-10T16:11:35.630Z",
+        "value": 0.2562
+      },
+      {
+        "session_id": "sess_a924342af13e",
+        "date": "2026-11-10T16:11:36.062Z",
+        "value": 0.25
+      },
+      {
+        "session_id": "sess_e7b758e37251",
+        "date": "2026-11-10T16:11:36.590Z",
+        "value": -0.2333
+      }
+    ],
+    "arousal": [
+      {
+        "session_id": "sess_fe0c9bcef600",
+        "date": "2026-11-10T16:11:35.630Z",
+        "value": -0.2395
+      },
+      {
+        "session_id": "sess_a924342af13e",
+        "date": "2026-11-10T16:11:36.062Z",
+        "value": -0.265
+      },
+      {
+        "session_id": "sess_e7b758e37251",
+        "date": "2026-11-10T16:11:36.590Z",
+        "value": 0.8055
+      }
+    ],
+    "response_latency_s": [
+      {
+        "session_id": "sess_fe0c9bcef600",
+        "date": "2026-11-10T16:11:35.630Z",
+        "value": 0.675
+      },
+      {
+        "session_id": "sess_a924342af13e",
+        "date": "2026-11-10T16:11:36.062Z",
+        "value": 0.6
+      },
+      {
+        "session_id": "sess_e7b758e37251",
+        "date": "2026-11-10T16:11:36.590Z",
+        "value": 0.275
+      }
+    ]
+  },
+  "agent_guidance": {
+    "recommended_speaking_rate_wpm": 159.0,
+    "end_of_turn_silence_ms": 600,
+    "adaptations": [
+      {
+        "instruction": "Open by acknowledging any earlier frustration before moving to the task; keep a calm tone.",
+        "reason": "2 of the last 5 turns read as angry.",
+        "priority": "high"
+      },
+      {
+        "instruction": "Keep responses brisk and to the point.",
+        "reason": "Speaker talks at a fast pace.",
+        "priority": "low"
+      }
+    ],
+    "updated_at": "2026-11-10T16:11:36.622Z"
+  },
+  "audit_log": [
+    {
+      "timestamp": "2026-11-10T16:11:35.093Z",
+      "agent_id": "demo-support-bot",
+      "action": "create_profile",
+      "detail": null,
+      "revision": 0
+    },
+    {
+      "timestamp": "2026-11-10T16:11:35.095Z",
+      "agent_id": "demo-support-bot",
+      "action": "set_consent",
+      "detail": "{'recording': True, 'voice_analysis': True, 'health_indicators': True, 'store_transcripts': True, 'retention_days': 180, 'granted_via': 'verbal-consent-recorded'}",
+      "revision": 1
+    },
+    {
+      "timestamp": "2026-11-10T16:11:35.112Z",
+      "agent_id": "demo-support-bot",
+      "action": "start_session",
+      "detail": "sess_fe0c9bcef600",
+      "revision": 2
+    },
+    {
+      "timestamp": "2026-11-10T16:11:35.260Z",
+      "agent_id": "demo-support-bot",
+      "action": "analyze_utterance",
+      "detail": null,
+      "revision": 3
+    },
+    {
+      "timestamp": "2026-11-10T16:11:35.438Z",
+      "agent_id": "demo-support-bot",
+      "action": "analyze_utterance",
+      "detail": null,
+      "revision": 4
+    },
+    {
+      "timestamp": "2026-11-10T16:11:35.531Z",
+      "agent_id": "demo-support-bot",
+      "action": "analyze_utterance",
+      "detail": null,
+      "revision": 5
+    },
+    {
+      "timestamp": "2026-11-10T16:11:35.616Z",
+      "agent_id": "demo-support-bot",
+      "action": "analyze_utterance",
+      "detail": null,
+      "revision": 6
+    },
+    {
+      "timestamp": "2026-11-10T16:11:35.631Z",
+      "agent_id": "demo-support-bot",
+      "action": "end_session",
+      "detail": "sess_fe0c9bcef600",
+      "revision": 7
+    },
+    {
+      "timestamp": "2026-11-10T16:11:35.650Z",
+      "agent_id": "demo-support-bot",
+      "action": "start_session",
+      "detail": "sess_a924342af13e",
+      "revision": 8
+    },
+    {
+      "timestamp": "2026-11-10T16:11:35.756Z",
+      "agent_id": "demo-support-bot",
+      "action": "analyze_utterance",
+      "detail": null,
+      "revision": 9
+    },
+    {
+      "timestamp": "2026-11-10T16:11:35.866Z",
+      "agent_id": "demo-support-bot",
+      "action": "analyze_utterance",
+      "detail": null,
+      "revision": 10
+    },
+    {
+      "timestamp": "2026-11-10T16:11:35.976Z",
+      "agent_id": "demo-support-bot",
+      "action": "analyze_utterance",
+      "detail": null,
+      "revision": 11
+    },
+    {
+      "timestamp": "2026-11-10T16:11:36.049Z",
+      "agent_id": "demo-support-bot",
+      "action": "analyze_utterance",
+      "detail": null,
+      "revision": 12
+    },
+    {
+      "timestamp": "2026-11-10T16:11:36.062Z",
+      "agent_id": "demo-support-bot",
+      "action": "end_session",
+      "detail": "sess_a924342af13e",
+      "revision": 13
+    },
+    {
+      "timestamp": "2026-11-10T16:11:36.093Z",
+      "agent_id": "demo-support-bot",
+      "action": "start_session",
+      "detail": "sess_e7b758e37251",
+      "revision": 14
+    },
+    {
+      "timestamp": "2026-11-10T16:11:36.208Z",
+      "agent_id": "demo-support-bot",
+      "action": "analyze_utterance",
+      "detail": null,
+      "revision": 15
+    },
+    {
+      "timestamp": "2026-11-10T16:11:36.347Z",
+      "agent_id": "demo-support-bot",
+      "action": "analyze_utterance",
+      "detail": null,
+      "revision": 16
+    },
+    {
+      "timestamp": "2026-11-10T16:11:36.463Z",
+      "agent_id": "demo-support-bot",
+      "action": "analyze_utterance",
+      "detail": null,
+      "revision": 17
+    },
+    {
+      "timestamp": "2026-11-10T16:11:36.534Z",
+      "agent_id": "demo-support-bot",
+      "action": "analyze_utterance",
+      "detail": null,
+      "revision": 18
+    },
+    {
+      "timestamp": "2026-11-10T16:11:36.558Z",
+      "agent_id": "demo-support-bot",
+      "action": "add_observation",
+      "detail": "emotion",
+      "revision": 19
+    },
+    {
+      "timestamp": "2026-11-10T16:11:36.590Z",
+      "agent_id": "demo-support-bot",
+      "action": "end_session",
+      "detail": "sess_e7b758e37251",
+      "revision": 20
+    },
+    {
+      "timestamp": "2026-11-10T16:11:36.622Z",
+      "agent_id": "demo-support-bot",
+      "action": "update_accent",
+      "detail": "Indian English",
+      "revision": 21
+    }
+  ],
+  "extensions": {}
+}

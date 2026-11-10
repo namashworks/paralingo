@@ -1,0 +1,59 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "paralingo"
+version = "1.0.0"
+description = "Shared per-speaker speech profile files that AI voice agents read and write: prosody, pauses, voice quality, fluency, emotion, skills, accent and guidance."
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+authors = [{ name = "Namash Aggarwal" }]
+maintainers = [{ name = "Namash Aggarwal" }]
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.24"]
+keywords = ["voice agent", "speech analysis", "prosody", "emotion recognition", "conversational ai", "mcp",
+            "llm tools", "speech pathology screening", "voice ai"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Intended Audience :: Science/Research",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Multimedia :: Sound/Audio :: Analysis",
+    "Topic :: Multimedia :: Sound/Audio :: Speech",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+[project.urls]
+Homepage = "https://github.com/namashworks/paralingo"
+Repository = "https://github.com/namashworks/paralingo"
+Issues = "https://github.com/namashworks/paralingo/issues"
+Changelog = "https://github.com/namashworks/paralingo/blob/main/CHANGELOG.md"
+
+[project.optional-dependencies]
+validation = ["jsonschema>=4.18"]
+api = ["fastapi>=0.115", "uvicorn>=0.30", "python-multipart>=0.0.9"]
+mcp = ["mcp>=1.0"]
+claude = ["anthropic"]
+dev = ["pytest>=8", "jsonschema>=4.18", "httpx>=0.27"]
+eval = ["praat-parselmouth>=0.4.3"]
+
+[project.scripts]
+paralingo = "paralingo.__main__:main"
+paralingo-mcp = "paralingo.mcp_server:main"
+paralingo-api = "paralingo.http_api:main"
+paralingo-keys = "paralingo.api_keys:main"
+
+[tool.setuptools.packages.find]
+include = ["paralingo", "paralingo.*"]
+
+[tool.setuptools.package-data]
+"paralingo.schema" = ["*.json"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

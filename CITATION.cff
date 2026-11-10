@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "If you use Paralingo in your work, please cite it as below and credit the original author."
+title: "Paralingo: a shared speech-analysis file for AI voice agents"
+type: software
+authors:
+  - given-names: "Namash"
+    family-names: "Aggarwal"
+    website: "https://github.com/namashworks"
+repository-code: "https://github.com/namashworks/paralingo"
+url: "https://github.com/namashworks/paralingo"
+license: Apache-2.0
+version: 1.0.0
+date-released: "2026-11-10"
+keywords:
+  - voice agents
+  - speech analysis
+  - prosody
+  - emotion recognition
+  - conversational AI
+  - MCP
+abstract: >-
+  A per-speaker JSON file and Python toolkit that AI voice agents read and write to
+  track how a person speaks: pitch, pauses, pace, voice quality, fluency, emotion,
+  communication skills, accent and non-diagnostic speech indicators, with a personal
+  baseline, longitudinal trends and concrete guidance for the agent.

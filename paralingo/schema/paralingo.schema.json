@@ -1,0 +1,330 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/schemas/paralingo/1.0.0",
+  "title": "Paralingo File (.speech.json)",
+  "description": "A per-speaker file that AI voice agents read and write to track WHAT a person says and HOW they say it: prosody (pitch, loudness, pace, pauses), voice quality, fluency, accent, emotion, communication skills, speaking style and non-diagnostic speech-health indicators, with a personal baseline and longitudinal trends. Every inference stores its evidence, confidence and method so other agents can reason about it.",
+  "type": "object",
+  "required": ["format", "version", "profile_id", "created_at", "updated_at", "revision", "speaker", "consent", "baseline", "sessions", "observations", "assessments", "trends", "agent_guidance", "audit_log"],
+  "additionalProperties": false,
+  "properties": {
+    "format": { "const": "paralingo" },
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "profile_id": { "type": "string" },
+    "created_at": { "$ref": "#/$defs/timestamp" },
+    "updated_at": { "$ref": "#/$defs/timestamp" },
+    "revision": { "type": "integer", "minimum": 0, "description": "Incremented on every write. Agents may pass expected_revision to detect concurrent edits." },
+
+    "speaker": {
+      "type": "object",
+      "required": ["speaker_id"],
+      "properties": {
+        "speaker_id": { "type": "string", "minLength": 1 },
+        "display_name": { "type": ["string", "null"] },
+        "languages": { "type": "array", "items": { "type": "string" }, "description": "BCP-47 tags, e.g. en-IN, hi-IN" },
+        "self_reported": { "type": "object", "description": "Optional facts the speaker chose to share (e.g. native language, known speech conditions). Never inferred." },
+        "notes": { "type": ["string", "null"] }
+      }
+    },
+
+    "consent": {
+      "type": "object",
+      "required": ["recording", "voice_analysis", "health_indicators", "store_transcripts", "retention_days"],
+      "properties": {
+        "recording": { "type": "boolean" },
+        "voice_analysis": { "type": "boolean", "description": "Allow prosody / emotion / skills analysis. If false, analysis tools refuse to write." },
+        "health_indicators": { "type": "boolean", "description": "Allow speech-health screening indicators. If false they are never computed or stored." },
+        "store_transcripts": { "type": "boolean", "description": "If false only derived metrics are kept, never the words." },
+        "retention_days": { "type": ["integer", "null"], "minimum": 1, "description": "Sessions older than this are purged automatically. null = keep until deleted." },
+        "granted_at": { "type": ["string", "null"] },
+        "granted_via": { "type": ["string", "null"], "description": "e.g. 'verbal-consent-recorded', 'web-form'" }
+      }
+    },
+
+    "settings": {
+      "type": "object",
+      "properties": {
+        "max_detailed_sessions": { "type": "integer", "minimum": 1, "description": "Older sessions keep only their summary (utterances dropped) to bound file size." },
+        "max_utterances_per_session": { "type": "integer", "minimum": 1 }
+      }
+    },
+
+    "baseline": {
+      "type": "object",
+      "required": ["status", "metrics"],
+      "description": "The speaker's personal norm. Emotions and changes are judged relative to THIS, not to population averages.",
+      "properties": {
+        "status": { "enum": ["insufficient_data", "provisional", "established"] },
+        "sessions_used": { "type": "integer" },
+        "utterances_used": { "type": "integer" },
+        "speech_seconds_used": { "type": "number" },
+        "metrics": {
+          "type": "object",
+          "additionalProperties": { "$ref": "#/$defs/running_stat" }
+        }
+      }
+    },
+
+    "accent": {
+      "type": "object",
+      "properties": {
+        "current_estimate": {
+          "type": ["object", "null"],
+          "properties": {
+            "label": { "type": "string" },
+            "confidence": { "$ref": "#/$defs/unit" },
+            "votes": { "type": "number" }
+          }
+        },
+        "estimates": {
+          "type": "array",
+          "description": "History of accent / L1 estimates written by agents or accent-ID models.",
+          "items": {
+            "type": "object",
+            "required": ["label", "confidence", "source", "timestamp"],
+            "properties": {
+              "label": { "type": "string" },
+              "confidence": { "$ref": "#/$defs/unit" },
+              "source": { "type": "string" },
+              "timestamp": { "$ref": "#/$defs/timestamp" },
+              "session_id": { "type": ["string", "null"] }
+            }
+          }
+        },
+        "phonetic_markers": {
+          "type": "array",
+          "description": "Observed accent features, e.g. 'retroflex /t/', 'non-rhotic', 'th-stopping', 'syllable-timed rhythm'.",
+          "items": {
+            "type": "object",
+            "required": ["marker"],
+            "properties": {
+              "marker": { "type": "string" },
+              "example": { "type": ["string", "null"] },
+              "count": { "type": "integer" },
+              "last_seen": { "type": ["string", "null"] }
+            }
+          }
+        },
+        "intelligibility": { "type": ["number", "null"], "minimum": 0, "maximum": 1, "description": "Optional, e.g. derived from ASR confidence." }
+      }
+    },
+
+    "sessions": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/session" }
+    },
+
+    "observations": {
+      "type": "array",
+      "description": "Free-form, evidence-backed notes agents leave for each other (the reasoning journal).",
+      "items": { "$ref": "#/$defs/observation" }
+    },
+
+    "assessments": {
+      "type": "object",
+      "required": ["emotional_state", "communication_skills", "speaking_style", "speech_indicators"],
+      "properties": {
+        "emotional_state": {
+          "type": "object",
+          "properties": {
+            "current": { "anyOf": [{ "type": "null" }, { "$ref": "#/$defs/emotion" }] },
+            "recent_labels": { "type": "array", "items": { "type": "string" } },
+            "trend": { "enum": ["improving", "stable", "worsening", "unknown"] }
+          }
+        },
+        "communication_skills": {
+          "type": "object",
+          "description": "0-100 scores, rolling over recent sessions.",
+          "properties": {
+            "scores": { "type": "object", "additionalProperties": { "type": ["number", "null"] } },
+            "strengths": { "type": "array", "items": { "type": "string" } },
+            "areas_to_improve": { "type": "array", "items": { "type": "string" } },
+            "updated_at": { "type": ["string", "null"] }
+          }
+        },
+        "speaking_style": {
+          "type": "object",
+          "properties": {
+            "pace": { "enum": ["very_slow", "slow", "moderate", "fast", "very_fast", "unknown"] },
+            "pitch_expressiveness": { "enum": ["monotone", "low", "moderate", "expressive", "unknown"] },
+            "loudness": { "enum": ["soft", "normal", "loud", "unknown"] },
+            "pausing": { "enum": ["sparse", "typical", "frequent", "unknown"] },
+            "verbosity": { "enum": ["terse", "moderate", "elaborate", "unknown"] },
+            "directness": { "enum": ["direct", "balanced", "hedging", "unknown"] },
+            "mean_words_per_turn": { "type": ["number", "null"] },
+            "typical_response_latency_s": { "type": ["number", "null"] }
+          }
+        },
+        "speech_indicators": {
+          "type": "array",
+          "description": "NON-DIAGNOSTIC screening signals. Only written when consent.health_indicators is true.",
+          "items": { "$ref": "#/$defs/indicator" }
+        }
+      }
+    },
+
+    "trends": {
+      "type": "object",
+      "description": "metric name -> chronological list of per-session values",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "object",
+          "required": ["session_id", "date", "value"],
+          "properties": {
+            "session_id": { "type": "string" },
+            "date": { "type": "string" },
+            "value": { "type": ["number", "null"] }
+          }
+        }
+      }
+    },
+
+    "agent_guidance": {
+      "type": "object",
+      "description": "Concrete, actionable adaptations a voice agent should apply when talking to this person.",
+      "properties": {
+        "recommended_speaking_rate_wpm": { "type": ["number", "null"] },
+        "end_of_turn_silence_ms": { "type": ["integer", "null"], "description": "Suggested VAD endpointing timeout so the agent does not interrupt this speaker." },
+        "adaptations": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["instruction", "reason"],
+            "properties": {
+              "instruction": { "type": "string" },
+              "reason": { "type": "string" },
+              "priority": { "enum": ["low", "medium", "high"] }
+            }
+          }
+        },
+        "updated_at": { "type": ["string", "null"] }
+      }
+    },
+
+    "audit_log": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["timestamp", "agent_id", "action"],
+        "properties": {
+          "timestamp": { "$ref": "#/$defs/timestamp" },
+          "agent_id": { "type": "string" },
+          "action": { "type": "string" },
+          "detail": { "type": ["string", "null"] },
+          "revision": { "type": "integer" }
+        }
+      }
+    },
+
+    "extensions": {
+      "type": "object",
+      "description": "Namespaced space for vendor- or agent-specific data, e.g. {\"acme.ser_model\": {...}}."
+    }
+  },
+
+  "$defs": {
+    "timestamp": { "type": "string", "description": "ISO-8601 UTC" },
+    "unit": { "type": "number", "minimum": 0, "maximum": 1 },
+    "num": { "type": ["number", "null"] },
+
+    "running_stat": {
+      "type": "object",
+      "required": ["n", "mean", "std"],
+      "properties": {
+        "n": { "type": "integer", "minimum": 0 },
+        "mean": { "type": ["number", "null"] },
+        "std": { "type": ["number", "null"] },
+        "m2": { "type": ["number", "null"] },
+        "min": { "type": ["number", "null"] },
+        "max": { "type": ["number", "null"] }
+      }
+    },
+
+    "emotion": {
+      "type": "object",
+      "properties": {
+        "label": { "type": "string", "description": "e.g. neutral, calm, happy, excited, frustrated, angry, anxious, sad, tired" },
+        "arousal": { "type": "number", "minimum": -1, "maximum": 1 },
+        "valence": { "type": "number", "minimum": -1, "maximum": 1 },
+        "confidence": { "$ref": "#/$defs/unit" },
+        "method": { "type": "string" },
+        "cues": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+
+    "utterance": {
+      "type": "object",
+      "required": ["utterance_id", "timestamp"],
+      "properties": {
+        "utterance_id": { "type": "string" },
+        "timestamp": { "$ref": "#/$defs/timestamp" },
+        "t_start": { "$ref": "#/$defs/num" },
+        "t_end": { "$ref": "#/$defs/num" },
+        "transcript": { "type": ["string", "null"] },
+        "audio_ref": { "type": ["string", "null"] },
+        "acoustics": { "type": "object", "description": "pitch, energy, voice_quality, spectral, audio_quality" },
+        "timing": { "type": "object", "description": "pauses, words_per_minute, articulation_rate, response_latency_s" },
+        "fluency": { "type": "object", "description": "fillers, repetitions, revisions, stuttering-like disfluencies" },
+        "lexical": { "type": "object" },
+        "sentiment": { "type": "object" },
+        "emotion": { "$ref": "#/$defs/emotion" },
+        "skills": { "type": "object", "additionalProperties": { "type": ["number", "null"] } },
+        "flags": { "type": "array", "items": { "type": "string" } },
+        "baseline_deviations": { "type": "object", "additionalProperties": { "type": "number" }, "description": "metric -> z-score vs personal baseline (only |z|>=2 kept)" },
+        "external": { "type": "object", "description": "Raw outputs from other models (SER, ASR confidence, accent ID...) supplied by the agent." }
+      }
+    },
+
+    "session": {
+      "type": "object",
+      "required": ["session_id", "started_at", "status", "utterances"],
+      "properties": {
+        "session_id": { "type": "string" },
+        "started_at": { "$ref": "#/$defs/timestamp" },
+        "ended_at": { "type": ["string", "null"] },
+        "status": { "enum": ["active", "closed"] },
+        "agent_id": { "type": ["string", "null"] },
+        "channel": { "type": ["string", "null"], "description": "phone, web, app, in-person..." },
+        "context": { "type": ["string", "null"], "description": "Purpose of the call, e.g. 'customer support', 'interview practice'" },
+        "utterances": { "type": "array", "items": { "$ref": "#/$defs/utterance" } },
+        "utterances_compacted": { "type": "boolean" },
+        "summary": { "type": ["object", "null"] }
+      }
+    },
+
+    "observation": {
+      "type": "object",
+      "required": ["observation_id", "timestamp", "agent_id", "category", "observation", "confidence"],
+      "properties": {
+        "observation_id": { "type": "string" },
+        "timestamp": { "$ref": "#/$defs/timestamp" },
+        "agent_id": { "type": "string" },
+        "category": { "enum": ["emotion", "communication", "accent", "speech_pattern", "health_indicator", "voice_quality", "behavior", "preference", "other"] },
+        "observation": { "type": "string" },
+        "evidence": { "type": "array", "items": { "type": "string" } },
+        "reasoning": { "type": ["string", "null"] },
+        "confidence": { "$ref": "#/$defs/unit" },
+        "session_id": { "type": ["string", "null"] },
+        "utterance_id": { "type": ["string", "null"] },
+        "supersedes": { "type": ["string", "null"] }
+      }
+    },
+
+    "indicator": {
+      "type": "object",
+      "required": ["indicator", "status", "occurrences", "disclaimer"],
+      "properties": {
+        "indicator": { "type": "string" },
+        "status": { "enum": ["watch", "persistent", "resolved"] },
+        "description": { "type": "string" },
+        "evidence": { "type": "array", "items": { "type": "string" } },
+        "occurrences": { "type": "integer" },
+        "sessions_flagged": { "type": "array", "items": { "type": "string" } },
+        "first_seen": { "type": ["string", "null"] },
+        "last_seen": { "type": ["string", "null"] },
+        "confounders": { "type": "array", "items": { "type": "string" } },
+        "disclaimer": { "type": "string" }
+      }
+    }
+  }
+}

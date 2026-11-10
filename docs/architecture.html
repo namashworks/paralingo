@@ -1,0 +1,723 @@
+<title>Paralingo Architecture</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap">
+<style>
+/* Layout: one reading column (max 1080px) with a sticky section nav; diagrams sit in scrollable figure panels.
+   Diagram colors encode the layer a component belongs to. */
+:root {
+  --bg: #F3F5F8;
+  --surface: #FFFFFF;
+  --ink: #131A23;
+  --muted: #5A6676;
+  --line: #D6DCE4;
+  --edge: #6B7686;
+  --accent: #2A57C0;
+  --voice: #66717F;  --voice-bg: #EDF0F4;
+  --orch: #B0600C;   --orch-bg: #FBF0E2;
+  --core: #2A57C0;   --core-bg: #E7EDFB;
+  --store: #0A7768;  --store-bg: #E1F3EF;
+  --ai: #8048B8;     --ai-bg: #F1E9F8;
+  --band: #EEF2F7;
+  --code-bg: #EEF1F5;
+  --sans: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0E131A; --surface: #151C26; --ink: #E4E9F0; --muted: #98A4B4; --line: #283241; --edge: #8793A3;
+    --accent: #84A6F4;
+    --voice: #98A4B4; --voice-bg: #1B2330;
+    --orch: #EBA55E;  --orch-bg: #30251A;
+    --core: #84A6F4;  --core-bg: #172238;
+    --store: #4FC6B3; --store-bg: #112D29;
+    --ai: #C49EF0;    --ai-bg: #261C34;
+    --band: #19212C; --code-bg: #1B2330;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0E131A; --surface: #151C26; --ink: #E4E9F0; --muted: #98A4B4; --line: #283241; --edge: #8793A3;
+  --accent: #84A6F4;
+  --voice: #98A4B4; --voice-bg: #1B2330;
+  --orch: #EBA55E;  --orch-bg: #30251A;
+  --core: #84A6F4;  --core-bg: #172238;
+  --store: #4FC6B3; --store-bg: #112D29;
+  --ai: #C49EF0;    --ai-bg: #261C34;
+  --band: #19212C; --code-bg: #1B2330;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.6 var(--sans); }
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.wrap { max-width: 1080px; margin: 0 auto; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+
+header.top { padding-block: 40px 20px; display: grid; gap: 14px; }
+.eyebrow { font: 500 12px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1 { font-size: clamp(30px, 4.6vw, 44px); line-height: 1.1; margin: 0; letter-spacing: -.015em; text-wrap: balance; }
+.lede { max-width: 68ch; color: var(--muted); margin: 0; font-size: 16px; }
+.wave { width: 100%; max-width: 640px; height: 64px; display: block; }
+.wave .bar { fill: var(--accent); opacity: .85; }
+.wave .pz { fill: none; stroke: var(--muted); stroke-width: 1; }
+.wave text { font: 400 10.5px var(--mono); fill: var(--muted); }
+.facts { display: flex; flex-wrap: wrap; gap: 8px 22px; font: 400 13px var(--mono); color: var(--muted); }
+.facts b { color: var(--ink); font-weight: 500; font-variant-numeric: tabular-nums; }
+
+nav.toc { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5; background: var(--bg); border-bottom: 1px solid var(--line); }
+nav.toc .wrap { display: flex; gap: 4px; overflow-x: auto; padding-block: 8px; }
+nav.toc a { font: 500 13px var(--sans); color: var(--muted); text-decoration: none; padding: 6px 12px; border-radius: 6px; white-space: nowrap; }
+nav.toc a:hover, nav.toc a:focus-visible { color: var(--ink); background: var(--band); outline: none; }
+nav.toc a:focus-visible { box-shadow: 0 0 0 2px var(--accent); }
+
+section.doc { padding-block: 44px 8px; display: grid; gap: 18px; scroll-margin-top: 56px; }
+section.doc > h2 { font-size: 26px; margin: 0; letter-spacing: -.01em; display: flex; gap: 12px; align-items: baseline; }
+section.doc > h2 .tag { font: 500 12px var(--mono); color: var(--accent); letter-spacing: .06em; }
+h3 { font-size: 17px; margin: 18px 0 0; }
+p { margin: 0; max-width: 72ch; }
+.muted { color: var(--muted); }
+code, .mono { font-family: var(--mono); font-size: .88em; }
+:not(pre) > code { background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+
+.fig { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow-x: auto; }
+.fig svg { display: block; width: 100%; height: auto; min-width: 880px; }
+.figcap { font-size: 13px; color: var(--muted); margin-top: -8px; }
+
+.legend { display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: 13px; color: var(--muted); }
+.legend span { display: inline-flex; align-items: center; gap: 7px; }
+.legend i { width: 12px; height: 12px; border-radius: 3px; border: 1.5px solid; display: inline-block; }
+.k-voice { background: var(--voice-bg); border-color: var(--voice) !important; }
+.k-orch { background: var(--orch-bg); border-color: var(--orch) !important; }
+.k-core { background: var(--core-bg); border-color: var(--core) !important; }
+.k-store { background: var(--store-bg); border-color: var(--store) !important; }
+.k-ai { background: var(--ai-bg); border-color: var(--ai) !important; }
+
+.grid2 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+.grid3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px; }
+.grid2 > *, .grid3 > * { min-width: 0; }
+.panel { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; display: grid; gap: 8px; align-content: start; }
+.panel h4 { margin: 0; font-size: 15px; }
+.panel ul { margin: 0; padding-left: 18px; display: grid; gap: 4px; font-size: 14px; }
+.pill { display: inline-block; font: 500 11px var(--mono); padding: 2px 8px; border-radius: 99px; border: 1px solid; letter-spacing: .02em; }
+.pill.now { color: var(--store); border-color: var(--store); }
+.pill.next { color: var(--orch); border-color: var(--orch); }
+
+.tbl { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; min-width: 640px; }
+th, td { text-align: left; padding: 9px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font: 600 12px var(--sans); color: var(--muted); text-transform: uppercase; letter-spacing: .05em; background: var(--band); }
+tr:last-child td { border-bottom: 0; }
+td.n { font-variant-numeric: tabular-nums; white-space: nowrap; }
+td .mono, td code { white-space: nowrap; }
+tr.grp td { background: var(--band); font: 600 12px var(--mono); letter-spacing: .05em; color: var(--accent); text-transform: uppercase; }
+
+.cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 16px; }
+.card { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; display: grid; align-content: start; min-width: 0; }
+.card header { padding: 12px 16px; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; align-items: baseline; }
+.card header b { font-size: 15px; }
+.card header span { font: 400 12px var(--mono); color: var(--muted); }
+.card .body { padding: 12px 16px; display: grid; gap: 8px; font-size: 13.5px; }
+.sig { font: 400 12.5px/1.65 var(--mono); margin: 0; white-space: pre-wrap; overflow-wrap: anywhere; color: var(--ink); }
+.sig .c { color: var(--muted); }
+
+pre.tree { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px 18px; margin: 0; overflow-x: auto; font: 400 12.5px/1.7 var(--mono); }
+pre.tree .k { color: var(--accent); font-weight: 500; }
+pre.tree .c { color: var(--muted); }
+
+ol.steps { margin: 0; padding-left: 22px; display: grid; gap: 6px; max-width: 80ch; }
+ol.steps li::marker { font-family: var(--mono); color: var(--accent); }
+
+.fsm { display: grid; gap: 14px; }
+.fsm .row { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 14px 16px; display: grid; gap: 10px; }
+.fsm .row h4 { margin: 0; font-size: 14px; }
+.chain { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 4px; }
+.st { font: 500 12.5px var(--mono); padding: 5px 11px; border-radius: 6px; background: var(--core-bg); border: 1px solid var(--core); }
+.tr { font: 400 11.5px var(--mono); color: var(--muted); display: inline-flex; align-items: center; gap: 4px; padding: 0 4px; }
+.tr::after { content: "→"; color: var(--edge); font-size: 14px; }
+
+.note { border-left: 3px solid var(--orch); background: var(--orch-bg); padding: 12px 16px; border-radius: 0 8px 8px 0; font-size: 14px; max-width: 80ch; }
+
+footer { padding-block: 40px 56px; color: var(--muted); font-size: 13px; }
+
+/* SVG diagram styling */
+svg .g-rect { fill: none; stroke: var(--line); stroke-width: 1.2; stroke-dasharray: 5 4; }
+svg .g-rect.solid { stroke-dasharray: none; fill: var(--band); }
+svg .glabel { font: 500 10px var(--mono); letter-spacing: .08em; fill: var(--muted); }
+svg .node rect { stroke-width: 1.5; }
+svg .node.voice rect { fill: var(--voice-bg); stroke: var(--voice); }
+svg .node.orch rect { fill: var(--orch-bg); stroke: var(--orch); }
+svg .node.core rect { fill: var(--core-bg); stroke: var(--core); }
+svg .node.store rect { fill: var(--store-bg); stroke: var(--store); }
+svg .node.ai rect { fill: var(--ai-bg); stroke: var(--ai); }
+svg .t1 { font: 600 13px var(--sans); fill: var(--ink); }
+svg .t2 { font: 400 10.5px var(--mono); fill: var(--muted); }
+svg .edge { fill: none; stroke: var(--edge); stroke-width: 1.4; }
+svg .edge.dash { stroke-dasharray: 5 4; }
+svg .ahp { fill: var(--edge); }
+svg .el { font: 400 10.5px var(--mono); fill: var(--muted); stroke: var(--surface); stroke-width: 4px; paint-order: stroke; stroke-linejoin: round; }
+svg .chip rect { fill: var(--surface); stroke: var(--store); stroke-width: 1; }
+svg .chip.lock rect { stroke-dasharray: 3 3; }
+svg .chip text { font: 400 11px var(--mono); fill: var(--ink); }
+svg .life { stroke: var(--line); stroke-width: 1.2; stroke-dasharray: 3 4; }
+svg .phase rect { fill: var(--band); }
+svg .phase text { font: 600 11px var(--mono); letter-spacing: .06em; fill: var(--accent); }
+svg .msg-t { font: 400 11px var(--mono); fill: var(--ink); stroke: var(--surface); stroke-width: 4px; paint-order: stroke; stroke-linejoin: round; }
+svg .msg-t.ret { fill: var(--muted); }
+svg .snote rect { fill: var(--core-bg); stroke: var(--core); stroke-width: 1; }
+svg .snote text { font: 400 10.5px var(--mono); fill: var(--ink); }
+
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+html { scroll-behavior: smooth; }
+</style>
+
+<header class="top wrap">
+  <div class="eyebrow">paralingo v1.0.0 · design document</div>
+  <h1>Paralingo Architecture</h1>
+  <p class="lede">How the shared per-speaker <code>.speech.json</code> file is produced, stored and used by voice agents. Covers the system design, the per-turn dataflow, the high-level design (components, deployment, cross-cutting concerns) and the low-level design (classes, file layout, write protocol, state machines, algorithms and parameters).</p>
+  <svg class="wave" id="wave" viewBox="0 0 640 64" role="img" aria-label="Waveform with two speech segments separated by a 620 millisecond pause"></svg>
+  <div class="facts">
+    <span><b>1</b> file per speaker</span>
+    <span><b>187 ms</b> median analysis per turn</span>
+    <span><b>1.08×</b> Praat jitter on 1,440 real clips</span>
+    <span><b>~4.5 KB</b> per stored utterance</span>
+    <span><b>11</b> agent tools</span>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Sections">
+  <div class="wrap">
+    <a href="#system">System design</a>
+    <a href="#dataflow">Dataflow</a>
+    <a href="#hld">HLD</a>
+    <a href="#lld">LLD</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+<!-- ============================================================ SYSTEM -->
+<section class="doc" id="system">
+  <h2>System design <span class="tag">CONTEXT · CONTAINERS</span></h2>
+  <p>The speech profile layer sits beside an existing voice stack. The voice platform keeps doing telephony, turn detection, speech recognition and speech synthesis. Your orchestrator hands each finished user turn to the speech profile package, which analyses it, updates the speaker's file, and hands back guidance. LLM agents and other tools read and write the same file through tools or MCP.</p>
+  <div class="legend">
+    <span><i class="k-voice"></i>Voice platform (existing)</span>
+    <span><i class="k-orch"></i>Your orchestration code</span>
+    <span><i class="k-ai"></i>AI agents and models</span>
+    <span><i class="k-core"></i>paralingo package</span>
+    <span><i class="k-store"></i>Storage</span>
+  </div>
+  <div class="fig"><svg id="arch" viewBox="0 0 1000 680" role="img" aria-label="System architecture diagram"></svg></div>
+  <p class="figcap">Solid arrows are calls or data handed over. The return path along the top of the voice platform is the spoken reply.</p>
+
+  <div class="grid2">
+    <div class="panel"><h4>Who calls what</h4>
+      <ul>
+        <li>The <b>orchestrator</b> owns the audio, so it opens and closes sessions and submits every user turn (<code>analyze_utterance</code>).</li>
+        <li>The <b>LLM agent</b> gets read and observe tools only: summary, guidance, sections, trends, observations, accent.</li>
+        <li><b>Other agents</b> (QA review, coaching, analytics) connect over MCP and see the same file.</li>
+        <li><b>External models</b> such as speech emotion recognition or accent ID pass their results in through the <code>external</code> field.</li>
+      </ul>
+    </div>
+    <div class="panel"><h4>Design boundaries</h4>
+      <ul>
+        <li>The package never touches the live audio stream. It works on finished turns, so it cannot stall the call.</li>
+        <li>All state lives in the profile file. The engine and tools are stateless and can run in any number of workers on one host.</li>
+        <li>The JSON Schema is the contract. Agents written in other languages can read and write the file directly if they follow the write protocol.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================ DATAFLOW -->
+<section class="doc" id="dataflow">
+  <h2>Dataflow <span class="tag">SEQUENCE · TRANSFORMATIONS</span></h2>
+  <p>A call has three phases. At call start the agent loads what is already known. On every user turn the audio and transcript become features, then inferences, then guidance for the next turn. At call end the session is rolled up into the person's baseline and long-term trends.</p>
+  <div class="fig"><svg id="seq" role="img" aria-label="Sequence diagram of call start, each user turn and call end"></svg></div>
+  <p class="figcap">Dashed arrows are return values. Feature extraction runs before the file lock is taken, so the lock is held only for the read, reasoning and write.</p>
+
+  <h3>How the data is transformed</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Step</th><th>Input</th><th>Output</th><th>Where</th></tr></thead>
+    <tbody>
+      <tr><td>1. Turn segmentation</td><td>Caller audio stream</td><td>One audio turn, with start and end time</td><td>Voice platform VAD</td></tr>
+      <tr><td>2. Recognition</td><td>Turn audio</td><td>Verbatim transcript, word timings, ASR confidence</td><td>Your ASR</td></tr>
+      <tr><td>3. Acoustic features</td><td>PCM samples</td><td>40 ms frames, 10 ms hop: F0 (Hz), HNR (dB), jitter and shimmer (%), loudness (dBFS), spectral centroid, pauses, SNR</td><td><code>audio.analyze_audio</code></td></tr>
+      <tr><td>4. Text features</td><td>Transcript</td><td>Fillers, stuttering-like disfluencies per 100 syllables, type-token ratio, hedges, sentiment</td><td><code>language.analyze_text</code></td></tr>
+      <tr><td>5. Timing</td><td>Steps 3 and 4</td><td>Words per minute, articulation rate (syllables/s), response latency</td><td><code>engine.analyze_utterance</code></td></tr>
+      <tr><td>6. Normalisation</td><td>Flat metric set</td><td>z-scores against the personal baseline, or a wide population prior before one exists</td><td><code>reasoning.zscore</code></td></tr>
+      <tr><td>7. Inference</td><td>z-scores and text features</td><td>Emotion (arousal, valence, label, cues), skill scores 0–100, flags, baseline deviations</td><td><code>reasoning</code></td></tr>
+      <tr><td>8. Aggregation</td><td>Last 20 utterances</td><td>Speaking style and agent guidance (speaking rate, end-of-turn silence, adaptations)</td><td><code>reasoning.build_guidance</code></td></tr>
+      <tr><td>9. Session roll-up</td><td>All session utterances</td><td>Session summary, speech indicators, baseline update, trend points, rolling skills</td><td><code>engine.end_session</code></td></tr>
+      <tr><td>10. Persistence</td><td>Profile document</td><td>Validated JSON written atomically, revision + 1, audit entry</td><td><code>store.edit</code></td></tr>
+    </tbody>
+  </table></div>
+</section>
+
+<!-- ============================================================ HLD -->
+<section class="doc" id="hld">
+  <h2>High-level design <span class="tag">HLD</span></h2>
+
+  <h3>Requirements</h3>
+  <div class="grid2">
+    <div class="panel"><h4>Functional</h4>
+      <ul>
+        <li>Record what was said and how: pitch, loudness, pauses, pace, voice quality, fluency, vocabulary.</li>
+        <li>Estimate emotion, communication skills, speaking style and accent.</li>
+        <li>Raise non-diagnostic speech indicators, only with opt-in consent.</li>
+        <li>Keep a personal baseline and per-session trends.</li>
+        <li>Let many agents read, write and leave evidence-backed observations.</li>
+        <li>Turn findings into concrete guidance a voice agent can apply.</li>
+      </ul>
+    </div>
+    <div class="panel"><h4>Non-functional</h4>
+      <ul>
+        <li>Per-turn analysis well under the time an LLM takes to reply (measured: 187 ms median).</li>
+        <li>No lost updates with concurrent writers; no half-written files after a crash.</li>
+        <li>Every inference explainable: cues, confidence and method stored with it.</li>
+        <li>Privacy by default: consent gates, retention, transcript opt-out, erasure.</li>
+        <li>Light dependencies (numpy; jsonschema optional) and a language-neutral file format.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>Components</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Component</th><th>Responsibility</th><th>Interface</th></tr></thead>
+    <tbody>
+      <tr><td><b>Profile file</b><br><span class="muted mono">&lt;speaker&gt;.speech.json</span></td><td>Single source of truth per speaker: consent, baseline, sessions, assessments, trends, guidance, observations, audit log</td><td>JSON, defined by <code>paralingo.schema.json</code></td></tr>
+      <tr><td><b>SpeechProfileStore</b></td><td>Locking, atomic writes, revisions, schema validation, retention and compaction, audit trail</td><td><code>create · load · edit() · delete</code></td></tr>
+      <tr><td><b>Analyzers</b></td><td>Turn audio and text into numbers. Pure functions, no I/O apart from reading the WAV</td><td><code>analyze_audio · analyze_text · pauses_from_word_timestamps</code></td></tr>
+      <tr><td><b>Reasoning</b></td><td>Baseline, z-scores, emotion, skills, style, indicators, guidance. Pure functions over the profile</td><td>Called by the engine</td></tr>
+      <tr><td><b>SpeechProfileEngine</b></td><td>Use cases: sessions, utterances, observations, accent, consent, summary, trends</td><td>Python API</td></tr>
+      <tr><td><b>SpeechProfileTools</b></td><td>Tool schemas and a JSON dispatcher that never raises; confines audio paths to <code>audio_root</code></td><td>Anthropic, OpenAI and MCP tool formats</td></tr>
+      <tr><td><b>MCP server · CLI</b></td><td>Expose the tools to MCP clients, and to scripts and operators</td><td>stdio MCP · <code>python -m paralingo</code></td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Deployment options</h3>
+  <div class="grid3">
+    <div class="panel"><span class="pill now">BUILT</span><h4>Embedded library</h4>
+      <p class="muted">The voice worker imports <code>paralingo</code> and calls the engine directly. Profiles live on the worker host's local disk. Simplest option, and correct for one host with any number of worker processes.</p></div>
+    <div class="panel"><span class="pill now">BUILT</span><h4>MCP sidecar</h4>
+      <p class="muted">The same files, exposed to LLM agents and tools over MCP stdio. Use <code>--no-pipeline-tools</code> to give agents read and observe access only.</p></div>
+    <div class="panel"><span class="pill next">NEXT STEP</span><h4>Profile service</h4>
+      <p class="muted">For several hosts: put the engine behind an HTTP service and swap the file store for a database row per speaker (for example Postgres JSONB with <code>SELECT … FOR UPDATE</code>). The schema and the tool API stay the same. Not built yet.</p></div>
+  </div>
+
+  <h3>Cross-cutting concerns</h3>
+  <div class="grid2">
+    <div class="panel"><h4>Concurrency</h4>
+      <ul>
+        <li>One file per speaker, so writers only contend when they work on the same person.</li>
+        <li>An exclusive lock file serialises writers; a lock older than 30 s is treated as stale and broken.</li>
+        <li><code>revision</code> plus <code>expected_revision</code> catches edits made from a stale read.</li>
+        <li>Tested with 4 concurrent agents and 20 writes: no lost updates.</li>
+      </ul></div>
+    <div class="panel"><h4>Privacy and safety</h4>
+      <ul>
+        <li><code>voice_analysis</code> off: analysis is refused. <code>health_indicators</code> is opt-in; turning it off deletes existing indicators.</li>
+        <li><code>store_transcripts</code> off: only derived numbers are kept.</li>
+        <li><code>retention_days</code> purges old sessions and observations on every write; <code>delete()</code> erases a speaker.</li>
+        <li>Indicators carry confounders and a disclaimer, and need 3 of the last 5 sessions to become persistent.</li>
+      </ul></div>
+    <div class="panel"><h4>Performance (measured on this machine)</h4>
+      <ul>
+        <li>Acoustic analysis of a 4.6 s turn: 98 ms. Text analysis: 0.3 ms.</li>
+        <li><code>analyze_utterance</code> end to end, profile with 60 utterances: 187 ms median, 253 ms p95.</li>
+        <li><code>end_session</code>: 87 ms. File growth: about 4.5 KB per stored utterance.</li>
+        <li>Run analysis in parallel with the LLM call; guidance then applies from the next turn and adds no reply latency.</li>
+      </ul></div>
+    <div class="panel"><h4>Failure handling</h4>
+      <ul>
+        <li>Tool calls return <code>{"ok": false, "error": …}</code> instead of raising, so a failed analysis never breaks the conversation.</li>
+        <li>If the edit body raises, nothing is written.</li>
+        <li>Lock timeout (10 s) returns <code>LockTimeout</code>; the pipeline should skip that turn's analysis and carry on.</li>
+        <li>Writes that fail schema validation are rejected before touching the file.</li>
+      </ul></div>
+  </div>
+
+  <div class="note"><b>Storage constraint.</b> Lock files are reliable on a local filesystem on one host. They are not reliable on synced folders (OneDrive, Dropbox) or on many network filesystems. This project folder is inside OneDrive, which is fine for development, but in production keep the profiles directory on local disk, or move to the profile service option above. Full-file rewrites also make write cost grow with file size; compaction keeps utterance detail for the last 20 sessions only.</div>
+</section>
+
+<!-- ============================================================ LLD -->
+<section class="doc" id="lld">
+  <h2>Low-level design <span class="tag">LLD</span></h2>
+
+  <h3>Module dependencies</h3>
+  <div class="fig"><svg id="deps" viewBox="0 0 1000 300" role="img" aria-label="Module dependency diagram"></svg></div>
+
+  <h3>Classes and modules</h3>
+  <div class="cards">
+    <div class="card"><header><b>SpeechProfileStore</b><span>store.py</span></header><div class="body">
+<pre class="sig">__init__(root, lock_timeout_s=10, stale_lock_s=30, strict_validation=True)
+path_for(speaker_id) <span class="c">→ Path</span>
+create(speaker_id, agent_id, exist_ok, **profile_fields) <span class="c">→ dict</span>
+load(speaker_id) <span class="c">→ dict</span>
+edit(speaker_id, agent_id, action, expected_revision=None,
+     create_if_missing=False) <span class="c">→ context manager yielding dict</span>
+delete(speaker_id) <span class="c">→ bool</span>
+list_speakers() <span class="c">→ list[str]</span>
+<span class="c"># module level</span>
+new_profile(...) · validate(profile) · apply_retention(profile)</pre></div></div>
+
+    <div class="card"><header><b>SpeechProfileEngine</b><span>engine.py</span></header><div class="body">
+<pre class="sig">__init__(store | root, agent_id)
+ensure_profile(speaker_id, **fields)
+set_consent(speaker_id, **flags) · update_speaker(...)
+start_session(speaker_id, channel, context) <span class="c">→ session_id</span>
+analyze_utterance(speaker_id, session_id, transcript, audio_path |
+    samples+sample_rate, word_timestamps, t_start, t_end,
+    response_latency_s, acoustics, external) <span class="c">→ findings</span>
+end_session(speaker_id, session_id) <span class="c">→ summary</span>
+add_observation(...) · update_accent(...)
+get_summary · get_trend · query_observations · get_profile</pre></div></div>
+
+    <div class="card"><header><b>SpeechProfileTools</b><span>agent_tools.py</span></header><div class="body">
+<pre class="sig">__init__(root, agent_id, audio_root=None,
+         include_pipeline_tools=True)
+definitions(fmt="anthropic" | "openai" | "mcp") <span class="c">→ list</span>
+execute(name, tool_input) <span class="c">→ JSON str {ok, result | error}</span>
+_check_audio_path(path) <span class="c">→ Path inside audio_root, .wav only</span>
+TOOL_SPECS <span class="c"># 11 specs, "pipeline": True marks audio tools</span></pre></div></div>
+
+    <div class="card"><header><b>audio</b><span>audio.py</span></header><div class="body">
+<pre class="sig">load_wav(path) <span class="c">→ (mono float64, sr)  8/16/24/32-bit PCM</span>
+analyze_audio(samples, sr, f0_min=60, f0_max=500,
+    min_pause_s=0.25, long_pause_s=1.0) <span class="c">→ dict</span>
+pauses_from_word_timestamps(words) <span class="c">→ pause dict</span>
+save_wav(path, samples, sr)</pre></div></div>
+
+    <div class="card"><header><b>language</b><span>language.py</span></header><div class="body">
+<pre class="sig">tokenize(text) <span class="c">→ list[str]</span>
+count_syllables(word) <span class="c">→ int  (vowel-group heuristic)</span>
+analyze_text(text) <span class="c">→ {fluency, lexical, sentiment}</span>
+FILLERS · PHRASE_FILLERS · HEDGES · POSITIVE · NEGATIVE</pre></div></div>
+
+    <div class="card"><header><b>reasoning</b><span>reasoning.py</span></header><div class="body">
+<pre class="sig">utterance_metrics(u) <span class="c">→ flat {metric: value}</span>
+baseline_update(baseline, metrics)  <span class="c"># Welford</span>
+baseline_status(baseline) · zscore(metric, value, baseline)
+estimate_emotion(u, baseline, tokens) <span class="c">→ emotion</span>
+score_skills(u) · speaking_style(agg, baseline, latency)
+evaluate_indicators(session, agg, baseline)
+merge_indicators(profile, session_id, hits, when)
+build_guidance(profile, recent_utterances)</pre></div></div>
+  </div>
+
+  <h3>File layout</h3>
+<pre class="tree"><span class="k">&lt;speaker_id&gt;.speech.json</span>
+├─ <span class="k">format, version, profile_id, created_at, updated_at, revision</span>
+├─ <span class="k">speaker</span>          <span class="c">speaker_id, display_name, languages[], self_reported{}, notes</span>
+├─ <span class="k">consent</span>          <span class="c">recording, voice_analysis, health_indicators, store_transcripts, retention_days</span>
+├─ <span class="k">settings</span>         <span class="c">max_detailed_sessions (20), max_utterances_per_session (300)</span>
+├─ <span class="k">baseline</span>         <span class="c">status, sessions_used, utterances_used, metrics{name: {n, mean, std, m2, min, max}}</span>
+├─ <span class="k">accent</span>           <span class="c">current_estimate, estimates[], phonetic_markers[], intelligibility</span>
+├─ <span class="k">sessions[]</span>       <span class="c">session_id, started_at, ended_at, status, channel, context, summary</span>
+│  └─ <span class="k">utterances[]</span>  <span class="c">transcript, acoustics{pitch, energy, voice_quality, spectral, audio_quality},</span>
+│                   <span class="c">timing{pauses, words_per_minute, articulation_rate_sps, response_latency_s},</span>
+│                   <span class="c">fluency, lexical, sentiment, emotion, skills, flags[], baseline_deviations, external</span>
+├─ <span class="k">observations[]</span>   <span class="c">category, observation, evidence[], reasoning, confidence, agent_id, session_id</span>
+├─ <span class="k">assessments</span>      <span class="c">emotional_state, communication_skills, speaking_style, speech_indicators[]</span>
+├─ <span class="k">trends</span>           <span class="c">metric → [{session_id, date, value}]  (max 200 points)</span>
+├─ <span class="k">agent_guidance</span>   <span class="c">recommended_speaking_rate_wpm, end_of_turn_silence_ms, adaptations[]</span>
+├─ <span class="k">audit_log[]</span>      <span class="c">timestamp, agent_id, action, detail, revision  (max 500)</span>
+└─ <span class="k">extensions</span>       <span class="c">namespaced vendor data</span></pre>
+
+  <h3>Write protocol: <code>store.edit()</code></h3>
+  <ol class="steps">
+    <li>Create <code>&lt;file&gt;.lock</code> with an exclusive create. If it exists, retry every 10 ms; break it if older than 30 s; give up after 10 s with <code>LockTimeout</code>.</li>
+    <li>Read the profile, or build a new one when <code>create_if_missing</code> is set.</li>
+    <li>If <code>expected_revision</code> was passed and differs, raise <code>ConcurrencyConflict</code>.</li>
+    <li>Hand the document to the caller to change. If the caller raises, release the lock and write nothing.</li>
+    <li>Increase <code>revision</code>, set <code>updated_at</code>, append an audit entry (keep the last 500).</li>
+    <li>Apply retention: drop expired sessions and observations, strip utterances from closed sessions beyond the last 20, blank transcripts if storage is off.</li>
+    <li>Round-trip through JSON to normalise numpy values, then validate against the schema.</li>
+    <li>Write to a temp file in the same folder, flush, fsync, then <code>os.replace</code> over the real file (retry up to 20 times on Windows sharing errors).</li>
+    <li>Delete the lock file.</li>
+  </ol>
+
+  <h3>State machines</h3>
+  <div class="fsm">
+    <div class="row"><h4>Session</h4>
+      <div class="chain"><span class="st">active</span><span class="tr">end_session()</span><span class="st">closed</span><span class="tr">older than last 20</span><span class="st">compacted (summary only)</span><span class="tr">retention_days passed</span><span class="st">purged</span></div></div>
+    <div class="row"><h4>Baseline</h4>
+      <div class="chain"><span class="st">insufficient_data</span><span class="tr">≥ 5 utterances</span><span class="st">provisional</span><span class="tr">≥ 3 sessions and ≥ 15 utterances</span><span class="st">established</span></div></div>
+    <div class="row"><h4>Speech indicator (per indicator)</h4>
+      <div class="chain"><span class="st">watch</span><span class="tr">flagged in ≥ 3 of last 5 evaluated sessions</span><span class="st">persistent</span><span class="tr">not flagged in last 3</span><span class="st">resolved</span></div></div>
+  </div>
+
+  <h3>Algorithms and parameters</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Measure</th><th>Method</th><th>Parameters</th></tr></thead>
+    <tbody>
+      <tr class="grp"><td colspan="3">audio.py</td></tr>
+      <tr><td>Voice activity</td><td>Frame RMS in dBFS against an adaptive threshold; speech blips under 50 ms removed; gaps under the pause minimum bridged</td><td class="n">threshold = noise floor (p10) + max(6 dB, 0.3 × (p95 − p10))</td></tr>
+      <tr><td>Pauses</td><td>Silent runs between speech segments</td><td class="n">min 250 ms · long ≥ 1.0 s</td></tr>
+      <tr><td>Pitch (F0)</td><td>Hann-windowed autocorrelation divided by the window's own autocorrelation; shortest-lag peak within 10% of the best (2% for 8 kHz phone audio, which lacks the fundamental); parabolic interpolation; octave-jump correction against the median</td><td class="n">60–500 Hz · voicing ≥ 0.45 · 40 ms frame · 10 ms hop</td></tr>
+      <tr><td>Intonation</td><td>F0 in semitones re. median; spread p5–p95; slope over the last 0.5 s of voicing</td><td class="n">rising &gt; +3 st/s · falling &lt; −3 st/s</td></tr>
+      <tr><td>HNR</td><td>From the autocorrelation peak r: 10·log10(r / (1 − r)), averaged over voiced frames</td><td class="n">dB</td></tr>
+      <tr><td>Jitter, shimmer</td><td>Each period is the shift (0.8–1.2 T) that best aligns one cycle's waveform with the next, as in Praat's cross-correlation method; cycles that correlate below 0.5 are skipped; mean absolute difference over mean</td><td class="n">period factor 1.3 · amplitude factor 1.6 · cycle correlation ≥ 0.5</td></tr>
+      <tr><td>Audio quality</td><td>SNR = mean speech dB − noise floor; clipping ratio</td><td class="n">good ≥ 25 dB · fair ≥ 12 dB · else poor</td></tr>
+      <tr class="grp"><td colspan="3">language.py</td></tr>
+      <tr><td>Disfluency</td><td>Fillers, part-word repetitions (b-b-but), whole-word and phrase repetitions, prolongations, self-corrections, cut-off words</td><td class="n">stuttering-like per 100 syllables</td></tr>
+      <tr><td>Sentiment</td><td>Word lexicon with negation (3-word window, inside one clause) and intensifiers</td><td class="n">(pos − neg) / (pos + neg + 2)</td></tr>
+      <tr class="grp"><td colspan="3">reasoning.py</td></tr>
+      <tr><td>Baseline</td><td>Welford running mean and variance per metric; acoustic metrics skipped for poor audio</td><td class="n">z uses a per-metric std floor, e.g. F0 6 Hz, loudness 1.5 dB</td></tr>
+      <tr><td>Arousal</td><td>tanh(0.6 × weighted mean z). Weights: F0 1.0, loudness 1.0, high-band energy 0.6 (personal baseline only); pitch spread 0.6, articulation rate 0.6, pause ratio −0.4</td><td class="n">−1 … +1</td></tr>
+      <tr><td>Valence and label</td><td>Text sentiment, minus 0.15 for flat and quiet delivery; an external emotion model is blended by its confidence. Quadrant mapping to labels</td><td class="n">neutral if |a| &lt; 0.25 and |v| &lt; 0.2 · confidence ≤ 0.9</td></tr>
+      <tr><td>Skills</td><td>Fluency, pace, clarity, expressiveness, confidence, vocabulary, responsiveness, each scored 0–100 against a target band</td><td class="n">pace 120–175 wpm · pitch spread 2–5.5 st · latency 0.2–1.5 s</td></tr>
+      <tr><td>Indicators</td><td>Session-level checks, at least 3 utterances and 15 s of speech</td><td class="n">SLD ≥ 3/100 syll · voice strain: 2 of jitter, shimmer, HNR worse by ≥ 3 SD vs own baseline · articulation &lt; 3 syll/s · pitch spread &lt; 1 st · |z| ≥ 2.5</td></tr>
+      <tr><td>Guidance</td><td>Speaking rate and end-of-turn silence from the recent utterances; rule-based adaptations sorted by priority</td><td class="n">rate = clamp(0.95 × median wpm, 110, 170) · silence = clamp(p90 pause + 250 ms, 600, 2500)</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Tool API</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Tool</th><th>Called by</th><th>Effect</th></tr></thead>
+    <tbody>
+      <tr><td><code>paralingo_get_summary</code></td><td>LLM</td><td>Read: compact snapshot plus <code>prompt_context</code> text</td></tr>
+      <tr><td><code>paralingo_get_guidance</code></td><td>LLM</td><td>Read: guidance and current emotion</td></tr>
+      <tr><td><code>paralingo_read_section</code></td><td>LLM</td><td>Read: one raw section, last N items</td></tr>
+      <tr><td><code>paralingo_get_trend</code></td><td>LLM</td><td>Read: one metric across sessions, direction, slope, baseline</td></tr>
+      <tr><td><code>paralingo_query_observations</code></td><td>LLM</td><td>Read: earlier observations, by category</td></tr>
+      <tr><td><code>paralingo_add_observation</code></td><td>LLM</td><td>Write: evidence-backed note (health category needs consent)</td></tr>
+      <tr><td><code>paralingo_update_accent</code></td><td>LLM, accent model</td><td>Write: estimate, markers, intelligibility</td></tr>
+      <tr><td><code>paralingo_start_session</code></td><td>Pipeline</td><td>Write: open a session</td></tr>
+      <tr><td><code>paralingo_analyze_utterance</code></td><td>Pipeline</td><td>Write: analyse and store one turn, return findings and guidance</td></tr>
+      <tr><td><code>paralingo_end_session</code></td><td>Pipeline</td><td>Write: roll up the session into baseline, trends, skills, indicators</td></tr>
+      <tr><td><code>paralingo_set_consent</code></td><td>Pipeline</td><td>Write: consent flags, after the person has agreed</td></tr>
+    </tbody>
+  </table></div>
+
+  <h3>Error model</h3>
+  <div class="tbl"><table>
+    <thead><tr><th>Error</th><th>Raised when</th><th>What the caller should do</th></tr></thead>
+    <tbody>
+      <tr><td><code>ProfileNotFound</code></td><td>Reading a speaker with no file</td><td>Create it with <code>ensure_profile</code>, or treat as a new caller</td></tr>
+      <tr><td><code>ConsentError</code></td><td>Analysis without <code>voice_analysis</code>, or a health observation without <code>health_indicators</code></td><td>Continue the call without analysis</td></tr>
+      <tr><td><code>ConcurrencyConflict</code></td><td><code>expected_revision</code> is stale</td><td>Reload, reapply the change, retry</td></tr>
+      <tr><td><code>LockTimeout</code></td><td>Another writer held the lock for 10 s</td><td>Skip this turn's analysis; do not block the reply</td></tr>
+      <tr><td><code>ProfileError</code></td><td>Schema validation failure, unknown session, closed session, bad arguments</td><td>Log it; fix the caller</td></tr>
+    </tbody>
+  </table></div>
+</section>
+</main>
+
+<footer class="wrap">Source: <code>paralingo/</code> in this project. Speed figures come from a local benchmark on the development machine. Accuracy against Praat on 1,440 real recordings is in <code>validation/RESULTS.md</code>.</footer>
+
+<script>
+(function () {
+  const NS = "http://www.w3.org/2000/svg";
+  const el = (tag, attrs, parent, text) => {
+    const e = document.createElementNS(NS, tag);
+    for (const k in attrs) e.setAttribute(k, attrs[k]);
+    if (text != null) e.textContent = text;
+    if (parent) parent.appendChild(e);
+    return e;
+  };
+  const defs = (svg, id) => {
+    const d = el("defs", {}, svg);
+    const m = el("marker", { id, viewBox: "0 0 10 10", refX: "9", refY: "5", markerWidth: "7", markerHeight: "7", orient: "auto-start-reverse" }, d);
+    el("path", { d: "M0,0 L10,5 L0,10 z", class: "ahp" }, m);
+  };
+  const node = (svg, n) => {
+    const g = el("g", { class: "node " + n.k }, svg);
+    el("rect", { x: n.x, y: n.y, width: n.w, height: n.h, rx: 7 }, g);
+    const cx = n.x + n.w / 2, cy = n.y + n.h / 2;
+    el("text", { x: cx, y: n.sub ? cy - 3 : cy + 5, "text-anchor": "middle", class: "t1" }, g, n.t);
+    if (n.sub) el("text", { x: cx, y: cy + 14, "text-anchor": "middle", class: "t2" }, g, n.sub);
+  };
+  const group = (svg, g) => {
+    el("rect", { x: g.x, y: g.y, width: g.w, height: g.h, rx: 10, class: "g-rect" + (g.solid ? " solid" : "") }, svg);
+    el("text", { x: g.x + 14, y: g.y + 18, class: "glabel" }, svg, g.label);
+  };
+  const edge = (svg, id, e) => {
+    const a = { d: e.d, class: "edge" + (e.dash ? " dash" : ""), "marker-end": `url(#${id})` };
+    if (e.both) a["marker-start"] = `url(#${id})`;
+    el("path", a, svg);
+    if (e.l) el("text", { x: e.lx, y: e.ly, class: "el", "text-anchor": e.anchor || "start" }, svg, e.l);
+  };
+
+  /* ---------- header waveform: speech · pause · speech ---------- */
+  (function wave() {
+    const svg = document.getElementById("wave");
+    let s = 7;
+    const rnd = () => (s = (s * 9301 + 49297) % 233280) / 233280;
+    const n = 128, bw = 640 / n;
+    for (let i = 0; i < n; i++) {
+      const pos = i / n;
+      const pause = (pos > 0.40 && pos < 0.555) || (pos > 0.86 && pos < 0.89);
+      const env = Math.sin(Math.PI * ((pos < 0.4 ? pos / 0.4 : (pos - 0.555) / 0.445))) ** 0.6;
+      const h = pause ? 1.5 : Math.max(2, (0.25 + 0.75 * rnd()) * 34 * env);
+      el("rect", { x: (i * bw + 0.6).toFixed(1), y: (32 - h / 2).toFixed(1), width: (bw - 1.2).toFixed(1), height: h.toFixed(1), rx: 1, class: "bar" }, svg);
+    }
+    el("path", { d: "M258,20 V16 H354 V20", class: "pz" }, svg);
+    el("text", { x: 306, y: 12, "text-anchor": "middle" }, svg, "pause · 620 ms");
+    el("text", { x: 4, y: 62 }, svg, "F0 182 Hz");
+    el("text", { x: 636, y: 62, "text-anchor": "end" }, svg, "148 wpm");
+  })();
+
+  /* ---------- architecture ---------- */
+  (function arch() {
+    const svg = document.getElementById("arch"), id = "ah-arch";
+    defs(svg, id);
+    [
+      { x: 20, y: 20, w: 960, h: 130, label: "VOICE PLATFORM · EXISTING STACK" },
+      { x: 20, y: 170, w: 960, h: 130, label: "CONVERSATION LAYER" },
+      { x: 20, y: 320, w: 730, h: 345, label: "PARALINGO PACKAGE", solid: true },
+      { x: 780, y: 440, w: 200, h: 225, label: "PROFILE STORAGE" },
+    ].forEach(g => group(svg, g));
+    [
+      { x: 40, y: 64, w: 130, h: 60, k: "voice", t: "Caller", sub: "phone · web · app" },
+      { x: 210, y: 64, w: 170, h: 60, k: "voice", t: "Telephony / WebRTC", sub: "Twilio · LiveKit · SIP" },
+      { x: 420, y: 64, w: 160, h: 60, k: "voice", t: "VAD + turn detection", sub: "one segment per turn" },
+      { x: 620, y: 64, w: 160, h: 60, k: "voice", t: "ASR", sub: "verbatim · word timings" },
+      { x: 820, y: 64, w: 140, h: 60, k: "voice", t: "TTS", sub: "speaks the reply" },
+      { x: 40, y: 210, w: 180, h: 64, k: "ai", t: "Other agents", sub: "QA · coaching · analytics" },
+      { x: 250, y: 210, w: 170, h: 64, k: "ai", t: "External models", sub: "emotion · accent ID" },
+      { x: 460, y: 210, w: 220, h: 64, k: "orch", t: "Turn orchestrator", sub: "your pipeline code" },
+      { x: 760, y: 210, w: 200, h: 64, k: "ai", t: "LLM agent", sub: "Claude, via tools" },
+      { x: 40, y: 352, w: 125, h: 60, k: "core", t: "CLI", sub: "scripts · ops" },
+      { x: 185, y: 352, w: 250, h: 60, k: "core", t: "MCP server", sub: "mcp_server.py · stdio" },
+      { x: 460, y: 352, w: 270, h: 60, k: "core", t: "SpeechProfileTools", sub: "11 tools · JSON in / out" },
+      { x: 40, y: 444, w: 690, h: 58, k: "core", t: "SpeechProfileEngine", sub: "sessions · utterances · observations · accent · consent · summary · trends" },
+      { x: 40, y: 528, w: 200, h: 56, k: "core", t: "audio.py", sub: "pitch · voice quality · pauses" },
+      { x: 252, y: 528, w: 200, h: 56, k: "core", t: "language.py", sub: "fluency · words · sentiment" },
+      { x: 464, y: 528, w: 200, h: 56, k: "core", t: "reasoning.py", sub: "baseline · emotion · guidance" },
+      { x: 40, y: 602, w: 690, h: 50, k: "store", t: "SpeechProfileStore", sub: "lock · atomic write · revision · schema validation · retention · audit" },
+    ].forEach(n => node(svg, n));
+    // storage chips
+    [["caller-42.speech.json", 0], ["asha.speech.json", 0], ["demo-caller.speech.json", 0], ["caller-42.speech.json.lock", 1]].forEach(([t, lock], i) => {
+      const g = el("g", { class: "chip" + (lock ? " lock" : "") }, svg);
+      el("rect", { x: 796, y: 470 + i * 38, width: 168, height: 28, rx: 5 }, g);
+      el("text", { x: 806, y: 488 + i * 38 }, g, t);
+    });
+    el("text", { x: 796, y: 650, class: "t2" }, svg, "local disk, one host");
+    [
+      { d: "M170,94 H208", both: true },
+      { d: "M380,94 H418" },
+      { d: "M580,94 H618", l: "audio", lx: 599, ly: 86, anchor: "middle" },
+      { d: "M890,64 V48 H300 V62", l: "spoken reply", lx: 595, ly: 44, anchor: "middle" },
+      { d: "M500,124 V208", l: "audio turn", lx: 506, ly: 166 },
+      { d: "M700,124 V178 H650 V208", l: "transcript + word timings", lx: 706, ly: 146 },
+      { d: "M420,242 H458" },
+      { d: "M680,242 H758", both: true, l: "prompt / reply", lx: 719, ly: 236, anchor: "middle" },
+      { d: "M880,210 V126", l: "reply text", lx: 886, ly: 170 },
+      { d: "M200,274 V308 H310 V350", l: "MCP", lx: 316, ly: 342 },
+      { d: "M560,274 V350", l: "analyze_utterance", lx: 566, ly: 316 },
+      { d: "M860,274 V332 H700 V350", l: "read · observe", lx: 708, ly: 326 },
+      { d: "M102,412 V442" }, { d: "M310,412 V442" }, { d: "M595,412 V442" },
+      { d: "M140,502 V526" }, { d: "M352,502 V526" }, { d: "M564,502 V526" },
+      { d: "M700,502 V600" },
+      { d: "M730,627 H778", both: true },
+    ].forEach(e => edge(svg, id, e));
+  })();
+
+  /* ---------- sequence diagram ---------- */
+  (function seq() {
+    const svg = document.getElementById("seq"), id = "ah-seq";
+    defs(svg, id);
+    const lanes = [
+      ["caller", "Caller", ""], ["voice", "Voice platform", "VAD · ASR · TTS"], ["orch", "Orchestrator", "your pipeline"],
+      ["llm", "LLM agent", "Claude"], ["tools", "Tools / Engine", "paralingo"], ["an", "Analyzers", "audio · language"],
+      ["rs", "Reasoning", "reasoning.py"], ["store", "Store", ".speech.json"],
+    ];
+    const kinds = { caller: "voice", voice: "voice", orch: "orch", llm: "ai", tools: "core", an: "core", rs: "core", store: "store" };
+    const X = {}; lanes.forEach(([k], i) => X[k] = 70 + i * 125);
+    const steps = [
+      ["phase", "1 · CALL START"],
+      ["m", "orch", "tools", "start_session(speaker, channel)"],
+      ["note", "store", "lock · add session · write"],
+      ["m", "orch", "tools", "get_summary(speaker)"],
+      ["r", "tools", "orch", "prompt_context + guidance"],
+      ["m", "orch", "llm", "system prompt + profile context"],
+      ["phase", "2 · EVERY USER TURN"],
+      ["m", "caller", "voice", "speech"],
+      ["m", "voice", "orch", "turn audio + transcript + word timings"],
+      ["m", "orch", "tools", "analyze_utterance(...)"],
+      ["m", "tools", "an", "analyze_audio · analyze_text (no lock)"],
+      ["r", "an", "tools", "pitch, loudness, pauses, voice quality, fluency"],
+      ["m", "tools", "store", "lock · load profile"],
+      ["m", "tools", "rs", "emotion vs baseline · skills · flags"],
+      ["r", "rs", "tools", "emotion + cues · style · guidance"],
+      ["m", "tools", "store", "validate · atomic write · revision+1 · unlock"],
+      ["r", "tools", "orch", "emotion, flags, guidance"],
+      ["m", "orch", "voice", "end-of-turn silence = eot_ms"],
+      ["m", "orch", "llm", "user text + live guidance"],
+      ["m", "llm", "tools", "add_observation / update_accent (optional)"],
+      ["r", "llm", "orch", "reply text"],
+      ["m", "orch", "voice", "speak at recommended rate"],
+      ["r", "voice", "caller", "spoken reply"],
+      ["phase", "3 · CALL END"],
+      ["m", "orch", "tools", "end_session(speaker)"],
+      ["m", "tools", "rs", "summary · indicators vs past baseline"],
+      ["note", "rs", "update baseline · trends · skills · guidance"],
+      ["m", "tools", "store", "retention · compaction · atomic write"],
+      ["r", "tools", "orch", "session summary"],
+    ];
+    const top = 72, row = 30;
+    let y = top + 10;
+    const body = el("g", {}, svg);
+    // compute layout first
+    const placed = steps.map(s => { const r = { s, y }; y += s[0] === "phase" ? 34 : row; return r; });
+    const H = y + 16;
+    svg.setAttribute("viewBox", `0 0 1010 ${H}`);
+    // phase bands
+    placed.forEach((p, i) => {
+      if (p.s[0] !== "phase") return;
+      const next = placed.findIndex((q, j) => j > i && q.s[0] === "phase");
+      const end = next === -1 ? H - 8 : placed[next].y - 4;
+      const g = el("g", { class: "phase" }, body);
+      el("rect", { x: 8, y: p.y - 2, width: 994, height: end - p.y + 2, rx: 6 }, g);
+      el("text", { x: 18, y: p.y + 16 }, g, p.s[1]);
+    });
+    // lifelines + headers
+    lanes.forEach(([k, t, sub]) => {
+      el("line", { x1: X[k], x2: X[k], y1: 62, y2: H - 10, class: "life" }, body);
+      node(body, { x: X[k] - 56, y: 12, w: 112, h: sub ? 48 : 40, k: kinds[k], t, sub: sub || null });
+    });
+    // messages
+    placed.forEach(p => {
+      const s = p.s, yy = p.y + 18;
+      if (s[0] === "m" || s[0] === "r") {
+        const x1 = X[s[1]], x2 = X[s[2]], dir = Math.sign(x2 - x1);
+        el("path", { d: `M${x1},${yy} H${x2 - dir * 2}`, class: "edge" + (s[0] === "r" ? " dash" : ""), "marker-end": `url(#${id})` }, body);
+        let cx = (x1 + x2) / 2;
+        const w = s[3].length * 6.6;
+        cx = Math.min(Math.max(cx, w / 2 + 6), 1004 - w / 2);
+        el("text", { x: cx, y: yy - 6, "text-anchor": "middle", class: "msg-t" + (s[0] === "r" ? " ret" : "") }, body, s[3]);
+      } else if (s[0] === "note") {
+        const w = s[2].length * 6.4 + 18;
+        let x = X[s[1]] - w / 2;
+        x = Math.min(Math.max(x, 8), 1002 - w);
+        const g = el("g", { class: "snote" }, body);
+        el("rect", { x, y: p.y + 5, width: w, height: 22, rx: 4 }, g);
+        el("text", { x: x + w / 2, y: p.y + 20, "text-anchor": "middle" }, g, s[2]);
+      }
+    });
+  })();
+
+  /* ---------- module dependencies ---------- */
+  (function deps() {
+    const svg = document.getElementById("deps"), id = "ah-deps";
+    defs(svg, id);
+    [
+      { x: 180, y: 16, w: 200, h: 50, k: "core", t: "__main__.py", sub: "CLI" },
+      { x: 620, y: 16, w: 200, h: 50, k: "core", t: "mcp_server.py", sub: "MCP stdio" },
+      { x: 400, y: 90, w: 200, h: 50, k: "core", t: "agent_tools.py", sub: "SpeechProfileTools" },
+      { x: 400, y: 164, w: 200, h: 50, k: "core", t: "engine.py", sub: "SpeechProfileEngine" },
+      { x: 40, y: 238, w: 200, h: 50, k: "core", t: "audio.py", sub: "numpy" },
+      { x: 280, y: 238, w: 200, h: 50, k: "core", t: "language.py", sub: "stdlib re" },
+      { x: 520, y: 238, w: 200, h: 50, k: "core", t: "reasoning.py", sub: "pure functions" },
+      { x: 760, y: 238, w: 200, h: 50, k: "store", t: "store.py", sub: "jsonschema (optional)" },
+    ].forEach(n => node(svg, n));
+    [
+      { d: "M330,66 L430,88" }, { d: "M290,66 L290,189 H398" },
+      { d: "M720,66 L570,88" },
+      { d: "M500,140 V162" },
+      { d: "M430,214 L170,236" }, { d: "M470,214 L390,236" }, { d: "M530,214 L610,236" }, { d: "M570,214 L840,236" },
+    ].forEach(e => edge(svg, id, e));
+  })();
+})();
+</script>
