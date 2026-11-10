@@ -10,7 +10,7 @@ repository-code: "https://github.com/namashworks/paralingo"
 url: "https://github.com/namashworks/paralingo"
 license: Apache-2.0
 version: 1.0.0
-date-released: "2026-11-10"
+date-released: "2026-11-11"
 keywords:
   - voice agents
   - speech analysis

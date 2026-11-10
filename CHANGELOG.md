@@ -6,20 +6,9 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
-### Added
-- Validation harness (`validation/`) comparing against Praat on real recordings, with an arousal benchmark,
-  a simulated phone line and indicator false-alarm rates. Results in `validation/RESULTS.md`.
+## [1.0.0] - 2026-11-11
 
-### Fixed
-- Jitter/shimmer pulse detection could loop forever or crash on real 48 kHz speech.
-- Jitter was 2.5x Praat's value; it now uses cycle-to-cycle cross-correlation (1.08x Praat).
-- Pitch on 8 kHz phone audio read too high; within-5 % agreement rose from 48 % to 68 %.
-
-### Changed
-- Voice-strain indicator now compares with the person's own baseline (3 SD) instead of absolute cut-offs,
-  which flagged 100 % of healthy speakers in normal speech.
-
-## [1.0.0] - 2026-11-10
+First public release.
 
 ### Added
 - Speech profile file format (`.speech.json`) with JSON Schema.
@@ -29,3 +18,11 @@ All notable changes to this project are documented here. The format follows
 - Concurrent-safe file store with locking, atomic writes, revisions, retention and audit log.
 - 11 agent tools in Anthropic, OpenAI and MCP formats; MCP server; CLI.
 - HTTP API with hashed API keys, tenants, scopes and rate limits.
+- Validation against Praat on 1,440 real recordings (RAVDESS), with an arousal benchmark, a simulated
+  phone line and indicator false-alarm rates. Results in `validation/RESULTS.md`:
+  - pitch correlation 0.994 with Praat; HNR within 0.03 dB on average;
+  - jitter 1.08x and shimmer 0.98x Praat's values (cycle-to-cycle cross-correlation);
+  - arousal AUC 0.896 with a personal baseline vs 0.734 without.
+- Voice-strain indicator judged against the person's own baseline (3 SD), because absolute clinical
+  cut-offs flag 100 % of healthy speakers in normal speech.
+- PyPI release workflow with Trusted Publishing, and Zenodo DOI via GitHub releases.

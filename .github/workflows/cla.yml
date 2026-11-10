@@ -11,6 +11,8 @@ permissions:
   statuses: write
 jobs:
   cla:
+    # Bots (Dependabot, GitHub Actions) and the maintainer don't need to sign.
+    if: ${{ !endsWith(github.actor, '[bot]') && github.actor != 'namashworks' }}
     runs-on: ubuntu-latest
     steps:
       - name: CLA assistant
@@ -22,4 +24,4 @@ jobs:
           path-to-signatures: "signatures/cla.json"
           path-to-document: "https://github.com/namashworks/paralingo/blob/main/CLA.md"
           branch: "cla-signatures"
-          allowlist: "namashworks,dependabot[bot],github-actions[bot]"
+          allowlist: "namashworks,*[bot]"
