@@ -6,6 +6,8 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-11-11
+
 ### Added
 - Documentation in `docs/`: getting started, integration guide (call flow, phone audio, LLM tools, MCP),
   HTTP API, generated tool reference, profile file and metrics reference, privacy and deployment,

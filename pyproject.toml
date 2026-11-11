@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "paralingo"
-version = "1.0.0"
+version = "1.0.1"
 description = "Shared per-speaker speech profile files that AI voice agents read and write: prosody, pauses, voice quality, fluency, emotion, skills, accent and guidance."
 readme = "README.md"
 license = "Apache-2.0"

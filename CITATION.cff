@@ -10,8 +10,8 @@ authors:
 repository-code: "https://github.com/namashworks/paralingo"
 url: "https://github.com/namashworks/paralingo"
 license: Apache-2.0
-version: 1.0.0
-date-released: "2026-11-10"
+version: 1.0.1
+date-released: "2026-11-11"
 doi: 10.5281/zenodo.24116090
 identifiers:
   - type: doi

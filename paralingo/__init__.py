@@ -19,7 +19,7 @@ from .language import analyze_text
 from .store import (ConcurrencyConflict, ConsentError, LockTimeout, ProfileError, ProfileExists, ProfileNotFound,
                     SpeechProfileStore, new_profile, validate)
 
-__version__ = "1.0.0"
+__version__ = "1.0.1"
 __author__ = "Namash Aggarwal"
 __license__ = "Apache-2.0"
 __url__ = "https://github.com/namashworks/paralingo"
