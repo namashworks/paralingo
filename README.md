@@ -6,6 +6,7 @@
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](pyproject.toml)
 [![ORCID](https://img.shields.io/badge/ORCID-0009--0008--0274--8545-A6CE39?logo=orcid&logoColor=white)](https://orcid.org/0009-0008-0274-8545)
+[![Software Heritage](https://archive.softwareheritage.org/badge/origin/https://github.com/namashworks/paralingo/)](https://archive.softwareheritage.org/browse/origin/?origin_url=https://github.com/namashworks/paralingo)
 
 Created and maintained by **[Namash Aggarwal](https://github.com/namashworks)** · ORCID [0009-0008-0274-8545](https://orcid.org/0009-0008-0274-8545)
 
@@ -216,6 +217,9 @@ button (from [`CITATION.cff`](CITATION.cff)), or copy this:
 
 > Aggarwal, N. (2026). *Paralingo: a shared speech-analysis file for AI voice agents* (Version 1.0.0)
 > [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.24116090
+
+The source code is also permanently archived by [Software Heritage](https://www.softwareheritage.org/):
+v1.0.0 is [`swh:1:rev:f3febd399769ccd21a62cfc9151b0803414dc10e`](https://archive.softwareheritage.org/swh:1:rev:f3febd399769ccd21a62cfc9151b0803414dc10e;origin=https://github.com/namashworks/paralingo).
 
 ```bibtex
 @software{aggarwal_paralingo_2026,

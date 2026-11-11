@@ -20,6 +20,9 @@ identifiers:
   - type: doi
     value: 10.5281/zenodo.24116091
     description: "Version 1.0.0"
+  - type: swh
+    value: "swh:1:rev:f3febd399769ccd21a62cfc9151b0803414dc10e"
+    description: "Software Heritage archive of the v1.0.0 source code"
 keywords:
   - voice agents
   - speech analysis
