@@ -6,7 +6,7 @@
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 [![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-blue.svg)](pyproject.toml)
 
-Created and maintained by **[Namash Aggarwal](https://github.com/namashworks)**.
+Created and maintained by **[Namash Aggarwal](https://github.com/namashworks)** [![ORCID](https://img.shields.io/badge/ORCID-0009--0008--0274--8545-A6CE39?logo=orcid&logoColor=white)](https://orcid.org/0009-0008-0274-8545).
 
 Speech-to-text tells a voice agent **what** a person said. The speech profile also records **how** they said it.
 Each speaker gets one JSON file, `<speaker_id>.speech.json`. Any number of AI voice agents can **read, write,
