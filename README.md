@@ -10,6 +10,29 @@
 
 Created and maintained by **[Namash Aggarwal](https://github.com/namashworks)** · ORCID [0009-0008-0274-8545](https://orcid.org/0009-0008-0274-8545)
 
+## 📖 Documentation
+
+| Start here | |
+|---|---|
+| [**Getting started**](docs/getting-started.md) | Install and analyse your first speaker in 2 minutes |
+| [**Integration guide**](docs/integration-guide.md) | Add Paralingo to your voice agent: call flow, phone audio, LLM tools, MCP |
+| [**HTTP API**](docs/http-api.md) | Use it from any language, with API keys |
+| [Tool reference](docs/tools-reference.md) · [Metrics and file format](docs/profile-format.md) · [Privacy and deployment](docs/privacy-and-deployment.md) · [Troubleshooting](docs/troubleshooting.md) · [Architecture](docs/architecture.md) | |
+
+```bash
+pip install paralingo
+```
+
+```python
+from paralingo import SpeechProfileEngine
+
+eng = SpeechProfileEngine("profiles", agent_id="my-voice-bot")
+sid = eng.start_session("caller-42", channel="phone")
+eng.analyze_utterance("caller-42", session_id=sid, audio_path="turn.wav", transcript="Um, hi, I was charged twice.")
+eng.end_session("caller-42", sid)
+print(eng.get_summary("caller-42")["prompt_context"])   # paste into your agent's system prompt
+```
+
 Speech-to-text tells a voice agent **what** a person said. The speech profile also records **how** they said it.
 Each speaker gets one JSON file, `<speaker_id>.speech.json`. Any number of AI voice agents can **read, write,
 track and reason over** that file, across calls and over time.
@@ -46,9 +69,11 @@ paralingo/
   http_api.py     HTTP API protected by API keys (FastAPI), with tenants, scopes and rate limits
   api_keys.py     create / list / revoke API keys (only hashes are stored)
   __main__.py     CLI
+docs/                          guides and references (start with docs/README.md)
+scripts/                       maintenance scripts (tool reference generator)
 examples/demo.py               simulates 3 calls and writes examples/profiles/demo-caller.speech.json
 examples/claude_voice_agent.py Claude agent that reads and writes the profile through tools
-tests/                         20 tests (audio accuracy, fluency, concurrency, consent, tools, HTTP API, regressions)
+tests/                         29 tests (audio accuracy, fluency, concurrency, consent, tools, HTTP API, docs examples, regressions)
 validation/                    accuracy harness against Praat on real recordings, and RESULTS.md
 ```
 

@@ -136,7 +136,9 @@ def analyze_audio(
     # ---------------- energy + VAD
     rms = np.sqrt(np.mean(frames ** 2, axis=1))
     rms_db = 20 * np.log10(rms + 1e-10)
-    noise_floor = float(np.percentile(rms_db, 10))
+    # 3rd percentile: VAD-trimmed turns often contain only ~100 ms of silence, so a higher percentile
+    # would land inside speech and make clean audio look noisy.
+    noise_floor = float(np.percentile(rms_db, 3))
     peak = float(np.percentile(rms_db, 95))
     if peak - noise_floor < 6.0:
         speech = rms_db > -55.0 if peak > -55.0 else np.zeros_like(rms_db, dtype=bool)
@@ -310,7 +312,13 @@ def analyze_audio(
             hf_ratio = _r(10 * np.log10(hi_b / lo_b), 2)
 
     sp_db = rms_db[speech]
-    snr = _r(np.mean(sp_db) - noise_floor, 1) if sp_db.size and (~speech).any() else None
+    # Noise is measured on non-speech frames only. With under 0.1 s of silence there is nothing reliable
+    # to measure, so quality stays "unknown" (acoustics are kept) instead of being misjudged as "poor".
+    ns_db = rms_db[~speech]
+    noise_level = float(np.median(ns_db)) if ns_db.size >= int(round(0.1 / HOP_S)) else None
+    snr = _r(np.mean(sp_db) - noise_level, 1) if sp_db.size and noise_level is not None else None
+    if noise_level is not None:
+        noise_floor = noise_level
     quality = "unknown"
     if snr is not None:
         quality = "good" if snr >= 25 and clipping_ratio < 0.001 else "fair" if snr >= 12 and clipping_ratio < 0.01 else "poor"

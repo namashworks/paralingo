@@ -31,6 +31,7 @@ classifiers = [
 
 [project.urls]
 Homepage = "https://github.com/namashworks/paralingo"
+Documentation = "https://github.com/namashworks/paralingo/tree/main/docs"
 Repository = "https://github.com/namashworks/paralingo"
 Issues = "https://github.com/namashworks/paralingo/issues"
 Changelog = "https://github.com/namashworks/paralingo/blob/main/CHANGELOG.md"

@@ -274,3 +274,16 @@ def test_voice_strain_is_judged_against_own_baseline(tmp_path):
     ind = {i["indicator"]: i for i in eng.get_profile("v")["assessments"]["speech_indicators"]}
     assert "voice_quality_strain" in ind
     assert all("baseline" in e for e in ind["voice_quality_strain"]["evidence"])
+
+
+def test_little_silence_is_not_misjudged_as_poor_audio():
+    """VAD-trimmed turns have little silence; they must not be rated 'poor' (which discards acoustics)."""
+    t = np.arange(int(4.0 * SR)) / SR
+    tone = 0.3 * sum((0.6 / k) * np.sin(2 * np.pi * 180 * k * t) for k in range(1, 6))
+    padded = analyze_audio(np.concatenate([np.zeros(SR // 4), tone, np.zeros(SR // 4)]), SR)
+    assert padded["audio_quality"]["quality"] == "good"
+    trimmed = analyze_audio(np.concatenate([np.zeros(960), tone, np.zeros(960)]), SR)
+    assert trimmed["audio_quality"]["quality"] == "unknown" and trimmed["pitch"]["f0_mean_hz"] is not None
+    noisy = analyze_audio(np.concatenate([np.zeros(SR // 2), tone[: 3 * SR], np.zeros(SR // 2)])
+                          + np.random.default_rng(0).normal(0, 0.06, 4 * SR), SR)
+    assert noisy["audio_quality"]["quality"] == "poor"

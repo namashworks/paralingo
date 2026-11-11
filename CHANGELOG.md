@@ -6,6 +6,16 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Added
+- Documentation in `docs/`: getting started, integration guide (call flow, phone audio, LLM tools, MCP),
+  HTTP API, generated tool reference, profile file and metrics reference, privacy and deployment,
+  troubleshooting and architecture. Every runnable example is executed by the test suite.
+
+### Fixed
+- Turns with little surrounding silence (common with VAD-trimmed audio) were rated "poor" quality, which
+  discarded their pitch and voice-quality data. Noise is now measured only on non-speech frames; with
+  under 0.1 s of silence, quality is reported as "unknown" and the acoustics are kept.
+
 ## [1.0.0] - 2026-11-10
 
 First public release.
