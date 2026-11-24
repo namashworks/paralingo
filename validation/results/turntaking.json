@@ -1,0 +1,195 @@
+{
+  "paralingo_version": "1.0.1",
+  "seed": 2026,
+  "asr_lag_s": 0.3,
+  "paralingo_with_transcripts": {
+    "cut_in_rate_pct": 55.3,
+    "mid_turn_pauses": 474,
+    "cut_in_by_pause_type_pct": {
+      "after_continuation": 7.9,
+      "after_complete_sentence": 55.4
+    },
+    "turns": 480,
+    "missed_turn_ends": 25,
+    "response_delay_ms": {
+      "mean": 431.0,
+      "p50": 390.0,
+      "p90": 640.0
+    },
+    "real_time_factor": 0.0127
+  },
+  "paralingo_audio_only": {
+    "cut_in_rate_pct": 63.7,
+    "mid_turn_pauses": 474,
+    "cut_in_by_pause_type_pct": {
+      "after_continuation": 36.9,
+      "after_complete_sentence": 34.8
+    },
+    "turns": 480,
+    "missed_turn_ends": 25,
+    "response_delay_ms": {
+      "mean": 595.0,
+      "p50": 570.0,
+      "p90": 810.0
+    },
+    "real_time_factor": 0.0131
+  },
+  "paralingo_threshold_sweep": {
+    "0.5": {
+      "cut_in_rate_pct": 60.5,
+      "mid_turn_pauses": 474,
+      "cut_in_by_pause_type_pct": {
+        "after_continuation": 10.0,
+        "after_complete_sentence": 61.8
+      },
+      "turns": 480,
+      "missed_turn_ends": 25,
+      "response_delay_ms": {
+        "mean": 382.0,
+        "p50": 330.0,
+        "p90": 570.0
+      },
+      "real_time_factor": 0.0129
+    },
+    "0.7": {
+      "cut_in_rate_pct": 47.7,
+      "mid_turn_pauses": 474,
+      "cut_in_by_pause_type_pct": {
+        "after_continuation": 5.4,
+        "after_complete_sentence": 47.6
+      },
+      "turns": 480,
+      "missed_turn_ends": 22,
+      "response_delay_ms": {
+        "mean": 495.0,
+        "p50": 470.0,
+        "p90": 710.0
+      },
+      "real_time_factor": 0.0142
+    },
+    "0.8": {
+      "cut_in_rate_pct": 39.2,
+      "mid_turn_pauses": 474,
+      "cut_in_by_pause_type_pct": {
+        "after_continuation": 4.6,
+        "after_complete_sentence": 37.3
+      },
+      "turns": 480,
+      "missed_turn_ends": 19,
+      "response_delay_ms": {
+        "mean": 583.0,
+        "p50": 560.0,
+        "p90": 810.0
+      },
+      "real_time_factor": 0.0164
+    }
+  },
+  "fixed_timeouts_same_vad": {
+    "500ms": {
+      "cut_in_rate_pct": 84.4,
+      "mid_turn_pauses": 474,
+      "cut_in_by_pause_type_pct": {
+        "after_continuation": 53.1,
+        "after_complete_sentence": 52.8
+      },
+      "turns": 480,
+      "missed_turn_ends": 32,
+      "response_delay_ms": {
+        "mean": 452.0,
+        "p50": 470.0,
+        "p90": 510.0
+      },
+      "real_time_factor": 0.0109
+    },
+    "700ms": {
+      "cut_in_rate_pct": 55.7,
+      "mid_turn_pauses": 474,
+      "cut_in_by_pause_type_pct": {
+        "after_continuation": 31.1,
+        "after_complete_sentence": 28.3
+      },
+      "turns": 480,
+      "missed_turn_ends": 25,
+      "response_delay_ms": {
+        "mean": 648.0,
+        "p50": 670.0,
+        "p90": 720.0
+      },
+      "real_time_factor": 0.0098
+    },
+    "1000ms": {
+      "cut_in_rate_pct": 28.3,
+      "mid_turn_pauses": 474,
+      "cut_in_by_pause_type_pct": {
+        "after_continuation": 13.3,
+        "after_complete_sentence": 15.9
+      },
+      "turns": 480,
+      "missed_turn_ends": 11,
+      "response_delay_ms": {
+        "mean": 923.0,
+        "p50": 960.0,
+        "p90": 1010.0
+      },
+      "real_time_factor": 0.0103
+    },
+    "1500ms": {
+      "cut_in_rate_pct": 9.9,
+      "mid_turn_pauses": 474,
+      "cut_in_by_pause_type_pct": {
+        "after_continuation": 5.0,
+        "after_complete_sentence": 3.4
+      },
+      "turns": 480,
+      "missed_turn_ends": 3,
+      "response_delay_ms": {
+        "mean": 1407.0,
+        "p50": 1460.0,
+        "p90": 1510.0
+      },
+      "real_time_factor": 0.0101
+    }
+  },
+  "fixed_timeouts_ideal_vad": {
+    "500ms": {
+      "cut_in_rate_pct": 48.1,
+      "mid_turn_pauses": 474,
+      "turns": 480,
+      "response_delay_ms": {
+        "mean": 500,
+        "p50": 500,
+        "p90": 500
+      }
+    },
+    "700ms": {
+      "cut_in_rate_pct": 24.5,
+      "mid_turn_pauses": 474,
+      "turns": 480,
+      "response_delay_ms": {
+        "mean": 700,
+        "p50": 700,
+        "p90": 700
+      }
+    },
+    "1000ms": {
+      "cut_in_rate_pct": 8.0,
+      "mid_turn_pauses": 474,
+      "turns": 480,
+      "response_delay_ms": {
+        "mean": 1000,
+        "p50": 1000,
+        "p90": 1000
+      }
+    },
+    "1500ms": {
+      "cut_in_rate_pct": 1.7,
+      "mid_turn_pauses": 474,
+      "turns": 480,
+      "response_delay_ms": {
+        "mean": 1500,
+        "p50": 1500,
+        "p90": 1500
+      }
+    }
+  }
+}

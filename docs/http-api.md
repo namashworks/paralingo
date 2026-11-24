@@ -118,6 +118,51 @@ const r = await fetch(`${base}/speakers/caller-42/utterances`, { method: "POST",
 const { emotion, flags, guidance } = await r.json();
 ```
 
+## Real-time (WebSocket)
+
+Stream live audio and get [turn-taking events](realtime.md) back: end of turn, barge-in, backchannel,
+plus a full analysis of each finished turn. Needs a key with scope `audio:analyze`, plus
+`profiles:write` to save the call's latency statistics.
+
+```
+ws://127.0.0.1:8000/v1/realtime?speaker_id=caller-42&sample_rate=16000&encoding=pcm16&session_id=sess_...
+```
+
+| Query parameter | Default | Meaning |
+|---|---|---|
+| `speaker_id` | required | Whose profile to use and update |
+| `sample_rate` | 16000 | 8000–48000 |
+| `encoding` | `pcm16` | `pcm16` (16-bit little-endian), `mulaw` (G.711) or `float32` |
+| `session_id` | none | Session to add analyses to; also where latency statistics are saved |
+| `language` | none | e.g. `ja-JP`; otherwise detected from the text |
+| `analyze` | `true` | Run the full Paralingo analysis on each finished turn |
+
+**Authentication.** Send an `Authorization: Bearer` header, or, from a browser, make the first message
+`{"type": "auth", "api_key": "spk_..."}`.
+
+**You send:**
+
+| Message | Meaning |
+|---|---|
+| binary frame | Audio, any size (e.g. 20 ms) |
+| `{"type": "transcript", "text": "...", "final": false, "language": "ja-JP"}` | Partial or final ASR text, as it arrives |
+| `{"type": "agent_speaking", "value": true}` | Your TTS started (`false` when it stops) |
+| `{"type": "stop"}` | End of the call |
+
+**You receive:**
+
+| Message | Meaning |
+|---|---|
+| `{"type": "ready", ...}` | Connected; includes the speaker's calibrated `personal_pause_ms` |
+| `{"type": "speech_start", "t": 1.23}` | The person started speaking |
+| `{"type": "end_of_turn", "t": ..., "data": {...}}` | Finished: `transcript`, `language`, `probability`, `reasons`, `silence_ms`, `prosody`, `lexical` |
+| `{"type": "barge_in", ...}` / `{"type": "backchannel", ...}` | Interruption (stop TTS) / "mm-hmm" (keep talking) |
+| `{"type": "analysis", "data": {...}}` | Emotion, metrics, flags and guidance for the finished turn |
+| `{"type": "summary", "data": {...}}` | On close: end-of-turn delay, response time, processing cost |
+| `{"type": "error", "error": "..."}` | A problem; close codes 4401 (bad key), 4403 (scope), 4429 (rate limit), 4400 (bad parameters) |
+
+See the [Azure guide](azure.md#browser-or-javascript-apps) for a browser example.
+
 ## Errors
 
 | Status | Meaning |

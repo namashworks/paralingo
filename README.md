@@ -16,7 +16,9 @@ Created and maintained by **[Namash Aggarwal](https://github.com/namashworks)** 
 |---|---|
 | [**Getting started**](docs/getting-started.md) | Install and analyse your first speaker in 2 minutes |
 | [**Integration guide**](docs/integration-guide.md) | Add Paralingo to your voice agent: call flow, phone audio, LLM tools, MCP |
-| [**HTTP API**](docs/http-api.md) | Use it from any language, with API keys |
+| [**Real-time turn-taking**](docs/realtime.md) | Live end-of-turn, barge-in and backchannel detection in EN/ZH/JA/KO, with latency measurement |
+| [**Azure AI Speech**](docs/azure.md) | Drop-in integration for Azure Speech, Python or browser |
+| [**HTTP API**](docs/http-api.md) | Use it from any language over HTTPS and WebSocket, with API keys |
 | [Tool reference](docs/tools-reference.md) · [Metrics and file format](docs/profile-format.md) · [Privacy and deployment](docs/privacy-and-deployment.md) · [Troubleshooting](docs/troubleshooting.md) · [Architecture](docs/architecture.md) | |
 
 ```bash
@@ -206,6 +208,10 @@ reference tool in speech science. Full results, method and limits: [validation/R
 | Arousal (calm vs energised) | AUC **0.896** with a personal baseline vs 0.734 without |
 | Voice-strain false alarms on healthy speakers | 8.0 % of single clips (old absolute cut-offs: 100 %) |
 | Simulated phone line (8 kHz µ-law) | pitch within 5 % of full quality on 67.9 % of clips |
+
+**Real-time turn-taking** ([benchmark](validation/TURN_TAKING.md)): on 480 simulated turns of real speech,
+Paralingo cut in mid-turn on 55 % of pauses at 431 ms average response, versus 84 % for a 500 ms silence
+timeout at 452 ms, and on under 10 % of pauses after "and…" versus over 50 %.
 
 Not yet validated: spontaneous conversation, noisy rooms, non-English speech, valence, fluency measures, and
 whether the indicators catch real speech or voice disorders. Reproduce with `validation/validate.py`.

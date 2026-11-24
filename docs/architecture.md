@@ -36,7 +36,9 @@ flowchart TB
 | `audio.py` | Pitch (autocorrelation), HNR, jitter and shimmer (cycle-to-cycle cross-correlation), loudness, pauses, audio quality |
 | `language.py` | Fillers, repetitions, stuttering-like disfluencies, vocabulary, hedging, sentiment |
 | `reasoning.py` | Personal baseline (running mean and variance), emotion, skills, speaking style, indicators, guidance |
-| `engine.py` | Sessions, utterances, observations, accent, consent, summaries, trends |
+| `realtime.py` | Streaming turn-taking: live VAD and pitch, end-of-turn probability (timing, prosody, words in EN/ZH/JA/KO), barge-in and backchannel detection, latency measurement |
+| `integrations/azure.py` | Azure AI Speech adapter: one audio stream to Azure and Paralingo; Azure text, word timings and language to the turn detector |
+| `engine.py` | Sessions, utterances, observations, accent, consent, summaries, trends, real-time metrics |
 | `store.py` | One file per speaker; locking, atomic writes, revisions, schema validation, retention, audit log |
 | `agent_tools.py` | Tool definitions (Anthropic, OpenAI, MCP) and a dispatcher that never raises |
 | `http_api.py`, `api_keys.py` | HTTP API with hashed API keys, scopes, tenants and rate limits |

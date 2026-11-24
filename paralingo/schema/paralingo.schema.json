@@ -288,7 +288,8 @@
         "context": { "type": ["string", "null"], "description": "Purpose of the call, e.g. 'customer support', 'interview practice'" },
         "utterances": { "type": "array", "items": { "$ref": "#/$defs/utterance" } },
         "utterances_compacted": { "type": "boolean" },
-        "summary": { "type": ["object", "null"] }
+        "summary": { "type": ["object", "null"] },
+        "realtime": { "type": ["object", "null"], "description": "Turn-taking statistics for the call: end-of-turn delay, response time and processing cost (paralingo.realtime)." }
       }
     },
 

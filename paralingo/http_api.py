@@ -15,6 +15,7 @@ never see each other's data. Remote clients cannot pass server file paths; audio
 from __future__ import annotations
 
 import argparse
+import asyncio
 import json
 import os
 import tempfile
@@ -23,15 +24,18 @@ import time
 from pathlib import Path
 from typing import Any
 
+import numpy as np
+
 from . import __url__, __version__
 from .agent_tools import TOOL_SPECS, SpeechProfileTools
 from .api_keys import ApiKey, KeyStore
 from .engine import SpeechProfileEngine
+from .realtime import TurnDetector, analyze_turn
 from .store import (ConcurrencyConflict, ConsentError, LockTimeout, ProfileError, ProfileExists, ProfileNotFound,
                     SpeechProfileStore)
 
 try:
-    from fastapi import Depends, FastAPI, File, Form, HTTPException, Request, UploadFile
+    from fastapi import Depends, FastAPI, File, Form, HTTPException, Request, UploadFile, WebSocket
     from fastapi.responses import JSONResponse
     from pydantic import BaseModel
 except ImportError as e:  # pragma: no cover
@@ -241,6 +245,95 @@ def create_app(root: str | os.PathLike[str], keys_file: str | os.PathLike[str]) 
     def erase(speaker_id: str, key: ApiKey = Depends(auth)) -> dict[str, Any]:
         need(key, "admin")
         return {"deleted": run(store_for(key.tenant).delete, speaker_id)}
+
+    @app.websocket("/v1/realtime")
+    async def realtime(ws: WebSocket, speaker_id: str, sample_rate: int = 16000, encoding: str = "pcm16",
+                       session_id: str | None = None, language: str | None = None, analyze: bool = True) -> None:
+        """Live turn-taking. Send audio as binary frames and JSON control messages; receive JSON events.
+
+        Auth: an ``Authorization: Bearer`` / ``X-API-Key`` header, or (for browsers) a first text message
+        ``{"type": "auth", "api_key": "spk_..."}``. Needs scope ``audio:analyze``.
+        Client messages: binary audio (pcm16 / mulaw / float32 little-endian), and JSON
+        ``{"type": "transcript", "text": ..., "final": bool, "language": ...}``,
+        ``{"type": "agent_speaking", "value": bool}``, ``{"type": "stop"}``.
+        Server messages: ``ready``, ``speech_start``, ``end_of_turn``, ``barge_in``, ``backchannel``,
+        ``analysis`` (full Paralingo analysis of a finished turn), ``error``, ``summary`` (latency, on close).
+        """
+        await ws.accept()
+
+        async def send(obj: dict[str, Any]) -> None:
+            await ws.send_text(json.dumps(obj, default=lambda o: o.item() if hasattr(o, "item") else str(o)))
+
+        hdr = ws.headers.get("authorization", "")
+        presented = hdr[7:].strip() if hdr.lower().startswith("bearer ") else ws.headers.get("x-api-key")
+        if not presented:
+            try:
+                first = json.loads(await asyncio.wait_for(ws.receive_text(), timeout=10))
+                presented = first.get("api_key") if first.get("type") == "auth" else None
+            except Exception:
+                presented = None
+        key = keys.verify(presented)
+        if key is None or not key.allows("audio:analyze"):
+            await send({"type": "error", "error": "invalid API key" if key is None else "API key lacks scope 'audio:analyze'"})
+            await ws.close(code=4401 if key is None else 4403)
+            return
+        if limiter.check(key.key_id, key.rate_per_minute):
+            await send({"type": "error", "error": "rate limit exceeded"})
+            await ws.close(code=4429)
+            return
+        if encoding not in ("pcm16", "mulaw", "float32") or not 8000 <= sample_rate <= 48000:
+            await send({"type": "error", "error": "encoding must be pcm16, mulaw or float32; sample_rate 8000-48000"})
+            await ws.close(code=4400)
+            return
+        eng = engine(key)
+        det = await asyncio.to_thread(TurnDetector.from_profile, eng, speaker_id, sample_rate, language=language)
+        await send({"type": "ready", "sample_rate": sample_rate, "encoding": encoding,
+                    "personal_pause_ms": round(det.pause_s * 1000)})
+        try:
+            while True:
+                msg = await ws.receive()
+                if msg.get("type") == "websocket.disconnect":
+                    break
+                if msg.get("bytes") is not None:
+                    data = msg["bytes"]
+                    chunk = np.frombuffer(data, dtype="<f4") if encoding == "float32" else data
+                    for ev in det.push_audio(chunk, encoding="pcm16" if encoding == "float32" else encoding):
+                        await send({"type": ev.type, "t": ev.t,
+                                    "data": {k: v for k, v in ev.data.items() if k != "audio"}})
+                        if ev.type == "end_of_turn" and analyze and ev.data["audio"].size:
+                            try:
+                                res = await asyncio.to_thread(analyze_turn, eng, speaker_id, ev, session_id=session_id)
+                                await send({"type": "analysis", "t": ev.t, "data": res})
+                            except (ConsentError, ProfileError, LockTimeout) as exc:
+                                await send({"type": "error", "error": f"{type(exc).__name__}: {exc}"})
+                elif msg.get("text") is not None:
+                    try:
+                        m = json.loads(msg["text"])
+                    except ValueError:
+                        await send({"type": "error", "error": "control messages must be JSON"})
+                        continue
+                    kind = m.get("type")
+                    if kind == "transcript":
+                        det.push_transcript(str(m.get("text", "")), is_final=bool(m.get("final")),
+                                            language=m.get("language"))
+                    elif kind == "agent_speaking":
+                        det.set_agent_speaking(bool(m.get("value")))
+                    elif kind == "stop":
+                        break
+        except Exception:  # client vanished mid-stream
+            pass
+        finally:
+            summary = det.latency.summary()
+            if session_id and key.allows("profiles:write"):
+                try:
+                    await asyncio.to_thread(eng.record_realtime_metrics, speaker_id, session_id, summary)
+                except (ProfileError, LockTimeout):
+                    pass
+            try:
+                await send({"type": "summary", "data": summary})
+                await ws.close()
+            except Exception:
+                pass
 
     return app
 

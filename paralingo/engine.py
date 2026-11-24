@@ -260,6 +260,16 @@ class SpeechProfileEngine:
             self._refresh_style_and_guidance(p, recent)
             return dict(sess["summary"])
 
+    def record_realtime_metrics(self, speaker_id: str, session_id: str, metrics: dict[str, Any]) -> None:
+        """Store a call's turn-taking statistics (e.g. ``TurnDetector.latency.summary()``) with its session."""
+        with self.store.edit(speaker_id, agent_id=self.agent_id, action="record_realtime_metrics",
+                             detail=session_id) as p:
+            for s in p["sessions"]:
+                if s["session_id"] == session_id:
+                    s["realtime"] = {"recorded_at": utcnow(), **metrics}
+                    return
+            raise ProfileError(f"unknown session {session_id}")
+
     # ================================================================== observations / accent
     def add_observation(self, speaker_id: str, *, category: str, observation: str, confidence: float,
                         evidence: list[str] | None = None, reasoning: str | None = None,

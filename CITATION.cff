@@ -10,8 +10,8 @@ authors:
 repository-code: "https://github.com/namashworks/paralingo"
 url: "https://github.com/namashworks/paralingo"
 license: Apache-2.0
-version: 1.0.1
-date-released: "2026-11-11"
+version: 1.1.0
+date-released: "2026-11-24"
 doi: 10.5281/zenodo.24116090
 identifiers:
   - type: doi
@@ -20,6 +20,9 @@ identifiers:
   - type: doi
     value: 10.5281/zenodo.24116091
     description: "Version 1.0.0"
+  - type: doi
+    value: 10.5281/zenodo.24129574
+    description: "Version 1.0.1"
   - type: swh
     value: "swh:1:rev:f3febd399769ccd21a62cfc9151b0803414dc10e"
     description: "Software Heritage archive of the v1.0.0 source code"
@@ -30,8 +33,11 @@ keywords:
   - emotion recognition
   - conversational AI
   - MCP
+  - turn-taking
+  - end-of-turn detection
 abstract: >-
-  A per-speaker JSON file and Python toolkit that AI voice agents read and write to
+  Real-time turn-taking for voice agents (end-of-turn, barge-in and backchannel detection in
+  English, Mandarin, Japanese and Korean), and a per-speaker JSON file and Python toolkit that AI voice agents read and write to
   track how a person speaks: pitch, pauses, pace, voice quality, fluency, emotion,
   communication skills, accent and non-diagnostic speech indicators, with a personal
   baseline, longitudinal trends and concrete guidance for the agent.

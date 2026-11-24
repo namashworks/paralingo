@@ -6,6 +6,27 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-11-24
+
+### Added
+- Real-time turn-taking (`paralingo.realtime`): streaming end-of-turn prediction from silence (relative to
+  each speaker's own pauses), pitch, loudness and words, with cues for English, Mandarin, Japanese and
+  Korean; barge-in vs backchannel detection; latency measurement (end-of-turn delay, response time,
+  processing cost). Pure numpy, about 1-2 % of one CPU core.
+- Azure AI Speech adapter (`paralingo.integrations.azure`): feeds one audio stream to Azure and Paralingo,
+  and Azure's live text, word timings, confidence and detected language to the turn detector.
+- WebSocket endpoint `/v1/realtime` in the HTTP API, for browser and non-Python clients.
+- `SpeechProfileEngine.record_realtime_metrics` stores a call's turn-taking statistics with its session.
+- Optional extras: `paralingo[azure]`; `websockets` added to `paralingo[api]`.
+- `TurnConfig.fixed_timeout_s`: a plain silence-timeout mode, as a fallback or for comparison.
+- Turn-taking benchmark (`validation/bench_turntaking.py`, results in `validation/TURN_TAKING.md`). On 480
+  held-out simulated turns of real speech with 300 ms ASR lag, Paralingo cut in mid-turn on 55 % of pauses at
+  431 ms mean response, versus 84 % for a 500 ms timeout at 452 ms, and on under 10 % of pauses after "and…".
+- Documentation: [real-time turn-taking](docs/realtime.md) and [Azure AI Speech](docs/azure.md) guides.
+
+### Changed
+- PyPI description now leads with real-time turn-taking. `CITATION.cff` lists the v1.0.1 DOI.
+
 ## [1.0.1] - 2026-11-11
 
 ### Added
