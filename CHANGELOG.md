@@ -6,6 +6,9 @@ All notable changes to this project are documented here. The format follows
 
 ## [Unreleased]
 
+### Changed
+- `CITATION.cff` lists the v1.1.0 DOI (10.5281/zenodo.24506911).
+
 ## [1.1.0] - 2026-11-24
 
 ### Added
