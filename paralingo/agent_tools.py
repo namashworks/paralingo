@@ -126,7 +126,9 @@ TOOL_SPECS: list[dict[str, Any]] = [
         "input_schema": {"type": "object", "properties": {
             "speaker_id": _SPEAKER,
             "session_id": _SESSION,
-            "transcript": {"type": "string", "description": "Verbatim transcript including fillers if possible."},
+            "transcript": {"type": "string", "description": "Verbatim transcript including fillers if possible. "
+                           "English, Mandarin, Japanese and Korean are fully analysed, including mixed-language turns."},
+            "language": {"type": "string", "description": "Language your ASR detected, e.g. 'ja-JP' (optional hint)."},
             "audio_path": {"type": "string", "description": "Path to a WAV file of this turn (inside the configured audio root)."},
             "word_timestamps": {"type": "array", "items": {"type": "object", "properties": {
                 "word": {"type": "string"}, "start": {"type": "number"}, "end": {"type": "number"},

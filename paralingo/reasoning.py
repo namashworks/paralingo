@@ -11,12 +11,16 @@ Design principles
 * **Explainable.** Every inference returns the cues that produced it.
 * **Humble.** Confidence is capped, poor audio lowers it, and health indicators are
   screening *signals* that require persistence across sessions - never diagnoses.
+* **Fair across languages.** Pace and articulation are compared with typical speakers of the language
+  used (``pace_ratio``, ``articulation_ratio``), and pitch variability is scaled for tonal languages.
 """
 from __future__ import annotations
 
 import math
 from statistics import median
 from typing import Any
+
+from .lang import get_pack
 
 DISCLAIMER = ("Automated, non-diagnostic screening signal derived from speech acoustics/transcripts. "
               "It can be caused by recording conditions, language background, mood or context. "
@@ -35,6 +39,8 @@ METRIC_PATHS: dict[str, tuple[str, ...]] = {
     "hnr_db": ("acoustics", "voice_quality", "hnr_db"),
     "words_per_minute": ("timing", "words_per_minute"),
     "articulation_rate_sps": ("timing", "articulation_rate_sps"),
+    "pace_ratio": ("timing", "pace_ratio"),
+    "articulation_ratio": ("timing", "articulation_ratio"),
     "pause_ratio": ("timing", "pauses", "pause_ratio"),
     "mean_pause_s": ("timing", "pauses", "mean_s"),
     "response_latency_s": ("timing", "response_latency_s"),
@@ -51,7 +57,8 @@ METRIC_PATHS: dict[str, tuple[str, ...]] = {
 ACOUSTIC_METRICS = {"f0_mean_hz", "f0_std_semitones", "f0_range_semitones", "rms_dbfs_mean", "hf_energy_ratio_db",
                     "jitter_local_pct", "shimmer_local_pct", "hnr_db"}
 # metrics that are meaningless for very short utterances
-MIN_WORDS_FOR = {"type_token_ratio": 15, "words_per_minute": 3, "articulation_rate_sps": 3,
+MIN_WORDS_FOR = {"type_token_ratio": 15, "words_per_minute": 3, "articulation_rate_sps": 3, "pace_ratio": 3,
+                 "articulation_ratio": 3,
                  "filler_rate_per_100w": 5, "total_disfluency_per_100w": 5, "hedge_rate_per_100w": 5,
                  "stuttering_like_per_100_syllables": 5}
 # minimum std used for z-scores (prevents tiny baseline variance from exploding z)
@@ -60,16 +67,22 @@ STD_FLOOR = {"f0_mean_hz": 6.0, "f0_std_semitones": 0.4, "f0_range_semitones": 1
              "words_per_minute": 12.0, "articulation_rate_sps": 0.4, "pause_ratio": 0.05, "mean_pause_s": 0.1,
              "response_latency_s": 0.3, "filler_rate_per_100w": 1.0, "stuttering_like_per_100_syllables": 0.7,
              "total_disfluency_per_100w": 1.5, "type_token_ratio": 0.05, "hedge_rate_per_100w": 1.0,
-             "words_per_turn": 4.0, "sentiment": 0.1, "valence": 0.1, "arousal": 0.1}
+             "words_per_turn": 4.0, "sentiment": 0.1, "valence": 0.1, "arousal": 0.1,
+             "pace_ratio": 0.08, "articulation_ratio": 0.083}
 # wide population priors (mean, std) used before a personal baseline exists; pitch & loudness
 # are deliberately absent - they depend on the person / microphone.
 POPULATION = {"words_per_minute": (150.0, 30.0), "articulation_rate_sps": (4.8, 1.0), "f0_std_semitones": (2.5, 1.0),
-              "pause_ratio": (0.2, 0.1), "filler_rate_per_100w": (3.0, 3.0), "f0_range_semitones": (7.0, 3.0)}
+              "pause_ratio": (0.2, 0.1), "filler_rate_per_100w": (3.0, 3.0), "f0_range_semitones": (7.0, 3.0),
+              "pace_ratio": (1.0, 0.2), "articulation_ratio": (1.0, 0.208)}
+# pitch-variability priors scale with the language's typical range (lexical tones widen it)
+PROSODY_SCALED = {"f0_std_semitones", "f0_range_semitones"}
+# pace_ratio bands equal the English words-per-minute bands divided by 150
+PACE_EDGES = [100 / 150, 125 / 150, 170 / 150, 200 / 150]
 
 TREND_METRICS = ["f0_mean_hz", "f0_std_semitones", "rms_dbfs_mean", "jitter_local_pct", "shimmer_local_pct", "hnr_db",
                  "words_per_minute", "articulation_rate_sps", "pause_ratio", "filler_rate_per_100w",
                  "stuttering_like_per_100_syllables", "type_token_ratio", "hedge_rate_per_100w", "valence", "arousal",
-                 "response_latency_s"]
+                 "response_latency_s", "pace_ratio", "articulation_ratio"]
 
 
 def get_path(d: dict[str, Any] | None, path: tuple[str, ...]) -> Any:
@@ -128,7 +141,25 @@ def baseline_status(baseline: dict[str, Any]) -> str:
     return "insufficient_data"
 
 
-def zscore(metric: str, value: float | None, baseline: dict[str, Any]) -> tuple[float | None, str]:
+def utterance_language(u: dict[str, Any]) -> str | None:
+    return get_path(u, ("language", "primary"))
+
+
+def dominant_language(utts: list[dict[str, Any]]) -> str | None:
+    """Most common main language over a list of utterances (None if no transcripts)."""
+    counts: dict[str, int] = {}
+    for u in utts:
+        if (lang := utterance_language(u)):
+            counts[lang] = counts.get(lang, 0) + 1
+    return max(counts, key=counts.get) if counts else None
+
+
+def prosody_scale(lang: str | None) -> float:
+    return get_pack(lang).prosody_scale if lang else 1.0
+
+
+def zscore(metric: str, value: float | None, baseline: dict[str, Any],
+           lang: str | None = None) -> tuple[float | None, str]:
     """z of value vs personal baseline (if >=5 samples) else population prior. Returns (z, source)."""
     if value is None:
         return None, "none"
@@ -138,6 +169,8 @@ def zscore(metric: str, value: float | None, baseline: dict[str, Any]) -> tuple[
         return (value - s["mean"]) / sd, "personal"
     if metric in POPULATION:
         mu, sd = POPULATION[metric]
+        if metric in PROSODY_SCALED:
+            mu, sd = mu * prosody_scale(lang), sd * prosody_scale(lang)
         return (value - mu) / sd, "population"
     return None, "none"
 
@@ -162,12 +195,13 @@ _TIRED = {"tired", "exhausted", "sleepy", "drained", "worn"}
 def estimate_emotion(u: dict[str, Any], baseline: dict[str, Any], tokens: list[str] | None = None) -> dict[str, Any]:
     """Dimensional (arousal / valence) emotion estimate from prosody + words, mapped to a label."""
     m = utterance_metrics(u)
+    lang = utterance_language(u)
     cues: list[str] = []
     num = den = 0.0
     for metric, w, need_personal in [("f0_mean_hz", 1.0, True), ("rms_dbfs_mean", 1.0, True),
                                      ("hf_energy_ratio_db", 0.6, True), ("f0_std_semitones", 0.6, False),
-                                     ("articulation_rate_sps", 0.6, False), ("pause_ratio", -0.4, False)]:
-        z, src = zscore(metric, m.get(metric), baseline)
+                                     ("articulation_ratio", 0.6, False), ("pause_ratio", -0.4, False)]:
+        z, src = zscore(metric, m.get(metric), baseline, lang)
         if z is None or (need_personal and src != "personal"):
             continue
         z = max(-4.0, min(4.0, z))
@@ -183,7 +217,7 @@ def estimate_emotion(u: dict[str, Any], baseline: dict[str, Any], tokens: list[s
         valence = float(sent)
         if abs(sent) >= 0.2:
             cues.append(f"word sentiment {sent:+.2f}")
-    zf, _ = zscore("f0_std_semitones", m.get("f0_std_semitones"), baseline)
+    zf, _ = zscore("f0_std_semitones", m.get("f0_std_semitones"), baseline, lang)
     ze, src_e = zscore("rms_dbfs_mean", m.get("rms_dbfs_mean"), baseline)
     if zf is not None and zf < -1 and src_e == "personal" and ze is not None and ze < -1:
         valence -= 0.15
@@ -257,31 +291,36 @@ def score_skills(u: dict[str, Any]) -> dict[str, float | None]:
     m = utterance_metrics(u)
     s: dict[str, float | None] = {}
     words = get_path(u, ("lexical", "word_count")) or 0
+    lang = utterance_language(u)
+    scale = prosody_scale(lang)
 
     if "total_disfluency_per_100w" in m:
         f = 100 - 6 * m["total_disfluency_per_100w"]
         f -= 60 * max(0.0, m.get("pause_ratio", 0) - 0.3)
         f -= 8 * (get_path(u, ("timing", "pauses", "long_count")) or 0)
         s["fluency"] = round(_clamp(f), 1)
-    s["pace"] = round(_band(m["words_per_minute"], 120, 175, 1.5), 1) if "words_per_minute" in m else None
+    # 120-175 wpm for English, the equivalent for other languages
+    s["pace"] = round(_band(m["pace_ratio"], 0.8, 175 / 150, 225), 1) if "pace_ratio" in m else None
 
     clar = []
     if "hnr_db" in m:
         clar.append(_clamp((m["hnr_db"] - 5) / 15 * 100))
-    if "articulation_rate_sps" in m:
-        clar.append(_band(m["articulation_rate_sps"], 3.5, 6.0, 30))
+    if "articulation_ratio" in m:      # 3.5-6.0 syllables/s for English, the equivalent for other languages
+        clar.append(_band(m["articulation_ratio"], 3.5 / 4.8, 6.0 / 4.8, 144))
     asr = get_path(u, ("external", "asr_confidence"))
     if asr is not None:
         clar.extend([float(asr) * 100] * 2)  # strongest clarity signal when available
     incompl = get_path(u, ("fluency", "incomplete_words")) or 0
     s["clarity"] = round(_clamp(sum(clar) / len(clar) - 5 * incompl), 1) if clar else None
 
-    s["expressiveness"] = round(_band(m["f0_std_semitones"], 2.0, 5.5, 45), 1) if "f0_std_semitones" in m else None
+    s["expressiveness"] = (round(_band(m["f0_std_semitones"] / scale, 2.0, 5.5, 45), 1)
+                           if "f0_std_semitones" in m else None)
 
     if words >= 5:
         c = 100 - 6 * m.get("hedge_rate_per_100w", 0) - 3 * m.get("filler_rate_per_100w", 0)
         contour = get_path(u, ("acoustics", "pitch", "terminal_contour"))
-        if contour == "falling" and "?" not in (u.get("transcript") or ""):
+        # a final fall sounds assured; in tone languages the last syllable's tone decides the contour instead
+        if contour == "falling" and "?" not in (u.get("transcript") or "") and not get_pack(lang).tonal:
             c += 5
         s["confidence"] = round(_clamp(c), 1)
     else:
@@ -296,7 +335,8 @@ def score_skills(u: dict[str, Any]) -> dict[str, float | None]:
 
 
 # --------------------------------------------------------------------------- style
-def speaking_style(agg: dict[str, float], baseline: dict[str, Any], latency: float | None) -> dict[str, Any]:
+def speaking_style(agg: dict[str, float], baseline: dict[str, Any], latency: float | None,
+                   lang: str | None = None) -> dict[str, Any]:
     def cat(v, edges, labels):
         if v is None:
             return "unknown"
@@ -307,9 +347,11 @@ def speaking_style(agg: dict[str, float], baseline: dict[str, Any], latency: flo
 
     z_loud, src = zscore("rms_dbfs_mean", agg.get("rms_dbfs_mean"), baseline)
     loud = "unknown" if src != "personal" else "soft" if z_loud < -1 else "loud" if z_loud > 1 else "normal"
+    sc = prosody_scale(lang)
     return {
-        "pace": cat(agg.get("words_per_minute"), [100, 125, 170, 200], ["very_slow", "slow", "moderate", "fast", "very_fast"]),
-        "pitch_expressiveness": cat(agg.get("f0_std_semitones"), [1.0, 2.0, 4.0], ["monotone", "low", "moderate", "expressive"]),
+        "pace": cat(agg.get("pace_ratio"), PACE_EDGES, ["very_slow", "slow", "moderate", "fast", "very_fast"]),
+        "pitch_expressiveness": cat(agg.get("f0_std_semitones"), [1.0 * sc, 2.0 * sc, 4.0 * sc],
+                                    ["monotone", "low", "moderate", "expressive"]),
         "loudness": loud,
         "pausing": cat(agg.get("pause_ratio"), [0.1, 0.3], ["sparse", "typical", "frequent"]),
         "verbosity": cat(agg.get("words_per_turn"), [8, 35], ["terse", "moderate", "elaborate"]),
@@ -323,6 +365,8 @@ def speaking_style(agg: dict[str, float], baseline: dict[str, Any], latency: flo
 def evaluate_indicators(session: dict[str, Any], agg: dict[str, float], baseline: dict[str, Any]) -> list[dict[str, Any]]:
     """Session-level, non-diagnostic screening checks. Returns triggered indicators with evidence."""
     utts = session["utterances"]
+    lang = dominant_language(utts)
+    sc = prosody_scale(lang)
     speech_s = sum(get_path(u, ("acoustics", "speech_s")) or get_path(u, ("timing", "speech_s")) or 0 for u in utts)
     syllables = sum(get_path(u, ("lexical", "syllable_count")) or 0 for u in utts)
     words = sum(get_path(u, ("lexical", "word_count")) or 0 for u in utts)
@@ -362,22 +406,25 @@ def evaluate_indicators(session: dict[str, Any], agg: dict[str, float], baseline
                 vq, ["background noise, a different microphone or phone/VoIP codec",
                      "cold, fatigue or voice overuse", "emotional or shouted speech"])
 
-    ar = agg.get("articulation_rate_sps")
-    z_wpm, src = zscore("words_per_minute", agg.get("words_per_minute"), baseline)
-    if (ar is not None and ar < 3.0) or (src == "personal" and z_wpm is not None and z_wpm < -2):
+    # thresholds are 3.0 and 6.5 syllables/s for English, scaled to the language's typical articulation rate
+    ar, arr = agg.get("articulation_rate_sps"), agg.get("articulation_ratio")
+    unit = "morae/s" if lang == "ja" else "syll/s"
+    z_pace, src = zscore("pace_ratio", agg.get("pace_ratio"), baseline, lang)
+    if (arr is not None and arr < 3.0 / 4.8) or (src == "personal" and z_pace is not None and z_pace < -2):
         add("slowed_speech", "Articulation / speaking rate well below typical or below this person's own baseline.",
-            [f"articulation rate {ar} syll/s" if ar is not None else "", f"wpm z={z_wpm:+.1f} ({src})" if z_wpm is not None else ""],
+            [f"articulation rate {ar} {unit} ({arr:.2f}x typical)" if arr is not None else "",
+             f"pace z={z_pace:+.1f} ({src})" if z_pace is not None else ""],
             ["careful speech for clarity", "second-language speaker", "thinking while talking", "fatigue"])
 
     td = agg.get("total_disfluency_per_100w")
-    if ar is not None and ar > 6.5 and td is not None and td > 8:
+    if arr is not None and arr > 6.5 / 4.8 and td is not None and td > 8:
         add("rapid_cluttered_speech", "Very fast articulation combined with many disfluencies.",
-            [f"articulation rate {ar:.1f} syll/s", f"disfluencies {td:.1f}/100 words"],
+            [f"articulation rate {ar:.1f} {unit} ({arr:.2f}x typical)", f"disfluencies {td:.1f}/100 words"],
             ["excitement or time pressure"])
 
     fst = agg.get("f0_std_semitones")
-    z_f, src_f = zscore("f0_std_semitones", fst, baseline)
-    if good_audio and fst is not None and (fst < 1.0 or (src_f == "personal" and z_f is not None and z_f < -2)):
+    z_f, src_f = zscore("f0_std_semitones", fst, baseline, lang)
+    if good_audio and fst is not None and (fst < 1.0 * sc or (src_f == "personal" and z_f is not None and z_f < -2)):
         add("reduced_prosody", "Unusually flat intonation (little pitch variation).",
             [f"pitch variability {fst:.2f} semitones" + (f" (z={z_f:+.1f} vs baseline)" if src_f == "personal" else "")],
             ["reading aloud / scripted speech", "tiredness", "cultural or personal speaking style"])
@@ -439,8 +486,13 @@ def build_guidance(profile: dict[str, Any], recent_utts: list[dict[str, Any]]) -
         adapt.append({"instruction": instr, "reason": reason, "priority": prio})
 
     rows = [utterance_metrics(u) for u in recent_utts]
+    lang = dominant_language(recent_utts)
+    # words per minute only means something for English; the TTS rate (e.g. SSML <prosody rate="-10%">)
+    # works for every language: slightly slower than the speaker, within 110-170 wpm equivalent
     wpms = [r["words_per_minute"] for r in rows if "words_per_minute" in r]
-    rate = round(max(110.0, min(170.0, median(wpms) * 0.95)), 0) if wpms else None
+    rate = round(max(110.0, min(170.0, median(wpms) * 0.95)), 0) if wpms and lang in (None, "en") else None
+    paces = [r["pace_ratio"] for r in rows if "pace_ratio" in r]
+    tts_pct = int(round((max(110 / 150, min(170 / 150, median(paces) * 0.95)) - 1) * 100)) if paces else None
 
     pauses = sorted(p[1] - p[0] for u in recent_utts for p in (get_path(u, ("timing", "pauses", "intervals_s")) or [])
                     if p and p[0] is not None and p[1] is not None)
@@ -471,6 +523,19 @@ def build_guidance(profile: dict[str, Any], recent_utts: list[dict[str, Any]]) -
         add("Ask open-ended questions to draw out detail.", "Speaker gives short answers.", "low")
     elif style["verbosity"] == "elaborate":
         add("Summarise back periodically to keep the conversation focused.", "Speaker gives long turns.", "low")
+    lu = a.get("language_use") or {}
+    main = lu.get("primary")
+    if main and main != "en":
+        add(f"Reply in {get_pack(main).name}; it is the language this speaker mostly uses.",
+            f"{round(100 * (lu.get('shares') or {}).get(main, 0))} % of their recent speech is {get_pack(main).name}.")
+    if main and (lu.get("mixed_turn_ratio") or 0) >= 0.2:
+        others = [get_pack(x).name for x in (lu.get("shares") or {}) if x != main][:2]
+        terms = lu.get("frequent_embedded_terms") or []
+        if others:
+            add(f"The speaker mixes {get_pack(main).name} with {' and '.join(others)}"
+                + (f" (e.g. {', '.join(terms[:4])})" if terms else "")
+                + ". That is natural for them: reuse their terms rather than translating them.",
+                f"They switch language in {round(100 * lu['mixed_turn_ratio'])} % of recent turns.")
     acc = profile.get("accent", {})
     intel = acc.get("intelligibility")
     if (intel is not None and intel < 0.8) or len(acc.get("phonetic_markers", [])) >= 3:
@@ -492,4 +557,32 @@ def build_guidance(profile: dict[str, Any], recent_utts: list[dict[str, Any]]) -
 
     prio = {"high": 0, "medium": 1, "low": 2}
     adapt.sort(key=lambda x: prio[x["priority"]])
-    return {"recommended_speaking_rate_wpm": rate, "end_of_turn_silence_ms": eot, "adaptations": adapt}
+    return {"recommended_speaking_rate_wpm": rate, "recommended_tts_rate_pct": tts_pct, "language": main,
+            "end_of_turn_silence_ms": eot, "adaptations": adapt}
+
+
+def language_use(utts: list[dict[str, Any]]) -> dict[str, Any] | None:
+    """Which languages the speaker uses, and how often they switch, over recent utterances."""
+    blocks = [u["language"] for u in utts if isinstance(u.get("language"), dict) and u["language"].get("shares")]
+    if not blocks:
+        return None
+    shares: dict[str, float] = {}
+    for b in blocks:
+        for k, v in b["shares"].items():
+            shares[k] = shares.get(k, 0.0) + v / len(blocks)
+    shares = {k: round(v, 3) for k, v in sorted(shares.items(), key=lambda kv: -kv[1])}
+    mixed = [b for b in blocks if b.get("code_switching")]
+    terms: dict[str, int] = {}
+    for b in mixed:
+        for t in b["code_switching"].get("embedded_terms", []):
+            terms[t] = terms.get(t, 0) + 1
+    primaries: dict[str, int] = {}
+    for b in blocks:
+        primaries[b["primary"]] = primaries.get(b["primary"], 0) + 1
+    return {
+        "primary": max(primaries, key=lambda k: (primaries[k], shares.get(k, 0))),
+        "shares": shares,
+        "mixed_turn_ratio": round(len(mixed) / len(blocks), 3),
+        "frequent_embedded_terms": [t for t, _ in sorted(terms.items(), key=lambda kv: -kv[1])][:8],
+        "turns_considered": len(blocks),
+    }

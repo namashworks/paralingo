@@ -15,6 +15,7 @@ Quick start::
 from .agent_tools import TOOL_SPECS, SpeechProfileTools
 from .audio import analyze_audio, load_wav, pauses_from_word_timestamps
 from .engine import SpeechProfileEngine, render_prompt_context
+from .lang import LanguagePack, register_pack
 from .language import analyze_text
 from .realtime import LatencyTracker, TurnConfig, TurnDetector, TurnEvent, analyze_turn
 from .store import (ConcurrencyConflict, ConsentError, LockTimeout, ProfileError, ProfileExists, ProfileNotFound,
@@ -27,6 +28,7 @@ __url__ = "https://github.com/namashworks/paralingo"
 __all__ = [
     "SpeechProfileEngine", "SpeechProfileStore", "SpeechProfileTools", "TOOL_SPECS",
     "TurnDetector", "TurnConfig", "TurnEvent", "LatencyTracker", "analyze_turn",
+    "LanguagePack", "register_pack",
     "analyze_audio", "analyze_text", "load_wav", "pauses_from_word_timestamps", "render_prompt_context",
     "new_profile", "validate",
     "ProfileError", "ProfileNotFound", "ProfileExists", "ConcurrencyConflict", "ConsentError", "LockTimeout",

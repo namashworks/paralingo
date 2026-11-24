@@ -154,6 +154,18 @@
             "typical_response_latency_s": { "type": ["number", "null"] }
           }
         },
+        "language_use": {
+          "type": ["object", "null"],
+          "description": "Languages the speaker uses and how often they switch between them, over recent turns.",
+          "properties": {
+            "primary": { "type": ["string", "null"], "description": "ISO 639-1 code, e.g. zh" },
+            "shares": { "type": "object", "additionalProperties": { "type": "number" } },
+            "mixed_turn_ratio": { "type": "number", "description": "Fraction of turns that switch language" },
+            "frequent_embedded_terms": { "type": "array", "items": { "type": "string" } },
+            "turns_considered": { "type": "integer" },
+            "updated_at": { "type": ["string", "null"] }
+          }
+        },
         "speech_indicators": {
           "type": "array",
           "description": "NON-DIAGNOSTIC screening signals. Only written when consent.health_indicators is true.",
@@ -183,7 +195,9 @@
       "type": "object",
       "description": "Concrete, actionable adaptations a voice agent should apply when talking to this person.",
       "properties": {
-        "recommended_speaking_rate_wpm": { "type": ["number", "null"] },
+        "recommended_speaking_rate_wpm": { "type": ["number", "null"], "description": "English only" },
+        "recommended_tts_rate_pct": { "type": ["integer", "null"], "description": "Relative TTS rate for any language, e.g. -10 for SSML <prosody rate=\"-10%\">" },
+        "language": { "type": ["string", "null"], "description": "Language to reply in (the speaker's main language)" },
         "end_of_turn_silence_ms": { "type": ["integer", "null"], "description": "Suggested VAD endpointing timeout so the agent does not interrupt this speaker." },
         "adaptations": {
           "type": "array",
@@ -271,6 +285,18 @@
         "skills": { "type": "object", "additionalProperties": { "type": ["number", "null"] } },
         "flags": { "type": "array", "items": { "type": "string" } },
         "baseline_deviations": { "type": "object", "additionalProperties": { "type": "number" }, "description": "metric -> z-score vs personal baseline (only |z|>=2 kept)" },
+        "language": {
+          "type": ["object", "null"],
+          "description": "Language(s) of the transcript: main language, shares and code-switching.",
+          "properties": {
+            "primary": { "type": ["string", "null"] },
+            "supported": { "type": "boolean" },
+            "asr_hint": { "type": ["string", "null"] },
+            "shares": { "type": "object", "additionalProperties": { "type": "number" } },
+            "code_switching": { "type": ["object", "null"] },
+            "typical_duration_s": { "type": "object" }
+          }
+        },
         "external": { "type": "object", "description": "Raw outputs from other models (SER, ASR confidence, accent ID...) supplied by the agent." }
       }
     },

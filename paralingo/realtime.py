@@ -31,39 +31,20 @@ from typing import Any
 
 import numpy as np
 
+from .lang import PACKS
+
 HOP_S = 0.010
 FRAME_S = 0.040
 LEXICAL_TOLERANCE_S = 0.15   # a transcript this soon before a pause still describes the speech that just ended
 
 # --------------------------------------------------------------------------- language cues
-# Words or endings that mean "I'm not finished" when a turn stops on them.
-CONTINUATION = {
-    "en": {"and", "but", "so", "because", "cause", "or", "then", "that", "which", "who", "if", "when", "while",
-           "to", "the", "a", "an", "of", "with", "for", "my", "your", "our", "is", "was", "are", "were", "um",
-           "umm", "uh", "uhh", "er", "erm", "like", "well", "also", "about", "from", "in", "on", "at", "it's",
-           "i'm", "we", "i", "and then", "you know", "i mean", "kind of", "sort of"},
-    "zh": {"然后", "就是", "那个", "这个", "因为", "所以", "但是", "可是", "还有", "而且", "如果", "比如", "嗯", "呃",
-           "额", "就", "和", "跟", "的话"},
-    "ja": {"けど", "けれど", "けれども", "が", "で", "て", "って", "から", "し", "とか", "あの", "あのー", "えーと",
-           "えっと", "その", "まあ", "なんか", "ので", "のに", "たり"},
-    "ko": {"는데", "은데", "인데", "던데", "고", "서", "면", "지만", "그리고", "그래서", "근데", "그런데", "음", "어",
-           "그", "저", "뭐", "니까"},
-}
-# Endings that mark a complete sentence or a question (punctuation is handled separately).
-COMPLETE = {
-    "en": set(),
-    "zh": {"吗", "呢", "吧", "了", "的", "啦", "嘛"},
-    "ja": {"です", "ます", "でした", "ました", "ね", "よ", "か", "ください", "だ", "ない", "ません", "ですか"},
-    "ko": {"요", "다", "까", "죠", "니다", "세요", "네요", "어요", "아요", "습니까"},
-}
-QUESTION = {"en": {"?"}, "zh": {"吗", "呢", "？", "?"}, "ja": {"か", "？", "?"}, "ko": {"까", "?", "？"}}
-BACKCHANNEL = {
-    "en": {"yeah", "yes", "yep", "yup", "uh-huh", "uh huh", "mm-hmm", "mhm", "mm", "hmm", "ok", "okay", "right",
-           "sure", "i see", "got it", "alright", "all right", "true", "exactly", "cool"},
-    "zh": {"嗯", "嗯嗯", "对", "对对", "对对对", "好", "好的", "是", "是的", "哦", "啊", "明白"},
-    "ja": {"はい", "うん", "ええ", "そうですね", "なるほど", "そう", "うんうん", "へえ"},
-    "ko": {"네", "응", "예", "아", "그렇죠", "맞아요", "음", "어", "그래"},
-}
+# The cue words live in the language packs (paralingo/lang/*.py): words or endings that mean "I'm not finished"
+# (continuation), endings that complete a sentence or ask a question, and backchannels ("mm-hmm"). These
+# dicts are views kept for backwards compatibility; register a new pack to add a language.
+CONTINUATION = {c: p.continuation for c, p in PACKS.items()}
+COMPLETE = {c: p.complete for c, p in PACKS.items()}
+QUESTION = {c: p.question for c, p in PACKS.items()}
+BACKCHANNEL = {c: p.backchannel for c, p in PACKS.items()}
 _PUNCT_END = re.compile(r"[.!?。！？]\s*$")
 _TRAILING = re.compile(r"[\s,，、…\-—~～]+$")
 
@@ -84,13 +65,12 @@ def detect_language(text: str) -> str | None:
 
 
 def _norm_lang(lang: str | None) -> str | None:
+    """Language code with turn-taking cues ('en-US' -> 'en'), or None."""
     if not lang:
         return None
-    lang = lang.lower()
-    for code in ("en", "zh", "ja", "ko"):
-        if lang.startswith(code) or (code == "zh" and lang.startswith(("cmn", "yue"))):
-            return code
-    return None
+    from .lang import normalize_language
+    code = normalize_language(lang)
+    return code if code in PACKS and PACKS[code].continuation else None
 
 
 def lexical_cues(text: str, language: str | None = None) -> dict[str, bool]:
@@ -103,16 +83,17 @@ def lexical_cues(text: str, language: str | None = None) -> dict[str, bool]:
     stripped = _TRAILING.sub("", raw)
     ends_punct = bool(_PUNCT_END.search(stripped))
     core = re.sub(r"[.!?。！？\s]+$", "", stripped)
-    if lang == "en":
-        words = re.findall(r"[a-z']+", core.lower())
+    pack = PACKS[lang]
+    if pack.word_unit == "word":        # space-separated words: match whole last words
+        words = re.findall(r"[^\W\d_]+(?:'[^\W\d_]+)?", core.lower())
         last1 = words[-1] if words else ""
         last2 = " ".join(words[-2:]) if len(words) >= 2 else last1
-        out["continuation"] = (last1 in CONTINUATION["en"] or last2 in CONTINUATION["en"]) and not ends_punct
-        out["question"] = stripped.endswith("?")
-    else:
-        out["continuation"] = any(core.endswith(tok) for tok in CONTINUATION[lang]) and not ends_punct
-        out["question"] = any(stripped.endswith(q) or core.endswith(q) for q in QUESTION[lang])
-        if not out["continuation"] and any(core.endswith(tok) for tok in COMPLETE[lang]):
+        out["continuation"] = (last1 in pack.continuation or last2 in pack.continuation) and not ends_punct
+        out["question"] = stripped.endswith(("?", "？"))
+    else:                               # unspaced or agglutinative: match endings
+        out["continuation"] = any(core.endswith(tok) for tok in pack.continuation) and not ends_punct
+        out["question"] = any(stripped.endswith(q) or core.endswith(q) for q in pack.question)
+        if not out["continuation"] and any(core.endswith(tok) for tok in pack.complete):
             out["complete"] = True
     if ends_punct and not out["continuation"]:
         out["complete"] = True
@@ -126,7 +107,7 @@ def is_backchannel(text: str, language: str | None = None) -> bool:
         return False
     lang = _norm_lang(language) or detect_language(text) or "en"
     t = re.sub(r"[.!?。！？,，、…\s]+$", "", text.strip().lower())
-    return t in BACKCHANNEL.get(lang, set())
+    return t in PACKS[lang].backchannel
 
 
 # --------------------------------------------------------------------------- data types
@@ -484,14 +465,17 @@ class TurnDetector:
             if self._text:
                 reasons.append("waiting for the latest words")
         logit = 4.0 * (silence_s / self.pause_s - 1.0)
+        lang = _norm_lang(self._text_lang or self.language) or detect_language(self._text)
+        # in tone languages (Mandarin) the last syllable's tone shapes the final pitch, so it says less
+        tone_w = 0.5 if lang and PACKS[lang].tonal else 1.0
         if pros["contour"] == "falling":
-            logit += 1.2
+            logit += 1.2 * tone_w
             reasons.append("pitch fell at the end")
         elif pros["contour"] == "level":
-            logit -= 0.6
+            logit -= 0.6 * tone_w
             reasons.append("pitch stayed level (often 'more to come')")
         elif pros["contour"] == "rising":
-            logit += 1.0 if lex["question"] else 0.2
+            logit += (1.0 if lex["question"] else 0.2) * tone_w
             reasons.append("pitch rose" + (" on a question" if lex["question"] else ""))
         if pros["energy_drop_db"] is not None and pros["energy_drop_db"] >= 6:
             logit += 0.4
@@ -548,5 +532,7 @@ def analyze_turn(engine: Any, speaker_id: str, event: TurnEvent, *, session_id: 
                  response_latency_s: float | None = None) -> dict[str, Any]:
     """Run the full Paralingo analysis on an ``end_of_turn`` event (call it in a background thread)."""
     d = event.data
+    ext = {"asr_confidence": d["asr_confidence"]} if d.get("asr_confidence") is not None else None
     return engine.analyze_utterance(speaker_id, session_id=session_id, samples=d["audio"], sample_rate=d["sample_rate"],
-                                    transcript=d.get("transcript") or None, response_latency_s=response_latency_s)
+                                    transcript=d.get("transcript") or None, response_latency_s=response_latency_s,
+                                    language=d.get("language"), external=ext)

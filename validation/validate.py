@@ -41,7 +41,7 @@ sys.path.insert(0, str(ROOT))
 from paralingo import __version__  # noqa: E402
 from paralingo import reasoning as R  # noqa: E402
 from paralingo.audio import analyze_audio, load_wav  # noqa: E402
-from paralingo.language import analyze_text, tokenize  # noqa: E402
+from paralingo.language import analyze_text, speech_rates, tokenize  # noqa: E402
 
 F0_MIN, F0_MAX = 60.0, 500.0
 EMOTIONS = {"01": "neutral", "02": "calm", "03": "happy", "04": "sad", "05": "angry", "06": "fearful",
@@ -115,17 +115,13 @@ def _nan_none(v: float) -> float | None:
 
 
 def utterance_record(ac: dict[str, Any], transcript: str | None) -> dict[str, Any]:
-    timing = {"pauses": ac["pauses"], "speech_s": ac["speech_s"], "words_per_minute": None,
-              "articulation_rate_sps": None, "response_latency_s": None}
+    t = analyze_text(transcript) if transcript else None
+    timing = {"pauses": ac["pauses"], "speech_s": ac["speech_s"], "response_latency_s": None,
+              **speech_rates(t, ac["speech_span_s"], ac["speech_s"])}   # same rates as the engine
     u: dict[str, Any] = {"acoustics": {k: v for k, v in ac.items() if k not in ("pauses", "speech_span_s", "tracks")},
                          "timing": timing}
-    if transcript:
-        t = analyze_text(transcript)
-        u.update(fluency=t["fluency"], lexical=t["lexical"], sentiment=t["sentiment"])
-        if ac["speech_span_s"] and ac["speech_span_s"] > 0.3:
-            timing["words_per_minute"] = round(t["lexical"]["content_word_count"] / ac["speech_span_s"] * 60, 1)
-        if ac["speech_s"] and ac["speech_s"] > 0.3:
-            timing["articulation_rate_sps"] = round(t["lexical"]["syllable_count"] / ac["speech_s"], 2)
+    if t:
+        u.update(fluency=t["fluency"], lexical=t["lexical"], sentiment=t["sentiment"], language=t["language"])
     return u
 
 

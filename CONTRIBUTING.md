@@ -42,9 +42,24 @@ python -m pytest -q
 * Add `# SPDX-License-Identifier: Apache-2.0` and the copyright line at the top of new source files.
 * Add a line to `CHANGELOG.md` under "Unreleased".
 
+## Adding a language
+
+Language packs live in `paralingo/lang/`, one file per language, in plain Python with no dependencies.
+Copy `ko.py` (a language written with spaces) or `zh.py` (written without spaces) and fill in:
+
+* how to count words and syllables;
+* fillers, hedges, vague words, revision markers, and a small sentiment lexicon with negation;
+* real-time turn-taking cues: words that mean "not finished", sentence endings, backchannels;
+* typical speaking and articulation rates, with a source.
+
+Register it in `paralingo/lang/__init__.py` and add tests with real sentences, including words that
+look like fillers but aren't (see `tests/test_languages.py`). Native speakers' reviews of the existing
+Mandarin, Japanese and Korean word lists are just as welcome. See [docs/languages.md](docs/languages.md).
+
 ## Good first contributions
 
-* Language packs for fillers, hedges and sentiment beyond English.
+* Language packs: Hindi, Spanish, Arabic, Vietnamese, Cantonese, and native-speaker reviews of the
+  Mandarin, Japanese and Korean packs.
 * Adapters for ASR providers' word timestamps (Deepgram, AssemblyAI, Whisper, Google).
 * Integrations with voice frameworks (Pipecat, LiveKit Agents, Vapi).
 * A pluggable speech-emotion-recognition model through the `external` field.

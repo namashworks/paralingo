@@ -90,6 +90,7 @@ Form fields for `/utterances` (at least one of `audio`, `transcript`, `word_time
 | `transcript` | Text |
 | `word_timestamps` | JSON string: `[{"word": "hi", "start": 0.1, "end": 0.3}, ...]` |
 | `external` | JSON string of other models' outputs, e.g. `{"asr_confidence": 0.93}` |
+| `language` | Language your ASR detected, e.g. `ja-JP` (optional hint; see [languages](languages.md)) |
 | `session_id`, `response_latency_s`, `t_start`, `t_end` | Optional |
 
 At the end of the call:

@@ -17,7 +17,7 @@ flowchart TB
         MCP["MCP server"] --> Engine
         API["HTTP API<br/>API keys, tenants"] --> Engine
         Engine --> Audio["audio.py<br/>pitch, voice quality, pauses"]
-        Engine --> Lang["language.py<br/>fluency, words, sentiment"]
+        Engine --> Lang["language.py + lang/<br/>fluency, words, sentiment, languages"]
         Engine --> Reason["reasoning.py<br/>baseline, emotion, guidance"]
         Engine --> Store["SpeechProfileStore<br/>lock, atomic write, audit"]
     end
@@ -34,7 +34,8 @@ flowchart TB
 | Module | Responsibility |
 |---|---|
 | `audio.py` | Pitch (autocorrelation), HNR, jitter and shimmer (cycle-to-cycle cross-correlation), loudness, pauses, audio quality |
-| `language.py` | Fillers, repetitions, stuttering-like disfluencies, vocabulary, hedging, sentiment |
+| `language.py` | Fillers, repetitions, stuttering-like disfluencies, vocabulary, hedging, sentiment, language use and speech rates |
+| `lang/` | Language packs (`en`, `zh`, `ja`, `ko`): word and syllable counting, word lists, typical rates, turn-taking cues; language detection and code-switching segmentation |
 | `reasoning.py` | Personal baseline (running mean and variance), emotion, skills, speaking style, indicators, guidance |
 | `realtime.py` | Streaming turn-taking: live VAD and pitch, end-of-turn probability (timing, prosody, words in EN/ZH/JA/KO), barge-in and backchannel detection, latency measurement |
 | `integrations/azure.py` | Azure AI Speech adapter: one audio stream to Azure and Paralingo; Azure text, word timings and language to the turn detector |

@@ -12,6 +12,7 @@ example how long to wait before replying.
 | [Getting started](getting-started.md) | Install Paralingo and analyse your first speaker in 2 minutes |
 | [Integration guide](integration-guide.md) | Plug Paralingo into your voice agent: call flow, audio formats, phone audio, LLM tools, MCP |
 | [Real-time turn-taking](realtime.md) | Know when a person has finished speaking, detect interruptions and backchannels, measure latency, live |
+| [Languages and code-switching](languages.md) | English, Mandarin, Japanese and Korean, speakers who mix languages, and adding your language |
 | [Azure AI Speech](azure.md) | Use Paralingo with Azure Speech, in Python or in the browser |
 | [HTTP API](http-api.md) | Use Paralingo from any language over HTTPS and WebSocket, with API keys |
 

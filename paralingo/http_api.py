@@ -204,6 +204,7 @@ def create_app(root: str | os.PathLike[str], keys_file: str | os.PathLike[str]) 
         t_end: float | None = Form(None),
         word_timestamps: str | None = Form(None, description="JSON list of {word, start, end}"),
         external: str | None = Form(None, description="JSON object of other models' outputs"),
+        language: str | None = Form(None, description="Language your ASR detected, e.g. ja-JP (optional hint)"),
         audio: UploadFile | None = File(None, description="WAV (PCM) audio of this user turn"),
         key: ApiKey = Depends(auth),
     ) -> dict[str, Any]:
@@ -229,7 +230,7 @@ def create_app(root: str | os.PathLike[str], keys_file: str | os.PathLike[str]) 
             try:
                 return run(engine(key).analyze_utterance, speaker_id, session_id=session_id, transcript=transcript,
                            audio_path=tmp_path, word_timestamps=words, t_start=t_start, t_end=t_end,
-                           response_latency_s=response_latency_s, external=ext,
+                           response_latency_s=response_latency_s, external=ext, language=language,
                            audio_ref=audio.filename if audio is not None else None)
             except Exception as exc:
                 if isinstance(exc, HTTPException):

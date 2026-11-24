@@ -99,6 +99,7 @@ Pass whatever your platform gives you. More inputs give a richer analysis:
 | `word_timestamps`: `[{"word", "start", "end"}]` in seconds | Pauses and pace when you have no audio |
 | `response_latency_s` | How long the person took to start answering |
 | `external` | Other models' outputs, e.g. `{"emotion": {...}, "asr_confidence": 0.93}` |
+| `language` | The language your ASR detected, e.g. `"ja-JP"`: a hint for the [language analysis](languages.md) |
 
 Analysis takes about 0.1–0.3 s per turn. Run it **in parallel** with your LLM call so it never delays
 the reply; its guidance then applies from the next turn:

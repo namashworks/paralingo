@@ -19,9 +19,9 @@ A complete example is in [`examples/profiles/demo-caller.speech.json`](../exampl
 | `accent` | `current_estimate`, `estimates` history, `phonetic_markers`, `intelligibility` |
 | `sessions` | One entry per call: `session_id`, `started_at`, `ended_at`, `status`, `channel`, `context`, `utterances`, `summary` |
 | `observations` | Evidence-backed notes from agents: `category`, `observation`, `evidence`, `reasoning`, `confidence`, `agent_id` |
-| `assessments` | `emotional_state`, `communication_skills`, `speaking_style`, `speech_indicators` |
+| `assessments` | `emotional_state`, `communication_skills`, `speaking_style`, `language_use`, `speech_indicators` |
 | `trends` | Per metric, one value per session: `[{session_id, date, value}]` |
-| `agent_guidance` | `recommended_speaking_rate_wpm`, `end_of_turn_silence_ms`, `adaptations` |
+| `agent_guidance` | `recommended_speaking_rate_wpm`, `recommended_tts_rate_pct`, `language`, `end_of_turn_silence_ms`, `adaptations` |
 | `audit_log` | Who changed what and when: `timestamp`, `agent_id`, `action`, `revision` |
 | `extensions` | Free space for your own namespaced data |
 
@@ -54,8 +54,10 @@ missing, for example no audio, or a transcript too short to judge.
 | `pauses.count`, `pauses.total_s`, `pauses.mean_s`, `pauses.max_s` | Silent pauses of 0.25 s or more inside the turn |
 | `pauses.long_count` | Pauses of 1 s or more |
 | `pauses.pause_ratio` | Share of the turn spent pausing |
-| `words_per_minute` | Speaking rate, including pauses |
-| `articulation_rate_sps` | Syllables per second of actual speech, excluding pauses |
+| `words_per_minute` | Speaking rate, including pauses (estimated words for Mandarin and Japanese) |
+| `articulation_rate_sps` | Syllables (morae for Japanese) per second of actual speech, excluding pauses |
+| `pace_ratio` | Speaking rate ÷ typical for the language (1.0 = typical; for English, wpm ÷ 150). See [languages](languages.md#fair-pace-across-languages). |
+| `articulation_ratio` | Articulation rate ÷ typical for the language |
 | `response_latency_s` | How long the person took to start answering (if you passed it) |
 
 ### `fluency`: from the transcript
@@ -120,6 +122,7 @@ Arousal reached an AUC of 0.90 on 1,440 real recordings with a personal baseline
 | `emotional_state` | `current` (latest emotion), `recent_labels`, `trend` (`improving`, `stable`, `worsening`) |
 | `communication_skills` | Rolling `scores` over the last 5 sessions, `strengths`, `areas_to_improve` |
 | `speaking_style` | `pace`, `pitch_expressiveness`, `loudness`, `pausing`, `verbosity`, `directness`, `mean_words_per_turn`, `typical_response_latency_s` |
+| `language_use` | `primary` language, language `shares`, `mixed_turn_ratio` (how often they switch language), `frequent_embedded_terms` |
 | `speech_indicators` | Non-diagnostic screening signals (only with `health_indicators` consent), each with `status` (`watch`, `persistent` after 3 of the last 5 sessions, `resolved`), `evidence`, `confounders` and a `disclaimer` |
 
 Indicators: `stuttering_like_disfluencies`, `voice_quality_strain` (judged only against the person's own
@@ -131,6 +134,8 @@ tell a person they have a condition.
 
 | Field | Use |
 |---|---|
-| `recommended_speaking_rate_wpm` | Your TTS rate: about 95 % of the person's own pace, between 110 and 170 |
+| `recommended_speaking_rate_wpm` | English only: your TTS rate, about 95 % of the person's own pace, between 110 and 170 |
+| `recommended_tts_rate_pct` | Any language: the same advice as a relative rate, e.g. `-10` for SSML `<prosody rate="-10%">` |
+| `language` | The speaker's main language, to reply in |
 | `end_of_turn_silence_ms` | Your VAD timeout: the person's 90th-percentile pause plus 250 ms, between 600 and 2,500 ms |
 | `adaptations` | `[{instruction, reason, priority}]`, e.g. "Wait longer before taking the turn", sorted by priority |

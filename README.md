@@ -17,6 +17,8 @@ Paralingo helps any voice agent, on any ASR, TTS or framework:
   the same speed ([benchmark](validation/TURN_TAKING.md)).
 * **Understand how someone speaks**: a per-speaker file of pitch, pauses, pace, voice quality, fluency,
   emotion and accent that agents read and write across calls ([validated against Praat](validation/RESULTS.md)).
+* **In their language**: English, Mandarin, Japanese and Korean, including speakers who switch language
+  mid-sentence, with pace judged against each language's norms ([languages](docs/languages.md)).
 
 ## 📖 Documentation
 
@@ -25,6 +27,7 @@ Paralingo helps any voice agent, on any ASR, TTS or framework:
 | [**Getting started**](docs/getting-started.md) | Install and analyse your first speaker in 2 minutes |
 | [**Integration guide**](docs/integration-guide.md) | Add Paralingo to your voice agent: call flow, phone audio, LLM tools, MCP |
 | [**Real-time turn-taking**](docs/realtime.md) | Live end-of-turn, barge-in and backchannel detection in EN/ZH/JA/KO, with latency measurement |
+| [**Languages**](docs/languages.md) | English, Mandarin, Japanese and Korean, including speakers who switch language mid-sentence |
 | [**Azure AI Speech**](docs/azure.md) | Drop-in integration for Azure Speech, Python or browser |
 | [**HTTP API**](docs/http-api.md) | Use it from any language over HTTPS and WebSocket, with API keys |
 | [Tool reference](docs/tools-reference.md) · [Metrics and file format](docs/profile-format.md) · [Privacy and deployment](docs/privacy-and-deployment.md) · [Troubleshooting](docs/troubleshooting.md) · [Architecture](docs/architecture.md) | |

@@ -1,9 +1,9 @@
 {
   "format": "paralingo",
   "version": "1.0.0",
-  "profile_id": "prof_256b2c802671",
-  "created_at": "2026-11-10T16:11:35.093Z",
-  "updated_at": "2026-11-10T16:11:36.622Z",
+  "profile_id": "prof_51e78a45ffc7",
+  "created_at": "2026-11-24T17:08:52.121Z",
+  "updated_at": "2026-11-24T17:09:00.774Z",
   "revision": 21,
   "speaker": {
     "speaker_id": "demo-caller",
@@ -20,7 +20,7 @@
     "health_indicators": true,
     "store_transcripts": true,
     "retention_days": 180,
-    "granted_at": "2026-11-10T16:11:35.095Z",
+    "granted_at": "2026-11-24T17:08:52.144Z",
     "granted_via": "verbal-consent-recorded"
   },
   "settings": {
@@ -31,87 +31,103 @@
     "status": "provisional",
     "sessions_used": 3,
     "utterances_used": 12,
-    "speech_seconds_used": 41.84,
+    "speech_seconds_used": 41.9,
     "metrics": {
       "f0_mean_hz": {
-        "n": 11,
-        "mean": 237.81818,
-        "std": 41.52753,
-        "m2": 17245.356515,
-        "min": 196.5,
+        "n": 12,
+        "mean": 233.83334,
+        "std": 41.93218,
+        "m2": 19341.386848,
+        "min": 190.0,
         "max": 336.4
       },
       "f0_std_semitones": {
-        "n": 11,
-        "mean": 1.77364,
-        "std": 0.90501,
-        "m2": 8.190463,
-        "min": 0.59,
+        "n": 12,
+        "mean": 1.67417,
+        "std": 0.92915,
+        "m2": 9.496484,
+        "min": 0.58,
         "max": 3.5
       },
       "f0_range_semitones": {
-        "n": 11,
-        "mean": 5.44636,
-        "std": 2.80803,
-        "m2": 78.850104,
+        "n": 12,
+        "mean": 5.14583,
+        "std": 2.87263,
+        "m2": 90.772062,
         "min": 1.72,
         "max": 10.64
       },
       "rms_dbfs_mean": {
-        "n": 11,
-        "mean": -15.64455,
-        "std": 3.63339,
-        "m2": 132.015321,
+        "n": 12,
+        "mean": -15.85583,
+        "std": 3.54078,
+        "m2": 137.908059,
         "min": -18.28,
         "max": -10.25
       },
       "hf_energy_ratio_db": {
-        "n": 11,
-        "mean": -11.99727,
-        "std": 2.1147,
-        "m2": 44.719637,
-        "min": -14.7,
+        "n": 12,
+        "mean": -12.30751,
+        "std": 2.2848,
+        "m2": 57.423594,
+        "min": -15.72,
         "max": -7.88
       },
       "jitter_local_pct": {
-        "n": 11,
-        "mean": 0.31836,
-        "std": 0.07549,
-        "m2": 0.056983,
-        "min": 0.24,
+        "n": 12,
+        "mean": 0.31158,
+        "std": 0.07571,
+        "m2": 0.063054,
+        "min": 0.237,
         "max": 0.428
       },
       "shimmer_local_pct": {
-        "n": 11,
-        "mean": 3.86345,
-        "std": 0.5837,
-        "m2": 3.407017,
+        "n": 12,
+        "mean": 3.93141,
+        "std": 0.60428,
+        "m2": 4.016708,
         "min": 2.693,
-        "max": 4.541
+        "max": 4.679
       },
       "hnr_db": {
-        "n": 11,
-        "mean": 34.91182,
-        "std": 0.6829,
-        "m2": 4.663574,
+        "n": 12,
+        "mean": 35.00584,
+        "std": 0.72803,
+        "m2": 5.830286,
         "min": 33.77,
-        "max": 35.94
+        "max": 36.04
       },
       "words_per_minute": {
         "n": 12,
-        "mean": 159.85,
-        "std": 26.81236,
-        "m2": 7907.928639,
+        "mean": 159.65833,
+        "std": 26.88249,
+        "m2": 7949.34916,
         "min": 126.1,
         "max": 204.0
       },
       "articulation_rate_sps": {
         "n": 12,
-        "mean": 3.7725,
-        "std": 0.80702,
-        "m2": 7.16402,
+        "mean": 3.76833,
+        "std": 0.80986,
+        "m2": 7.214577,
         "min": 2.72,
         "max": 5.38
+      },
+      "pace_ratio": {
+        "n": 12,
+        "mean": 1.06433,
+        "std": 0.17941,
+        "m2": 0.354056,
+        "min": 0.84,
+        "max": 1.36
+      },
+      "articulation_ratio": {
+        "n": 12,
+        "mean": 0.78509,
+        "std": 0.1689,
+        "m2": 0.313793,
+        "min": 0.566,
+        "max": 1.121
       },
       "pause_ratio": {
         "n": 12,
@@ -190,7 +206,7 @@
         "label": "Indian English",
         "confidence": 0.65,
         "source": "accent-id-model-x",
-        "timestamp": "2026-11-10T16:11:36.622Z",
+        "timestamp": "2026-11-24T17:09:00.772Z",
         "session_id": null
       }
     ],
@@ -199,30 +215,30 @@
         "marker": "retroflex /t/, /d/",
         "example": "order",
         "count": 1,
-        "last_seen": "2026-11-10T16:11:36.622Z"
+        "last_seen": "2026-11-24T17:09:00.772Z"
       },
       {
         "marker": "syllable-timed rhythm",
         "example": null,
         "count": 1,
-        "last_seen": "2026-11-10T16:11:36.622Z"
+        "last_seen": "2026-11-24T17:09:00.772Z"
       }
     ],
     "intelligibility": 0.9
   },
   "sessions": [
     {
-      "session_id": "sess_fe0c9bcef600",
-      "started_at": "2026-11-10T16:11:35.112Z",
-      "ended_at": "2026-11-10T16:11:35.630Z",
+      "session_id": "sess_1be7e1f28b66",
+      "started_at": "2026-11-24T17:08:52.167Z",
+      "ended_at": "2026-11-24T17:08:53.476Z",
       "status": "closed",
       "agent_id": "demo-support-bot",
       "channel": "phone",
       "context": "Order status",
       "utterances": [
         {
-          "utterance_id": "utt_c5efda9fe56f",
-          "timestamp": "2026-11-10T16:11:35.245Z",
+          "utterance_id": "utt_8cbfab861966",
+          "timestamp": "2026-11-24T17:08:52.480Z",
           "transcript": "Hi, um, I'm calling about my order, it hasn't arrived yet.",
           "acoustics": {
             "duration_s": 5.23,
@@ -255,9 +271,9 @@
               "hf_energy_ratio_db": -13.73
             },
             "audio_quality": {
-              "snr_db": 44.1,
+              "snr_db": 44.2,
               "clipping_ratio": 0.0,
-              "noise_floor_dbfs": -62.3,
+              "noise_floor_dbfs": -62.4,
               "quality": "good"
             }
           },
@@ -279,7 +295,9 @@
             "response_latency_s": 0.7,
             "speech_s": 4.45,
             "words_per_minute": 126.1,
-            "articulation_rate_sps": 3.82
+            "articulation_rate_sps": 3.82,
+            "pace_ratio": 0.84,
+            "articulation_ratio": 0.796
           },
           "fluency": {
             "filler_count": 1,
@@ -308,13 +326,28 @@
             "hedges": {},
             "hedge_rate_per_100w": 0.0,
             "vague_word_count": 0,
-            "question_count": 0
+            "question_count": 0,
+            "word_count_method": "whitespace",
+            "syllable_unit": "syllable"
           },
           "sentiment": {
             "score": 0.0,
             "positive_weight": 0.0,
             "negative_weight": 0.0,
             "method": "lexicon-negation-v1"
+          },
+          "language": {
+            "primary": "en",
+            "supported": true,
+            "asr_hint": null,
+            "shares": {
+              "en": 1.0
+            },
+            "code_switching": null,
+            "typical_duration_s": {
+              "speaking": 4.0,
+              "articulating": 3.542
+            }
           },
           "external": {
             "asr_confidence": 0.9
@@ -341,8 +374,8 @@
           "flags": []
         },
         {
-          "utterance_id": "utt_8b41c413e1a4",
-          "timestamp": "2026-11-10T16:11:35.428Z",
+          "utterance_id": "utt_6de67f6eb4e4",
+          "timestamp": "2026-11-24T17:08:52.867Z",
           "transcript": "It's, uh, order number four five two... I think it was placed last week.",
           "acoustics": {
             "duration_s": 6.423,
@@ -375,9 +408,9 @@
               "hf_energy_ratio_db": -14.7
             },
             "audio_quality": {
-              "snr_db": 43.9,
+              "snr_db": 44.2,
               "clipping_ratio": 0.0,
-              "noise_floor_dbfs": -62.2,
+              "noise_floor_dbfs": -62.4,
               "quality": "good"
             }
           },
@@ -399,7 +432,9 @@
             "response_latency_s": 1.1,
             "speech_s": 5.65,
             "words_per_minute": 130.9,
-            "articulation_rate_sps": 3.01
+            "articulation_rate_sps": 3.01,
+            "pace_ratio": 0.872,
+            "articulation_ratio": 0.627
           },
           "fluency": {
             "filler_count": 1,
@@ -430,7 +465,9 @@
             },
             "hedge_rate_per_100w": 7.14,
             "vague_word_count": 0,
-            "question_count": 0
+            "question_count": 0,
+            "word_count_method": "whitespace",
+            "syllable_unit": "syllable"
           },
           "sentiment": {
             "score": 0.0,
@@ -438,17 +475,30 @@
             "negative_weight": 0.0,
             "method": "lexicon-negation-v1"
           },
+          "language": {
+            "primary": "en",
+            "supported": true,
+            "asr_hint": null,
+            "shares": {
+              "en": 1.0
+            },
+            "code_switching": null,
+            "typical_duration_s": {
+              "speaking": 5.2,
+              "articulating": 3.542
+            }
+          },
           "external": {
             "asr_confidence": 0.9
           },
           "emotion": {
             "label": "neutral",
-            "arousal": -0.239,
+            "arousal": -0.24,
             "valence": 0.0,
             "confidence": 0.43,
             "method": "heuristic-prosody+lexicon-v1",
             "cues": [
-              "articulation_rate_sps low (z=-1.8, population)"
+              "articulation_ratio low (z=-1.8, population)"
             ]
           },
           "skills": {
@@ -465,8 +515,8 @@
           "flags": []
         },
         {
-          "utterance_id": "utt_9cae7180b362",
-          "timestamp": "2026-11-10T16:11:35.515Z",
+          "utterance_id": "utt_600271ab6725",
+          "timestamp": "2026-11-24T17:08:53.113Z",
           "transcript": "Okay great, thank you, that's really helpful.",
           "acoustics": {
             "duration_s": 3.279,
@@ -499,9 +549,9 @@
               "hf_energy_ratio_db": -10.84
             },
             "audio_quality": {
-              "snr_db": 43.1,
+              "snr_db": 43.2,
               "clipping_ratio": 0.0,
-              "noise_floor_dbfs": -61.3,
+              "noise_floor_dbfs": -61.4,
               "quality": "good"
             }
           },
@@ -518,7 +568,9 @@
             "response_latency_s": 0.5,
             "speech_s": 2.81,
             "words_per_minute": 149.5,
-            "articulation_rate_sps": 4.27
+            "articulation_rate_sps": 4.27,
+            "pace_ratio": 0.996,
+            "articulation_ratio": 0.89
           },
           "fluency": {
             "filler_count": 0,
@@ -545,13 +597,28 @@
             "hedges": {},
             "hedge_rate_per_100w": 0.0,
             "vague_word_count": 0,
-            "question_count": 0
+            "question_count": 0,
+            "word_count_method": "whitespace",
+            "syllable_unit": "syllable"
           },
           "sentiment": {
             "score": 0.692,
             "positive_weight": 4.5,
             "negative_weight": 0.0,
             "method": "lexicon-negation-v1"
+          },
+          "language": {
+            "primary": "en",
+            "supported": true,
+            "asr_hint": null,
+            "shares": {
+              "en": 1.0
+            },
+            "code_switching": null,
+            "typical_duration_s": {
+              "speaking": 2.8,
+              "articulating": 2.5
+            }
           },
           "external": {
             "asr_confidence": 0.9
@@ -581,8 +648,8 @@
           "flags": []
         },
         {
-          "utterance_id": "utt_dcc044cae009",
-          "timestamp": "2026-11-10T16:11:35.598Z",
+          "utterance_id": "utt_5aeb7bff04b9",
+          "timestamp": "2026-11-24T17:08:53.383Z",
           "transcript": "No, that's all. Thanks so much, bye!",
           "acoustics": {
             "duration_s": 3.284,
@@ -615,9 +682,9 @@
               "hf_energy_ratio_db": -12.45
             },
             "audio_quality": {
-              "snr_db": 43.6,
+              "snr_db": 43.7,
               "clipping_ratio": 0.0,
-              "noise_floor_dbfs": -61.9,
+              "noise_floor_dbfs": -62.0,
               "quality": "good"
             }
           },
@@ -634,7 +701,9 @@
             "response_latency_s": 0.4,
             "speech_s": 2.82,
             "words_per_minute": 148.9,
-            "articulation_rate_sps": 3.19
+            "articulation_rate_sps": 3.19,
+            "pace_ratio": 0.993,
+            "articulation_ratio": 0.665
           },
           "fluency": {
             "filler_count": 0,
@@ -661,13 +730,28 @@
             "hedges": {},
             "hedge_rate_per_100w": 0.0,
             "vague_word_count": 0,
-            "question_count": 0
+            "question_count": 0,
+            "word_count_method": "whitespace",
+            "syllable_unit": "syllable"
           },
           "sentiment": {
             "score": 0.333,
             "positive_weight": 1.0,
             "negative_weight": 0.0,
             "method": "lexicon-negation-v1"
+          },
+          "language": {
+            "primary": "en",
+            "supported": true,
+            "asr_hint": null,
+            "shares": {
+              "en": 1.0
+            },
+            "code_switching": null,
+            "typical_duration_s": {
+              "speaking": 2.8,
+              "articulating": 1.875
+            }
           },
           "external": {
             "asr_confidence": 0.9
@@ -680,7 +764,7 @@
             "method": "heuristic-prosody+lexicon-v1",
             "cues": [
               "f0_std_semitones low (z=-1.9, population)",
-              "articulation_rate_sps low (z=-1.6, population)",
+              "articulation_ratio low (z=-1.6, population)",
               "pause_ratio low (z=-2.0, population)",
               "word sentiment +0.33"
             ]
@@ -707,8 +791,9 @@
         "total_speech_s": 15.73,
         "total_words": 39,
         "metrics_mean": {
-          "arousal": -0.2395,
+          "arousal": -0.2398,
           "articulation_rate_sps": 3.5725,
+          "articulation_ratio": 0.7445,
           "f0_mean_hz": 220.5,
           "f0_range_semitones": 4.4775,
           "f0_std_semitones": 1.4775,
@@ -718,6 +803,7 @@
           "hnr_db": 35.315,
           "jitter_local_pct": 0.2645,
           "mean_pause_s": 0.155,
+          "pace_ratio": 0.9253,
           "pause_ratio": 0.0292,
           "response_latency_s": 0.675,
           "rms_dbfs_mean": -18.2525,
@@ -731,12 +817,12 @@
         },
         "skills_mean": {
           "pace": 100.0,
-          "clarity": 93.5,
-          "fluency": 75.7,
-          "expressiveness": 74.0,
-          "overall": 86.7,
           "confidence": 77.1,
-          "responsiveness": 100.0
+          "fluency": 75.7,
+          "responsiveness": 100.0,
+          "clarity": 93.5,
+          "overall": 86.7,
+          "expressiveness": 74.0
         },
         "dominant_emotion": "neutral",
         "emotion_timeline": [
@@ -746,58 +832,67 @@
           "calm"
         ],
         "deviations_from_baseline": {},
+        "languages": {
+          "primary": "en",
+          "shares": {
+            "en": 1.0
+          },
+          "mixed_turn_ratio": 0.0,
+          "frequent_embedded_terms": [],
+          "turns_considered": 4
+        },
         "indicators_evaluated": true,
         "indicators_triggered": []
       }
     },
     {
-      "session_id": "sess_a924342af13e",
-      "started_at": "2026-11-10T16:11:35.650Z",
-      "ended_at": "2026-11-10T16:11:36.062Z",
+      "session_id": "sess_133ddc76741e",
+      "started_at": "2026-11-24T17:08:53.540Z",
+      "ended_at": "2026-11-24T17:08:57.096Z",
       "status": "closed",
       "agent_id": "demo-support-bot",
       "channel": "phone",
       "context": "Billing question",
       "utterances": [
         {
-          "utterance_id": "utt_3ab29408ed05",
-          "timestamp": "2026-11-10T16:11:35.742Z",
+          "utterance_id": "utt_5f189714f69f",
+          "timestamp": "2026-11-24T17:08:53.974Z",
           "transcript": "Hello, I have a question about my bill this month.",
           "acoustics": {
             "duration_s": 4.479,
-            "speech_s": 3.95,
-            "voiced_ratio": 1.0,
+            "speech_s": 4.01,
+            "voiced_ratio": 0.995,
             "pitch": {
-              "f0_mean_hz": 189.9,
+              "f0_mean_hz": 190.0,
               "f0_median_hz": 190.4,
-              "f0_std_hz": 6.33,
+              "f0_std_hz": 6.39,
               "f0_min_hz": 179.8,
               "f0_max_hz": 200.0,
               "f0_std_semitones": 0.58,
               "f0_range_semitones": 1.84,
               "terminal_contour": "level",
-              "terminal_slope_st_per_s": -0.5
+              "terminal_slope_st_per_s": -0.49
             },
             "energy": {
-              "rms_dbfs_mean": -18.12,
-              "rms_dbfs_std": 1.25,
-              "dynamic_range_db": 3.52
+              "rms_dbfs_mean": -18.18,
+              "rms_dbfs_std": 1.39,
+              "dynamic_range_db": 3.56
             },
             "voice_quality": {
-              "jitter_local_pct": 0.255,
-              "shimmer_local_pct": 4.711,
-              "hnr_db": 36.29,
-              "pulses_analyzed": 753
+              "jitter_local_pct": 0.237,
+              "shimmer_local_pct": 4.679,
+              "hnr_db": 36.04,
+              "pulses_analyzed": 756
             },
             "spectral": {
-              "centroid_hz": 320.6,
-              "hf_energy_ratio_db": -15.74
+              "centroid_hz": 320.4,
+              "hf_energy_ratio_db": -15.72
             },
             "audio_quality": {
-              "snr_db": 6.4,
+              "snr_db": 44.4,
               "clipping_ratio": 0.0,
-              "noise_floor_dbfs": -24.5,
-              "quality": "poor"
+              "noise_floor_dbfs": -62.6,
+              "quality": "good"
             }
           },
           "timing": {
@@ -811,9 +906,11 @@
               "intervals_s": []
             },
             "response_latency_s": 0.6,
-            "speech_s": 3.95,
-            "words_per_minute": 151.9,
-            "articulation_rate_sps": 3.29
+            "speech_s": 4.01,
+            "words_per_minute": 149.6,
+            "articulation_rate_sps": 3.24,
+            "pace_ratio": 0.998,
+            "articulation_ratio": 0.675
           },
           "fluency": {
             "filler_count": 0,
@@ -840,7 +937,9 @@
             "hedges": {},
             "hedge_rate_per_100w": 0.0,
             "vague_word_count": 0,
-            "question_count": 0
+            "question_count": 0,
+            "word_count_method": "whitespace",
+            "syllable_unit": "syllable"
           },
           "sentiment": {
             "score": 0.0,
@@ -848,39 +947,52 @@
             "negative_weight": 0.0,
             "method": "lexicon-negation-v1"
           },
+          "language": {
+            "primary": "en",
+            "supported": true,
+            "asr_hint": null,
+            "shares": {
+              "en": 1.0
+            },
+            "code_switching": null,
+            "typical_duration_s": {
+              "speaking": 4.0,
+              "articulating": 2.708
+            }
+          },
           "external": {
             "asr_confidence": 0.9
           },
           "emotion": {
-            "label": "neutral",
-            "arousal": -0.064,
+            "label": "subdued",
+            "arousal": -0.449,
             "valence": 0.0,
-            "confidence": 0.28,
+            "confidence": 0.49,
             "method": "heuristic-prosody+lexicon-v1",
             "cues": [
-              "articulation_rate_sps low (z=-1.5, population)",
+              "f0_std_semitones low (z=-1.9, population)",
+              "articulation_ratio low (z=-1.6, population)",
               "pause_ratio low (z=-2.0, population)"
             ]
           },
           "skills": {
             "fluency": 100.0,
             "pace": 100.0,
-            "clarity": 91.2,
-            "expressiveness": null,
+            "clarity": 93.0,
+            "expressiveness": 36.1,
             "confidence": 100.0,
             "vocabulary": null,
             "responsiveness": 100.0,
-            "overall": 98.2
+            "overall": 88.2
           },
           "baseline_deviations": {},
           "flags": [
-            "poor_audio",
             "flat_intonation"
           ]
         },
         {
-          "utterance_id": "utt_c8992bc38274",
-          "timestamp": "2026-11-10T16:11:35.860Z",
+          "utterance_id": "utt_9d0c401e8935",
+          "timestamp": "2026-11-24T17:08:55.124Z",
           "transcript": "I was charged twice, I think, for the same thing.",
           "acoustics": {
             "duration_s": 4.829,
@@ -913,9 +1025,9 @@
               "hf_energy_ratio_db": -13.54
             },
             "audio_quality": {
-              "snr_db": 44.1,
+              "snr_db": 44.2,
               "clipping_ratio": 0.0,
-              "noise_floor_dbfs": -62.3,
+              "noise_floor_dbfs": -62.4,
               "quality": "good"
             }
           },
@@ -937,7 +1049,9 @@
             "response_latency_s": 0.9,
             "speech_s": 4.05,
             "words_per_minute": 137.6,
-            "articulation_rate_sps": 2.72
+            "articulation_rate_sps": 2.72,
+            "pace_ratio": 0.917,
+            "articulation_ratio": 0.566
           },
           "fluency": {
             "filler_count": 0,
@@ -966,7 +1080,9 @@
             },
             "hedge_rate_per_100w": 10.0,
             "vague_word_count": 1,
-            "question_count": 0
+            "question_count": 0,
+            "word_count_method": "whitespace",
+            "syllable_unit": "syllable"
           },
           "sentiment": {
             "score": 0.0,
@@ -974,23 +1090,36 @@
             "negative_weight": 0.0,
             "method": "lexicon-negation-v1"
           },
+          "language": {
+            "primary": "en",
+            "supported": true,
+            "asr_hint": null,
+            "shares": {
+              "en": 1.0
+            },
+            "code_switching": null,
+            "typical_duration_s": {
+              "speaking": 4.0,
+              "articulating": 2.292
+            }
+          },
           "external": {
             "asr_confidence": 0.9
           },
           "emotion": {
             "label": "subdued",
-            "arousal": -0.386,
+            "arousal": -0.387,
             "valence": 0.0,
             "confidence": 0.43,
             "method": "heuristic-prosody+lexicon-v1",
             "cues": [
-              "articulation_rate_sps low (z=-2.1, population)"
+              "articulation_ratio low (z=-2.1, population)"
             ]
           },
           "skills": {
             "fluency": 100.0,
             "pace": 100.0,
-            "clarity": 89.2,
+            "clarity": 89.1,
             "expressiveness": 96.0,
             "confidence": 40.0,
             "vocabulary": null,
@@ -1001,8 +1130,8 @@
           "flags": []
         },
         {
-          "utterance_id": "utt_6d92bee829f2",
-          "timestamp": "2026-11-10T16:11:35.966Z",
+          "utterance_id": "utt_3da14548be05",
+          "timestamp": "2026-11-24T17:08:55.868Z",
           "transcript": "Okay, so it will be refunded? That's good.",
           "acoustics": {
             "duration_s": 3.677,
@@ -1035,9 +1164,9 @@
               "hf_energy_ratio_db": -10.9
             },
             "audio_quality": {
-              "snr_db": 43.2,
+              "snr_db": 43.5,
               "clipping_ratio": 0.0,
-              "noise_floor_dbfs": -61.4,
+              "noise_floor_dbfs": -61.7,
               "quality": "good"
             }
           },
@@ -1054,7 +1183,9 @@
             "response_latency_s": 0.5,
             "speech_s": 3.21,
             "words_per_minute": 149.5,
-            "articulation_rate_sps": 4.05
+            "articulation_rate_sps": 4.05,
+            "pace_ratio": 0.997,
+            "articulation_ratio": 0.844
           },
           "fluency": {
             "filler_count": 0,
@@ -1081,13 +1212,28 @@
             "hedges": {},
             "hedge_rate_per_100w": 0.0,
             "vague_word_count": 0,
-            "question_count": 1
+            "question_count": 1,
+            "word_count_method": "whitespace",
+            "syllable_unit": "syllable"
           },
           "sentiment": {
             "score": 0.5,
             "positive_weight": 2.0,
             "negative_weight": 0.0,
             "method": "lexicon-negation-v1"
+          },
+          "language": {
+            "primary": "en",
+            "supported": true,
+            "asr_hint": null,
+            "shares": {
+              "en": 1.0
+            },
+            "code_switching": null,
+            "typical_duration_s": {
+              "speaking": 3.2,
+              "articulating": 2.708
+            }
           },
           "external": {
             "asr_confidence": 0.9
@@ -1117,8 +1263,8 @@
           "flags": []
         },
         {
-          "utterance_id": "utt_35774a2eddb1",
-          "timestamp": "2026-11-10T16:11:36.040Z",
+          "utterance_id": "utt_9f8c6f675572",
+          "timestamp": "2026-11-24T17:08:56.789Z",
           "transcript": "Perfect, thank you for your help.",
           "acoustics": {
             "duration_s": 2.888,
@@ -1151,9 +1297,9 @@
               "hf_energy_ratio_db": -14.29
             },
             "audio_quality": {
-              "snr_db": 44.2,
+              "snr_db": 44.3,
               "clipping_ratio": 0.0,
-              "noise_floor_dbfs": -62.4,
+              "noise_floor_dbfs": -62.5,
               "quality": "good"
             }
           },
@@ -1170,7 +1316,9 @@
             "response_latency_s": 0.4,
             "speech_s": 2.42,
             "words_per_minute": 148.8,
-            "articulation_rate_sps": 2.89
+            "articulation_rate_sps": 2.89,
+            "pace_ratio": 0.992,
+            "articulation_ratio": 0.602
           },
           "fluency": {
             "filler_count": 0,
@@ -1197,13 +1345,28 @@
             "hedges": {},
             "hedge_rate_per_100w": 0.0,
             "vague_word_count": 0,
-            "question_count": 0
+            "question_count": 0,
+            "word_count_method": "whitespace",
+            "syllable_unit": "syllable"
           },
           "sentiment": {
             "score": 0.5,
             "positive_weight": 2.0,
             "negative_weight": 0.0,
             "method": "lexicon-negation-v1"
+          },
+          "language": {
+            "primary": "en",
+            "supported": true,
+            "asr_hint": null,
+            "shares": {
+              "en": 1.0
+            },
+            "code_switching": null,
+            "typical_duration_s": {
+              "speaking": 2.4,
+              "articulating": 1.458
+            }
           },
           "external": {
             "asr_confidence": 0.9
@@ -1216,7 +1379,7 @@
             "method": "heuristic-prosody+lexicon-v1",
             "cues": [
               "f0_std_semitones low (z=-1.9, population)",
-              "articulation_rate_sps low (z=-1.9, population)",
+              "articulation_ratio low (z=-1.9, population)",
               "pause_ratio low (z=-2.0, population)",
               "word sentiment +0.50"
             ]
@@ -1240,64 +1403,75 @@
       "utterances_compacted": false,
       "summary": {
         "utterance_count": 4,
-        "total_speech_s": 13.63,
+        "total_speech_s": 13.69,
         "total_words": 34,
         "metrics_mean": {
-          "arousal": -0.265,
-          "articulation_rate_sps": 3.2375,
-          "f0_mean_hz": 218.2333,
-          "f0_range_semitones": 4.0367,
-          "f0_std_semitones": 1.32,
+          "arousal": -0.3615,
+          "articulation_rate_sps": 3.225,
+          "articulation_ratio": 0.6717,
+          "f0_mean_hz": 211.175,
+          "f0_range_semitones": 3.4875,
+          "f0_std_semitones": 1.135,
           "filler_rate_per_100w": 0.0,
           "hedge_rate_per_100w": 2.5,
-          "hf_energy_ratio_db": -12.91,
-          "hnr_db": 34.9867,
-          "jitter_local_pct": 0.2983,
+          "hf_energy_ratio_db": -13.6125,
+          "hnr_db": 35.25,
+          "jitter_local_pct": 0.283,
           "mean_pause_s": 0.0775,
+          "pace_ratio": 0.976,
           "pause_ratio": 0.0177,
           "response_latency_s": 0.6,
-          "rms_dbfs_mean": -18.23,
+          "rms_dbfs_mean": -18.2175,
           "sentiment": 0.25,
-          "shimmer_local_pct": 4.125,
+          "shimmer_local_pct": 4.2635,
           "stuttering_like_per_100_syllables": 0.0,
           "total_disfluency_per_100w": 0.0,
           "valence": 0.25,
-          "words_per_minute": 146.95,
+          "words_per_minute": 146.375,
           "words_per_turn": 8.5
         },
         "skills_mean": {
           "pace": 100.0,
-          "clarity": 91.4,
-          "fluency": 100.0,
-          "expressiveness": 69.4,
-          "overall": 92.1,
           "confidence": 85.0,
-          "responsiveness": 100.0
+          "fluency": 100.0,
+          "responsiveness": 100.0,
+          "clarity": 91.9,
+          "overall": 89.6,
+          "expressiveness": 61.1
         },
-        "dominant_emotion": "neutral",
+        "dominant_emotion": "subdued",
         "emotion_timeline": [
-          "neutral",
+          "subdued",
           "subdued",
           "pleased",
           "calm"
         ],
         "deviations_from_baseline": {},
+        "languages": {
+          "primary": "en",
+          "shares": {
+            "en": 1.0
+          },
+          "mixed_turn_ratio": 0.0,
+          "frequent_embedded_terms": [],
+          "turns_considered": 4
+        },
         "indicators_evaluated": true,
         "indicators_triggered": []
       }
     },
     {
-      "session_id": "sess_e7b758e37251",
-      "started_at": "2026-11-10T16:11:36.093Z",
-      "ended_at": "2026-11-10T16:11:36.590Z",
+      "session_id": "sess_ff9de8bb40ed",
+      "started_at": "2026-11-24T17:08:57.368Z",
+      "ended_at": "2026-11-24T17:09:00.667Z",
       "status": "closed",
       "agent_id": "demo-support-bot",
       "channel": "phone",
       "context": "Delivery problem (frustrated)",
       "utterances": [
         {
-          "utterance_id": "utt_386485420bd0",
-          "timestamp": "2026-11-10T16:11:36.197Z",
+          "utterance_id": "utt_4fa3a6a0e329",
+          "timestamp": "2026-11-24T17:08:57.969Z",
           "transcript": "This is the third time I'm calling! The package is still not here.",
           "acoustics": {
             "duration_s": 4.647,
@@ -1330,9 +1504,9 @@
               "hf_energy_ratio_db": -9.75
             },
             "audio_quality": {
-              "snr_db": 45.9,
+              "snr_db": 46.0,
               "clipping_ratio": 0.0,
-              "noise_floor_dbfs": -56.8,
+              "noise_floor_dbfs": -56.9,
               "quality": "good"
             }
           },
@@ -1354,7 +1528,9 @@
             "response_latency_s": 0.2,
             "speech_s": 3.87,
             "words_per_minute": 186.6,
-            "articulation_rate_sps": 3.88
+            "articulation_rate_sps": 3.88,
+            "pace_ratio": 1.244,
+            "articulation_ratio": 0.807
           },
           "fluency": {
             "filler_count": 0,
@@ -1381,7 +1557,9 @@
             "hedges": {},
             "hedge_rate_per_100w": 0.0,
             "vague_word_count": 0,
-            "question_count": 0
+            "question_count": 0,
+            "word_count_method": "whitespace",
+            "syllable_unit": "syllable"
           },
           "sentiment": {
             "score": 0.0,
@@ -1389,20 +1567,33 @@
             "negative_weight": 0.0,
             "method": "lexicon-negation-v1"
           },
+          "language": {
+            "primary": "en",
+            "supported": true,
+            "asr_hint": null,
+            "shares": {
+              "en": 1.0
+            },
+            "code_switching": null,
+            "typical_duration_s": {
+              "speaking": 5.2,
+              "articulating": 3.125
+            }
+          },
           "external": {
             "asr_confidence": 0.9
           },
           "emotion": {
             "label": "energetic",
-            "arousal": 0.882,
+            "arousal": 0.886,
             "valence": 0.0,
             "confidence": 0.55,
             "method": "heuristic-prosody+lexicon-v1",
             "cues": [
-              "f0_mean_hz high (z=+2.5, personal)",
+              "f0_mean_hz high (z=+2.6, personal)",
               "rms_dbfs_mean high (z=+4.0, personal)",
               "hf_energy_ratio_db high (z=+2.0, personal)",
-              "f0_std_semitones high (z=+3.2, personal)"
+              "f0_std_semitones high (z=+3.3, personal)"
             ]
           },
           "skills": {
@@ -1416,20 +1607,21 @@
             "overall": 96.3
           },
           "baseline_deviations": {
-            "f0_mean_hz": 2.49,
-            "f0_std_semitones": 3.19,
-            "f0_range_semitones": 3.24,
-            "rms_dbfs_mean": 4.9,
-            "hf_energy_ratio_db": 2.03,
-            "words_per_minute": 3.64
+            "f0_mean_hz": 2.56,
+            "f0_std_semitones": 3.25,
+            "f0_range_semitones": 3.31,
+            "rms_dbfs_mean": 4.89,
+            "hf_energy_ratio_db": 2.01,
+            "words_per_minute": 3.67,
+            "pace_ratio": 3.67
           },
           "flags": [
             "deviates_from_baseline"
           ]
         },
         {
-          "utterance_id": "utt_e15d865c7cb1",
-          "timestamp": "2026-11-10T16:11:36.334Z",
+          "utterance_id": "utt_3c3a8bc7ae54",
+          "timestamp": "2026-11-24T17:08:58.956Z",
           "transcript": "No, no, I already did that, it doesn't work, it is ridiculous.",
           "acoustics": {
             "duration_s": 3.995,
@@ -1462,9 +1654,9 @@
               "hf_energy_ratio_db": -7.88
             },
             "audio_quality": {
-              "snr_db": 42.7,
+              "snr_db": 42.9,
               "clipping_ratio": 0.0,
-              "noise_floor_dbfs": -53.0,
+              "noise_floor_dbfs": -53.2,
               "quality": "good"
             }
           },
@@ -1481,7 +1673,9 @@
             "response_latency_s": 0.1,
             "speech_s": 3.53,
             "words_per_minute": 204.0,
-            "articulation_rate_sps": 5.38
+            "articulation_rate_sps": 5.38,
+            "pace_ratio": 1.36,
+            "articulation_ratio": 1.121
           },
           "fluency": {
             "filler_count": 0,
@@ -1508,7 +1702,9 @@
             "hedges": {},
             "hedge_rate_per_100w": 0.0,
             "vague_word_count": 0,
-            "question_count": 0
+            "question_count": 0,
+            "word_count_method": "whitespace",
+            "syllable_unit": "syllable"
           },
           "sentiment": {
             "score": -0.333,
@@ -1516,20 +1712,33 @@
             "negative_weight": 1.0,
             "method": "lexicon-negation-v1"
           },
+          "language": {
+            "primary": "en",
+            "supported": true,
+            "asr_hint": null,
+            "shares": {
+              "en": 1.0
+            },
+            "code_switching": null,
+            "typical_duration_s": {
+              "speaking": 4.8,
+              "articulating": 3.958
+            }
+          },
           "external": {
             "asr_confidence": 0.9
           },
           "emotion": {
             "label": "angry",
-            "arousal": 0.95,
+            "arousal": 0.949,
             "valence": -0.333,
             "confidence": 0.55,
             "method": "heuristic-prosody+lexicon-v1",
             "cues": [
               "f0_mean_hz high (z=+4.0, personal)",
               "rms_dbfs_mean high (z=+4.0, personal)",
-              "hf_energy_ratio_db high (z=+3.2, personal)",
-              "articulation_rate_sps high (z=+3.5, personal)",
+              "hf_energy_ratio_db high (z=+3.1, personal)",
+              "articulation_ratio high (z=+3.4, personal)",
               "word sentiment -0.33"
             ]
           },
@@ -1544,11 +1753,13 @@
             "overall": 91.4
           },
           "baseline_deviations": {
-            "f0_mean_hz": 5.16,
-            "rms_dbfs_mean": 5.33,
-            "hf_energy_ratio_db": 3.22,
-            "words_per_minute": 5.09,
-            "articulation_rate_sps": 3.46
+            "f0_mean_hz": 5.15,
+            "rms_dbfs_mean": 5.32,
+            "hf_energy_ratio_db": 3.07,
+            "words_per_minute": 5.12,
+            "articulation_rate_sps": 3.46,
+            "pace_ratio": 5.12,
+            "articulation_ratio": 3.45
           },
           "flags": [
             "fast_rate",
@@ -1557,8 +1768,8 @@
           ]
         },
         {
-          "utterance_id": "utt_55563739f9d1",
-          "timestamp": "2026-11-10T16:11:36.451Z",
+          "utterance_id": "utt_62f8227f3774",
+          "timestamp": "2026-11-24T17:08:59.748Z",
           "transcript": "I'm really frustrated, I need this today, I am so annoyed.",
           "acoustics": {
             "duration_s": 4.061,
@@ -1615,7 +1826,9 @@
             "response_latency_s": 0.2,
             "speech_s": 3.29,
             "words_per_minute": 183.3,
-            "articulation_rate_sps": 4.86
+            "articulation_rate_sps": 4.86,
+            "pace_ratio": 1.222,
+            "articulation_ratio": 1.013
           },
           "fluency": {
             "filler_count": 0,
@@ -1642,7 +1855,9 @@
             "hedges": {},
             "hedge_rate_per_100w": 0.0,
             "vague_word_count": 0,
-            "question_count": 0
+            "question_count": 0,
+            "word_count_method": "whitespace",
+            "syllable_unit": "syllable"
           },
           "sentiment": {
             "score": -0.6,
@@ -1650,25 +1865,39 @@
             "negative_weight": 3.0,
             "method": "lexicon-negation-v1"
           },
+          "language": {
+            "primary": "en",
+            "supported": true,
+            "asr_hint": null,
+            "shares": {
+              "en": 1.0
+            },
+            "code_switching": null,
+            "typical_duration_s": {
+              "speaking": 4.4,
+              "articulating": 3.333
+            }
+          },
           "external": {
             "asr_confidence": 0.9
           },
           "emotion": {
             "label": "angry",
-            "arousal": 0.84,
+            "arousal": 0.849,
             "valence": -0.6,
             "confidence": 0.55,
             "method": "heuristic-prosody+lexicon-v1",
             "cues": [
+              "f0_mean_hz high (z=+1.5, personal)",
               "rms_dbfs_mean high (z=+4.0, personal)",
-              "f0_std_semitones high (z=+2.3, personal)",
-              "articulation_rate_sps high (z=+2.5, personal)",
+              "f0_std_semitones high (z=+2.4, personal)",
+              "articulation_ratio high (z=+2.5, personal)",
               "word sentiment -0.60"
             ]
           },
           "skills": {
             "fluency": 100.0,
-            "pace": 87.5,
+            "pace": 87.6,
             "clarity": 95.0,
             "expressiveness": 100.0,
             "confidence": 100.0,
@@ -1677,11 +1906,13 @@
             "overall": 97.1
           },
           "baseline_deviations": {
-            "f0_std_semitones": 2.27,
-            "f0_range_semitones": 2.57,
+            "f0_std_semitones": 2.36,
+            "f0_range_semitones": 2.66,
             "rms_dbfs_mean": 4.82,
-            "words_per_minute": 3.37,
-            "articulation_rate_sps": 2.55
+            "words_per_minute": 3.39,
+            "articulation_rate_sps": 2.55,
+            "pace_ratio": 3.39,
+            "articulation_ratio": 2.55
           },
           "flags": [
             "deviates_from_baseline",
@@ -1689,8 +1920,8 @@
           ]
         },
         {
-          "utterance_id": "utt_f9fde3bf22f5",
-          "timestamp": "2026-11-10T16:11:36.519Z",
+          "utterance_id": "utt_1f23e19480a6",
+          "timestamp": "2026-11-24T17:09:00.410Z",
           "transcript": "Fine. Just send it again, please.",
           "acoustics": {
             "duration_s": 2.256,
@@ -1725,7 +1956,7 @@
             "audio_quality": {
               "snr_db": 48.4,
               "clipping_ratio": 0.0,
-              "noise_floor_dbfs": -60.6,
+              "noise_floor_dbfs": -60.7,
               "quality": "good"
             }
           },
@@ -1742,7 +1973,9 @@
             "response_latency_s": 0.6,
             "speech_s": 1.79,
             "words_per_minute": 201.1,
-            "articulation_rate_sps": 3.91
+            "articulation_rate_sps": 3.91,
+            "pace_ratio": 1.341,
+            "articulation_ratio": 0.815
           },
           "fluency": {
             "filler_count": 0,
@@ -1769,7 +2002,9 @@
             "hedges": {},
             "hedge_rate_per_100w": 0.0,
             "vague_word_count": 0,
-            "question_count": 0
+            "question_count": 0,
+            "word_count_method": "whitespace",
+            "syllable_unit": "syllable"
           },
           "sentiment": {
             "score": 0.0,
@@ -1777,12 +2012,25 @@
             "negative_weight": 0.0,
             "method": "lexicon-negation-v1"
           },
+          "language": {
+            "primary": "en",
+            "supported": true,
+            "asr_hint": null,
+            "shares": {
+              "en": 1.0
+            },
+            "code_switching": null,
+            "typical_duration_s": {
+              "speaking": 2.4,
+              "articulating": 1.458
+            }
+          },
           "external": {
             "asr_confidence": 0.9
           },
           "emotion": {
             "label": "energetic",
-            "arousal": 0.55,
+            "arousal": 0.588,
             "valence": 0.0,
             "confidence": 0.48,
             "method": "heuristic-prosody+lexicon-v1",
@@ -1792,7 +2040,7 @@
           },
           "skills": {
             "fluency": 100.0,
-            "pace": 60.9,
+            "pace": 60.8,
             "clarity": 95.0,
             "expressiveness": 63.1,
             "confidence": 100.0,
@@ -1801,8 +2049,9 @@
             "overall": 86.5
           },
           "baseline_deviations": {
-            "rms_dbfs_mean": 4.01,
-            "words_per_minute": 4.85
+            "rms_dbfs_mean": 4.0,
+            "words_per_minute": 4.87,
+            "pace_ratio": 4.88
           },
           "flags": [
             "fast_rate",
@@ -1816,8 +2065,9 @@
         "total_speech_s": 12.48,
         "total_words": 42,
         "metrics_mean": {
-          "arousal": 0.8055,
+          "arousal": 0.818,
           "articulation_rate_sps": 4.5075,
+          "articulation_ratio": 0.939,
           "f0_mean_hz": 269.825,
           "f0_range_semitones": 7.4725,
           "f0_std_semitones": 2.41,
@@ -1827,6 +2077,7 @@
           "hnr_db": 34.4525,
           "jitter_local_pct": 0.3872,
           "mean_pause_s": 0.155,
+          "pace_ratio": 1.2917,
           "pause_ratio": 0.04,
           "response_latency_s": 0.275,
           "rms_dbfs_mean": -11.0975,
@@ -1840,12 +2091,12 @@
         },
         "skills_mean": {
           "pace": 71.9,
-          "clarity": 95.0,
-          "fluency": 100.0,
-          "expressiveness": 90.8,
-          "overall": 92.8,
           "confidence": 100.0,
-          "responsiveness": 99.2
+          "fluency": 100.0,
+          "responsiveness": 99.2,
+          "clarity": 95.0,
+          "overall": 92.8,
+          "expressiveness": 90.8
         },
         "dominant_emotion": "energetic",
         "emotion_timeline": [
@@ -1855,9 +2106,19 @@
           "energetic"
         ],
         "deviations_from_baseline": {
-          "f0_mean_hz": 2.22,
+          "f0_mean_hz": 2.31,
+          "pace_ratio": 4.26,
           "rms_dbfs_mean": 4.76,
-          "words_per_minute": 4.24
+          "words_per_minute": 4.26
+        },
+        "languages": {
+          "primary": "en",
+          "shares": {
+            "en": 1.0
+          },
+          "mixed_turn_ratio": 0.0,
+          "frequent_embedded_terms": [],
+          "turns_considered": 4
         },
         "indicators_evaluated": true,
         "indicators_triggered": []
@@ -1866,8 +2127,8 @@
   ],
   "observations": [
     {
-      "observation_id": "obs_b0f09bdcaf61",
-      "timestamp": "2026-11-10T16:11:36.558Z",
+      "observation_id": "obs_b1510c468298",
+      "timestamp": "2026-11-24T17:09:00.569Z",
       "agent_id": "demo-support-bot",
       "category": "emotion",
       "observation": "Caller escalates quickly when asked to repeat steps already tried.",
@@ -1877,7 +2138,7 @@
       ],
       "reasoning": "Repeated-contact frustration; skip basic troubleshooting next time.",
       "confidence": 0.7,
-      "session_id": "sess_e7b758e37251",
+      "session_id": "sess_ff9de8bb40ed",
       "utterance_id": null,
       "supersedes": null
     }
@@ -1886,7 +2147,7 @@
     "emotional_state": {
       "current": {
         "label": "energetic",
-        "arousal": 0.55,
+        "arousal": 0.588,
         "valence": 0.0,
         "confidence": 0.48,
         "method": "heuristic-prosody+lexicon-v1",
@@ -1897,7 +2158,7 @@
       "recent_labels": [
         "pleased",
         "calm",
-        "neutral",
+        "subdued",
         "subdued",
         "pleased",
         "calm",
@@ -1910,11 +2171,11 @@
     },
     "communication_skills": {
       "scores": {
-        "clarity": 93.3,
+        "clarity": 93.5,
         "confidence": 87.4,
-        "expressiveness": 78.1,
+        "expressiveness": 75.3,
         "fluency": 91.9,
-        "overall": 90.5,
+        "overall": 89.7,
         "pace": 90.6,
         "responsiveness": 99.7
       },
@@ -1924,7 +2185,7 @@
         "fluency"
       ],
       "areas_to_improve": [],
-      "updated_at": "2026-11-10T16:11:36.590Z"
+      "updated_at": "2026-11-24T17:09:00.670Z"
     },
     "speaking_style": {
       "pace": "fast",
@@ -1936,267 +2197,313 @@
       "mean_words_per_turn": 9.5,
       "typical_response_latency_s": 0.45
     },
-    "speech_indicators": []
+    "speech_indicators": [],
+    "language_use": {
+      "primary": "en",
+      "shares": {
+        "en": 1.0
+      },
+      "mixed_turn_ratio": 0.0,
+      "frequent_embedded_terms": [],
+      "turns_considered": 8,
+      "updated_at": "2026-11-24T17:09:00.773Z"
+    }
   },
   "trends": {
     "f0_mean_hz": [
       {
-        "session_id": "sess_fe0c9bcef600",
-        "date": "2026-11-10T16:11:35.630Z",
+        "session_id": "sess_1be7e1f28b66",
+        "date": "2026-11-24T17:08:53.476Z",
         "value": 220.5
       },
       {
-        "session_id": "sess_a924342af13e",
-        "date": "2026-11-10T16:11:36.062Z",
-        "value": 218.2333
+        "session_id": "sess_133ddc76741e",
+        "date": "2026-11-24T17:08:57.096Z",
+        "value": 211.175
       },
       {
-        "session_id": "sess_e7b758e37251",
-        "date": "2026-11-10T16:11:36.590Z",
+        "session_id": "sess_ff9de8bb40ed",
+        "date": "2026-11-24T17:09:00.667Z",
         "value": 269.825
       }
     ],
     "f0_std_semitones": [
       {
-        "session_id": "sess_fe0c9bcef600",
-        "date": "2026-11-10T16:11:35.630Z",
+        "session_id": "sess_1be7e1f28b66",
+        "date": "2026-11-24T17:08:53.476Z",
         "value": 1.4775
       },
       {
-        "session_id": "sess_a924342af13e",
-        "date": "2026-11-10T16:11:36.062Z",
-        "value": 1.32
+        "session_id": "sess_133ddc76741e",
+        "date": "2026-11-24T17:08:57.096Z",
+        "value": 1.135
       },
       {
-        "session_id": "sess_e7b758e37251",
-        "date": "2026-11-10T16:11:36.590Z",
+        "session_id": "sess_ff9de8bb40ed",
+        "date": "2026-11-24T17:09:00.667Z",
         "value": 2.41
       }
     ],
     "rms_dbfs_mean": [
       {
-        "session_id": "sess_fe0c9bcef600",
-        "date": "2026-11-10T16:11:35.630Z",
+        "session_id": "sess_1be7e1f28b66",
+        "date": "2026-11-24T17:08:53.476Z",
         "value": -18.2525
       },
       {
-        "session_id": "sess_a924342af13e",
-        "date": "2026-11-10T16:11:36.062Z",
-        "value": -18.23
+        "session_id": "sess_133ddc76741e",
+        "date": "2026-11-24T17:08:57.096Z",
+        "value": -18.2175
       },
       {
-        "session_id": "sess_e7b758e37251",
-        "date": "2026-11-10T16:11:36.590Z",
+        "session_id": "sess_ff9de8bb40ed",
+        "date": "2026-11-24T17:09:00.667Z",
         "value": -11.0975
       }
     ],
     "jitter_local_pct": [
       {
-        "session_id": "sess_fe0c9bcef600",
-        "date": "2026-11-10T16:11:35.630Z",
+        "session_id": "sess_1be7e1f28b66",
+        "date": "2026-11-24T17:08:53.476Z",
         "value": 0.2645
       },
       {
-        "session_id": "sess_a924342af13e",
-        "date": "2026-11-10T16:11:36.062Z",
-        "value": 0.2983
+        "session_id": "sess_133ddc76741e",
+        "date": "2026-11-24T17:08:57.096Z",
+        "value": 0.283
       },
       {
-        "session_id": "sess_e7b758e37251",
-        "date": "2026-11-10T16:11:36.590Z",
+        "session_id": "sess_ff9de8bb40ed",
+        "date": "2026-11-24T17:09:00.667Z",
         "value": 0.3872
       }
     ],
     "shimmer_local_pct": [
       {
-        "session_id": "sess_fe0c9bcef600",
-        "date": "2026-11-10T16:11:35.630Z",
+        "session_id": "sess_1be7e1f28b66",
+        "date": "2026-11-24T17:08:53.476Z",
         "value": 4.089
       },
       {
-        "session_id": "sess_a924342af13e",
-        "date": "2026-11-10T16:11:36.062Z",
-        "value": 4.125
+        "session_id": "sess_133ddc76741e",
+        "date": "2026-11-24T17:08:57.096Z",
+        "value": 4.2635
       },
       {
-        "session_id": "sess_e7b758e37251",
-        "date": "2026-11-10T16:11:36.590Z",
+        "session_id": "sess_ff9de8bb40ed",
+        "date": "2026-11-24T17:09:00.667Z",
         "value": 3.4417
       }
     ],
     "hnr_db": [
       {
-        "session_id": "sess_fe0c9bcef600",
-        "date": "2026-11-10T16:11:35.630Z",
+        "session_id": "sess_1be7e1f28b66",
+        "date": "2026-11-24T17:08:53.476Z",
         "value": 35.315
       },
       {
-        "session_id": "sess_a924342af13e",
-        "date": "2026-11-10T16:11:36.062Z",
-        "value": 34.9867
+        "session_id": "sess_133ddc76741e",
+        "date": "2026-11-24T17:08:57.096Z",
+        "value": 35.25
       },
       {
-        "session_id": "sess_e7b758e37251",
-        "date": "2026-11-10T16:11:36.590Z",
+        "session_id": "sess_ff9de8bb40ed",
+        "date": "2026-11-24T17:09:00.667Z",
         "value": 34.4525
       }
     ],
     "words_per_minute": [
       {
-        "session_id": "sess_fe0c9bcef600",
-        "date": "2026-11-10T16:11:35.630Z",
+        "session_id": "sess_1be7e1f28b66",
+        "date": "2026-11-24T17:08:53.476Z",
         "value": 138.85
       },
       {
-        "session_id": "sess_a924342af13e",
-        "date": "2026-11-10T16:11:36.062Z",
-        "value": 146.95
+        "session_id": "sess_133ddc76741e",
+        "date": "2026-11-24T17:08:57.096Z",
+        "value": 146.375
       },
       {
-        "session_id": "sess_e7b758e37251",
-        "date": "2026-11-10T16:11:36.590Z",
+        "session_id": "sess_ff9de8bb40ed",
+        "date": "2026-11-24T17:09:00.667Z",
         "value": 193.75
       }
     ],
     "articulation_rate_sps": [
       {
-        "session_id": "sess_fe0c9bcef600",
-        "date": "2026-11-10T16:11:35.630Z",
+        "session_id": "sess_1be7e1f28b66",
+        "date": "2026-11-24T17:08:53.476Z",
         "value": 3.5725
       },
       {
-        "session_id": "sess_a924342af13e",
-        "date": "2026-11-10T16:11:36.062Z",
-        "value": 3.2375
+        "session_id": "sess_133ddc76741e",
+        "date": "2026-11-24T17:08:57.096Z",
+        "value": 3.225
       },
       {
-        "session_id": "sess_e7b758e37251",
-        "date": "2026-11-10T16:11:36.590Z",
+        "session_id": "sess_ff9de8bb40ed",
+        "date": "2026-11-24T17:09:00.667Z",
         "value": 4.5075
       }
     ],
     "pause_ratio": [
       {
-        "session_id": "sess_fe0c9bcef600",
-        "date": "2026-11-10T16:11:35.630Z",
+        "session_id": "sess_1be7e1f28b66",
+        "date": "2026-11-24T17:08:53.476Z",
         "value": 0.0292
       },
       {
-        "session_id": "sess_a924342af13e",
-        "date": "2026-11-10T16:11:36.062Z",
+        "session_id": "sess_133ddc76741e",
+        "date": "2026-11-24T17:08:57.096Z",
         "value": 0.0177
       },
       {
-        "session_id": "sess_e7b758e37251",
-        "date": "2026-11-10T16:11:36.590Z",
+        "session_id": "sess_ff9de8bb40ed",
+        "date": "2026-11-24T17:09:00.667Z",
         "value": 0.04
       }
     ],
     "filler_rate_per_100w": [
       {
-        "session_id": "sess_fe0c9bcef600",
-        "date": "2026-11-10T16:11:35.630Z",
+        "session_id": "sess_1be7e1f28b66",
+        "date": "2026-11-24T17:08:53.476Z",
         "value": 4.0575
       },
       {
-        "session_id": "sess_a924342af13e",
-        "date": "2026-11-10T16:11:36.062Z",
+        "session_id": "sess_133ddc76741e",
+        "date": "2026-11-24T17:08:57.096Z",
         "value": 0.0
       },
       {
-        "session_id": "sess_e7b758e37251",
-        "date": "2026-11-10T16:11:36.590Z",
+        "session_id": "sess_ff9de8bb40ed",
+        "date": "2026-11-24T17:09:00.667Z",
         "value": 0.0
       }
     ],
     "stuttering_like_per_100_syllables": [
       {
-        "session_id": "sess_fe0c9bcef600",
-        "date": "2026-11-10T16:11:35.630Z",
+        "session_id": "sess_1be7e1f28b66",
+        "date": "2026-11-24T17:08:53.476Z",
         "value": 0.0
       },
       {
-        "session_id": "sess_a924342af13e",
-        "date": "2026-11-10T16:11:36.062Z",
+        "session_id": "sess_133ddc76741e",
+        "date": "2026-11-24T17:08:57.096Z",
         "value": 0.0
       },
       {
-        "session_id": "sess_e7b758e37251",
-        "date": "2026-11-10T16:11:36.590Z",
+        "session_id": "sess_ff9de8bb40ed",
+        "date": "2026-11-24T17:09:00.667Z",
         "value": 0.0
       }
     ],
     "hedge_rate_per_100w": [
       {
-        "session_id": "sess_fe0c9bcef600",
-        "date": "2026-11-10T16:11:35.630Z",
+        "session_id": "sess_1be7e1f28b66",
+        "date": "2026-11-24T17:08:53.476Z",
         "value": 1.785
       },
       {
-        "session_id": "sess_a924342af13e",
-        "date": "2026-11-10T16:11:36.062Z",
+        "session_id": "sess_133ddc76741e",
+        "date": "2026-11-24T17:08:57.096Z",
         "value": 2.5
       },
       {
-        "session_id": "sess_e7b758e37251",
-        "date": "2026-11-10T16:11:36.590Z",
+        "session_id": "sess_ff9de8bb40ed",
+        "date": "2026-11-24T17:09:00.667Z",
         "value": 0.0
       }
     ],
     "valence": [
       {
-        "session_id": "sess_fe0c9bcef600",
-        "date": "2026-11-10T16:11:35.630Z",
+        "session_id": "sess_1be7e1f28b66",
+        "date": "2026-11-24T17:08:53.476Z",
         "value": 0.2562
       },
       {
-        "session_id": "sess_a924342af13e",
-        "date": "2026-11-10T16:11:36.062Z",
+        "session_id": "sess_133ddc76741e",
+        "date": "2026-11-24T17:08:57.096Z",
         "value": 0.25
       },
       {
-        "session_id": "sess_e7b758e37251",
-        "date": "2026-11-10T16:11:36.590Z",
+        "session_id": "sess_ff9de8bb40ed",
+        "date": "2026-11-24T17:09:00.667Z",
         "value": -0.2333
       }
     ],
     "arousal": [
       {
-        "session_id": "sess_fe0c9bcef600",
-        "date": "2026-11-10T16:11:35.630Z",
-        "value": -0.2395
+        "session_id": "sess_1be7e1f28b66",
+        "date": "2026-11-24T17:08:53.476Z",
+        "value": -0.2398
       },
       {
-        "session_id": "sess_a924342af13e",
-        "date": "2026-11-10T16:11:36.062Z",
-        "value": -0.265
+        "session_id": "sess_133ddc76741e",
+        "date": "2026-11-24T17:08:57.096Z",
+        "value": -0.3615
       },
       {
-        "session_id": "sess_e7b758e37251",
-        "date": "2026-11-10T16:11:36.590Z",
-        "value": 0.8055
+        "session_id": "sess_ff9de8bb40ed",
+        "date": "2026-11-24T17:09:00.667Z",
+        "value": 0.818
       }
     ],
     "response_latency_s": [
       {
-        "session_id": "sess_fe0c9bcef600",
-        "date": "2026-11-10T16:11:35.630Z",
+        "session_id": "sess_1be7e1f28b66",
+        "date": "2026-11-24T17:08:53.476Z",
         "value": 0.675
       },
       {
-        "session_id": "sess_a924342af13e",
-        "date": "2026-11-10T16:11:36.062Z",
+        "session_id": "sess_133ddc76741e",
+        "date": "2026-11-24T17:08:57.096Z",
         "value": 0.6
       },
       {
-        "session_id": "sess_e7b758e37251",
-        "date": "2026-11-10T16:11:36.590Z",
+        "session_id": "sess_ff9de8bb40ed",
+        "date": "2026-11-24T17:09:00.667Z",
         "value": 0.275
+      }
+    ],
+    "pace_ratio": [
+      {
+        "session_id": "sess_1be7e1f28b66",
+        "date": "2026-11-24T17:08:53.476Z",
+        "value": 0.9253
+      },
+      {
+        "session_id": "sess_133ddc76741e",
+        "date": "2026-11-24T17:08:57.096Z",
+        "value": 0.976
+      },
+      {
+        "session_id": "sess_ff9de8bb40ed",
+        "date": "2026-11-24T17:09:00.667Z",
+        "value": 1.2917
+      }
+    ],
+    "articulation_ratio": [
+      {
+        "session_id": "sess_1be7e1f28b66",
+        "date": "2026-11-24T17:08:53.476Z",
+        "value": 0.7445
+      },
+      {
+        "session_id": "sess_133ddc76741e",
+        "date": "2026-11-24T17:08:57.096Z",
+        "value": 0.6717
+      },
+      {
+        "session_id": "sess_ff9de8bb40ed",
+        "date": "2026-11-24T17:09:00.667Z",
+        "value": 0.939
       }
     ]
   },
   "agent_guidance": {
-    "recommended_speaking_rate_wpm": 159.0,
+    "recommended_speaking_rate_wpm": 158.0,
+    "recommended_tts_rate_pct": 5,
+    "language": "en",
     "end_of_turn_silence_ms": 600,
     "adaptations": [
       {
@@ -2210,158 +2517,158 @@
         "priority": "low"
       }
     ],
-    "updated_at": "2026-11-10T16:11:36.622Z"
+    "updated_at": "2026-11-24T17:09:00.774Z"
   },
   "audit_log": [
     {
-      "timestamp": "2026-11-10T16:11:35.093Z",
+      "timestamp": "2026-11-24T17:08:52.121Z",
       "agent_id": "demo-support-bot",
       "action": "create_profile",
       "detail": null,
       "revision": 0
     },
     {
-      "timestamp": "2026-11-10T16:11:35.095Z",
+      "timestamp": "2026-11-24T17:08:52.144Z",
       "agent_id": "demo-support-bot",
       "action": "set_consent",
       "detail": "{'recording': True, 'voice_analysis': True, 'health_indicators': True, 'store_transcripts': True, 'retention_days': 180, 'granted_via': 'verbal-consent-recorded'}",
       "revision": 1
     },
     {
-      "timestamp": "2026-11-10T16:11:35.112Z",
+      "timestamp": "2026-11-24T17:08:52.167Z",
       "agent_id": "demo-support-bot",
       "action": "start_session",
-      "detail": "sess_fe0c9bcef600",
+      "detail": "sess_1be7e1f28b66",
       "revision": 2
     },
     {
-      "timestamp": "2026-11-10T16:11:35.260Z",
+      "timestamp": "2026-11-24T17:08:52.514Z",
       "agent_id": "demo-support-bot",
       "action": "analyze_utterance",
       "detail": null,
       "revision": 3
     },
     {
-      "timestamp": "2026-11-10T16:11:35.438Z",
+      "timestamp": "2026-11-24T17:08:52.907Z",
       "agent_id": "demo-support-bot",
       "action": "analyze_utterance",
       "detail": null,
       "revision": 4
     },
     {
-      "timestamp": "2026-11-10T16:11:35.531Z",
+      "timestamp": "2026-11-24T17:08:53.172Z",
       "agent_id": "demo-support-bot",
       "action": "analyze_utterance",
       "detail": null,
       "revision": 5
     },
     {
-      "timestamp": "2026-11-10T16:11:35.616Z",
+      "timestamp": "2026-11-24T17:08:53.415Z",
       "agent_id": "demo-support-bot",
       "action": "analyze_utterance",
       "detail": null,
       "revision": 6
     },
     {
-      "timestamp": "2026-11-10T16:11:35.631Z",
+      "timestamp": "2026-11-24T17:08:53.477Z",
       "agent_id": "demo-support-bot",
       "action": "end_session",
-      "detail": "sess_fe0c9bcef600",
+      "detail": "sess_1be7e1f28b66",
       "revision": 7
     },
     {
-      "timestamp": "2026-11-10T16:11:35.650Z",
+      "timestamp": "2026-11-24T17:08:53.540Z",
       "agent_id": "demo-support-bot",
       "action": "start_session",
-      "detail": "sess_a924342af13e",
+      "detail": "sess_133ddc76741e",
       "revision": 8
     },
     {
-      "timestamp": "2026-11-10T16:11:35.756Z",
+      "timestamp": "2026-11-24T17:08:54.008Z",
       "agent_id": "demo-support-bot",
       "action": "analyze_utterance",
       "detail": null,
       "revision": 9
     },
     {
-      "timestamp": "2026-11-10T16:11:35.866Z",
+      "timestamp": "2026-11-24T17:08:55.156Z",
       "agent_id": "demo-support-bot",
       "action": "analyze_utterance",
       "detail": null,
       "revision": 10
     },
     {
-      "timestamp": "2026-11-10T16:11:35.976Z",
+      "timestamp": "2026-11-24T17:08:55.925Z",
       "agent_id": "demo-support-bot",
       "action": "analyze_utterance",
       "detail": null,
       "revision": 11
     },
     {
-      "timestamp": "2026-11-10T16:11:36.049Z",
+      "timestamp": "2026-11-24T17:08:56.841Z",
       "agent_id": "demo-support-bot",
       "action": "analyze_utterance",
       "detail": null,
       "revision": 12
     },
     {
-      "timestamp": "2026-11-10T16:11:36.062Z",
+      "timestamp": "2026-11-24T17:08:57.127Z",
       "agent_id": "demo-support-bot",
       "action": "end_session",
-      "detail": "sess_a924342af13e",
+      "detail": "sess_133ddc76741e",
       "revision": 13
     },
     {
-      "timestamp": "2026-11-10T16:11:36.093Z",
+      "timestamp": "2026-11-24T17:08:57.368Z",
       "agent_id": "demo-support-bot",
       "action": "start_session",
-      "detail": "sess_e7b758e37251",
+      "detail": "sess_ff9de8bb40ed",
       "revision": 14
     },
     {
-      "timestamp": "2026-11-10T16:11:36.208Z",
+      "timestamp": "2026-11-24T17:08:58.042Z",
       "agent_id": "demo-support-bot",
       "action": "analyze_utterance",
       "detail": null,
       "revision": 15
     },
     {
-      "timestamp": "2026-11-10T16:11:36.347Z",
+      "timestamp": "2026-11-24T17:08:58.988Z",
       "agent_id": "demo-support-bot",
       "action": "analyze_utterance",
       "detail": null,
       "revision": 16
     },
     {
-      "timestamp": "2026-11-10T16:11:36.463Z",
+      "timestamp": "2026-11-24T17:08:59.826Z",
       "agent_id": "demo-support-bot",
       "action": "analyze_utterance",
       "detail": null,
       "revision": 17
     },
     {
-      "timestamp": "2026-11-10T16:11:36.534Z",
+      "timestamp": "2026-11-24T17:09:00.457Z",
       "agent_id": "demo-support-bot",
       "action": "analyze_utterance",
       "detail": null,
       "revision": 18
     },
     {
-      "timestamp": "2026-11-10T16:11:36.558Z",
+      "timestamp": "2026-11-24T17:09:00.569Z",
       "agent_id": "demo-support-bot",
       "action": "add_observation",
       "detail": "emotion",
       "revision": 19
     },
     {
-      "timestamp": "2026-11-10T16:11:36.590Z",
+      "timestamp": "2026-11-24T17:09:00.672Z",
       "agent_id": "demo-support-bot",
       "action": "end_session",
-      "detail": "sess_e7b758e37251",
+      "detail": "sess_ff9de8bb40ed",
       "revision": 20
     },
     {
-      "timestamp": "2026-11-10T16:11:36.622Z",
+      "timestamp": "2026-11-24T17:09:00.774Z",
       "agent_id": "demo-support-bot",
       "action": "update_accent",
       "detail": "Indian English",

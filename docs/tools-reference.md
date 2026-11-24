@@ -65,7 +65,7 @@ Longitudinal trend of one speech metric across sessions, with direction and the 
 | Parameter | Type | Required | Description |
 |---|---|---|---|
 | `speaker_id` | string | yes | Stable id of the person (e.g. hashed phone number or CRM id). |
-| `metric` | one of: `f0_mean_hz`, `f0_std_semitones`, `rms_dbfs_mean`, `jitter_local_pct`, `shimmer_local_pct`, `hnr_db`, `words_per_minute`, `articulation_rate_sps`, `pause_ratio`, `filler_rate_per_100w`, `stuttering_like_per_100_syllables`, `type_token_ratio`, `hedge_rate_per_100w`, `valence`, `arousal`, `response_latency_s` | yes |  |
+| `metric` | one of: `f0_mean_hz`, `f0_std_semitones`, `rms_dbfs_mean`, `jitter_local_pct`, `shimmer_local_pct`, `hnr_db`, `words_per_minute`, `articulation_rate_sps`, `pause_ratio`, `filler_rate_per_100w`, `stuttering_like_per_100_syllables`, `type_token_ratio`, `hedge_rate_per_100w`, `valence`, `arousal`, `response_latency_s`, `pace_ratio`, `articulation_ratio` | yes |  |
 | `last_n` | integer (≥ 2, ≤ 100) |  |  |
 
 ### paralingo_query_observations
@@ -127,7 +127,8 @@ Analyse one user turn (audio WAV and/or transcript and/or ASR word timestamps): 
 |---|---|---|---|
 | `speaker_id` | string | yes | Stable id of the person (e.g. hashed phone number or CRM id). |
 | `session_id` | string |  | Session (call) id. Omit to use the speaker's active session. |
-| `transcript` | string |  | Verbatim transcript including fillers if possible. |
+| `transcript` | string |  | Verbatim transcript including fillers if possible. English, Mandarin, Japanese and Korean are fully analysed, including mixed-language turns. |
+| `language` | string |  | Language your ASR detected, e.g. 'ja-JP' (optional hint). |
 | `audio_path` | string |  | Path to a WAV file of this turn (inside the configured audio root). |
 | `word_timestamps` | array of objects |  |  |
 | `t_start` | number |  |  |

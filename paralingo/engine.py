@@ -104,6 +104,7 @@ class SpeechProfileEngine:
         acoustics: dict[str, Any] | None = None,
         external: dict[str, Any] | None = None,
         audio_ref: str | None = None,
+        language: str | None = None,
     ) -> dict[str, Any]:
         """Analyse one user turn and store it. Supply any combination of:
 
@@ -114,6 +115,9 @@ class SpeechProfileEngine:
         * ``external``   - other models' outputs, e.g. {"emotion": {"label": "angry", "confidence": .8,
                            "arousal": .7, "valence": -.6, "model": "my-ser"}, "asr_confidence": .93,
                            "language_id": "en-IN"}
+        * ``language``   - the language your ASR detected or was set to ("ja-JP"), as a hint. Transcripts in
+                           English, Mandarin, Japanese and Korean are fully analysed, including turns that
+                           switch language; the script of the text wins where it disagrees with the hint.
         """
         # ---- heavy lifting outside the file lock
         ac: dict[str, Any] = {}
@@ -128,8 +132,15 @@ class SpeechProfileEngine:
         if acoustics:
             ac = _deep_merge(ac, acoustics)
 
-        text = L.analyze_text(transcript or "") if transcript else None
-        tokens = L.tokenize(transcript or "")
+        hint = language or (external or {}).get("language_id")
+        if transcript and not hint and L.needs_language_hint(transcript):
+            try:            # Chinese characters alone could be Mandarin or Japanese: ask the profile
+                langs = self.store.load(speaker_id)["speaker"].get("languages") or []
+                hint = next((x for x in langs if L.normalize_language(x) in ("zh", "ja")), None)
+            except Exception:
+                pass
+        text, counts = L.analyze(transcript, hint) if transcript else (None, None)
+        tokens = L.tokenize(transcript or "") + sorted(counts.emotion_words if counts else ())
 
         pauses = ac.get("pauses")
         speech_s = ac.get("speech_s")
@@ -142,12 +153,7 @@ class SpeechProfileEngine:
             speech_s = speech_s or span
 
         timing: dict[str, Any] = {"pauses": pauses, "response_latency_s": response_latency_s,
-                                  "speech_s": speech_s, "words_per_minute": None, "articulation_rate_sps": None}
-        if text and span:
-            wc = text["lexical"]["content_word_count"]
-            timing["words_per_minute"] = round(wc / span * 60.0, 1) if span > 0.3 else None
-            if speech_s and speech_s > 0.3:
-                timing["articulation_rate_sps"] = round(text["lexical"]["syllable_count"] / speech_s, 2)
+                                  "speech_s": speech_s, **L.speech_rates(text, span, speech_s)}
 
         utt: dict[str, Any] = {
             "utterance_id": new_id("utt"),
@@ -161,6 +167,7 @@ class SpeechProfileEngine:
             "fluency": text["fluency"] if text else None,
             "lexical": text["lexical"] if text else None,
             "sentiment": text["sentiment"] if text else None,
+            "language": text["language"] if text and text["language"].get("primary") else None,
             "external": external or None,
         }
         utt = {k: v for k, v in utt.items() if v is not None or k in ("transcript",)}
@@ -171,6 +178,10 @@ class SpeechProfileEngine:
                 raise ConsentError("speaker has not consented to voice analysis")
             sess = self._active_session(p, session_id)
             base = p["baseline"]
+            main = get(utt, "language", "primary")
+            known = p["speaker"].setdefault("languages", [])
+            if main and main != "und" and not any(L.normalize_language(x) == main for x in known):
+                known.append(main)
             utt["emotion"] = R.estimate_emotion(utt, base, tokens)
             utt["skills"] = R.score_skills(utt)
             metrics = R.utterance_metrics(utt)
@@ -178,6 +189,8 @@ class SpeechProfileEngine:
             utt["flags"] = _utterance_flags(utt)
             if not p["consent"].get("store_transcripts", True):
                 utt["transcript"] = None
+                if get(utt, "language", "code_switching"):      # borrowed terms are words from the transcript
+                    utt["language"]["code_switching"]["embedded_terms"] = []
             sess["utterances"].append(utt)
             cap = p.get("settings", {}).get("max_utterances_per_session", 300)
             del sess["utterances"][:-cap]
@@ -198,7 +211,9 @@ class SpeechProfileEngine:
             "baseline_deviations": utt["baseline_deviations"],
             "key_metrics": {k: v for k, v in metrics.items() if k in (
                 "f0_mean_hz", "f0_std_semitones", "rms_dbfs_mean", "words_per_minute", "articulation_rate_sps",
-                "pause_ratio", "filler_rate_per_100w", "hnr_db", "jitter_local_pct", "shimmer_local_pct")},
+                "pace_ratio", "pause_ratio", "filler_rate_per_100w", "hnr_db", "jitter_local_pct",
+                "shimmer_local_pct")},
+            "language": utt.get("language"),
             "audio_quality": get(utt, "acoustics", "audio_quality", "quality"),
             "guidance": p["agent_guidance"],
         }
@@ -235,6 +250,7 @@ class SpeechProfileEngine:
                 "dominant_emotion": labels.most_common(1)[0][0] if labels else None,
                 "emotion_timeline": [u["emotion"]["label"] for u in utts if u.get("emotion")][:100],
                 "deviations_from_baseline": R.deviations(agg, base),
+                "languages": R.language_use(utts),
                 "indicators_evaluated": evaluated,
                 "indicators_triggered": [h["indicator"] for h in hits],
             }
@@ -347,6 +363,7 @@ class SpeechProfileEngine:
             "emotional_state": a["emotional_state"],
             "communication_skills": a["communication_skills"],
             "speaking_style": a["speaking_style"],
+            "language_use": a.get("language_use"),
             "accent": {"estimate": p["accent"].get("current_estimate"),
                        "markers": [m["marker"] for m in p["accent"].get("phonetic_markers", [])][:10],
                        "intelligibility": p["accent"].get("intelligibility")},
@@ -390,8 +407,12 @@ class SpeechProfileEngine:
         rows = [R.utterance_metrics(u) for u in recent_utts]
         agg = R.mean_metrics(rows) if rows else {}
         lat = [r["response_latency_s"] for r in rows if "response_latency_s" in r]
+        lu = R.language_use(recent_utts)
+        if lu:
+            p["assessments"]["language_use"] = {**lu, "updated_at": utcnow()}
         if rows:
-            p["assessments"]["speaking_style"] = R.speaking_style(agg, p["baseline"], median(lat) if lat else None)
+            p["assessments"]["speaking_style"] = R.speaking_style(agg, p["baseline"], median(lat) if lat else None,
+                                                                  R.dominant_language(recent_utts))
         g = R.build_guidance(p, recent_utts)
         g["updated_at"] = utcnow()
         p["agent_guidance"] = g
@@ -438,13 +459,15 @@ def _utterance_flags(u: dict[str, Any]) -> list[str]:
         f.append("high_disfluency")
     if (get(u, "fluency", "part_word_repetitions") or 0) > 0:
         f.append("part_word_repetition")
-    wpm = get(u, "timing", "words_per_minute")
-    if wpm and (get(u, "lexical", "word_count") or 0) >= 5:
-        if wpm < 100:
+    pace = get(u, "timing", "pace_ratio")      # 100 / 200 wpm in English, the equivalent in other languages
+    if pace and (get(u, "lexical", "word_count") or 0) >= 5:
+        if pace < 100 / 150:
             f.append("slow_rate")
-        elif wpm > 200:
+        elif pace > 200 / 150:
             f.append("fast_rate")
-    if (get(u, "acoustics", "pitch", "f0_std_semitones") or 99) < 1.0:
+    if (get(u, "language") or {}).get("code_switching"):
+        f.append("code_switching")
+    if (get(u, "acoustics", "pitch", "f0_std_semitones") or 99) < 1.0 * R.prosody_scale(get(u, "language", "primary")):
         f.append("flat_intonation")
     if get(u, "acoustics", "pitch", "terminal_contour") == "rising":
         f.append("rising_terminal")
@@ -470,6 +493,15 @@ def render_prompt_context(s: dict[str, Any]) -> str:
     sc = s["communication_skills"].get("scores") or {}
     if sc:
         lines.append("- Communication scores: " + ", ".join(f"{k} {v:.0f}" for k, v in sc.items()))
+    lu = s.get("language_use") or {}
+    if lu.get("shares"):
+        langs = ", ".join(f"{k} {round(100 * v)}%" for k, v in list(lu["shares"].items())[:3])
+        line = f"- Languages: {langs}"
+        if lu.get("mixed_turn_ratio"):
+            line += f"; mixes languages in {round(100 * lu['mixed_turn_ratio'])}% of turns"
+            if lu.get("frequent_embedded_terms"):
+                line += f" (e.g. {', '.join(lu['frequent_embedded_terms'][:4])})"
+        lines.append(line)
     acc = s["accent"]
     if acc.get("estimate"):
         lines.append(f"- Accent (estimate): {acc['estimate']['label']} ({acc['estimate']['confidence']})")
@@ -478,6 +510,8 @@ def render_prompt_context(s: dict[str, Any]) -> str:
     g = s["agent_guidance"]
     if g.get("recommended_speaking_rate_wpm"):
         lines.append(f"- Speak at ~{g['recommended_speaking_rate_wpm']:.0f} wpm")
+    elif g.get("recommended_tts_rate_pct") is not None:
+        lines.append(f"- Speaking rate: {g['recommended_tts_rate_pct']:+d}% vs your default voice")
     if g.get("end_of_turn_silence_ms"):
         lines.append(f"- Wait ~{g['end_of_turn_silence_ms']} ms of silence before replying")
     for ad in g.get("adaptations", [])[:6]:
