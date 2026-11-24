@@ -1,4 +1,4 @@
-# Paralingo: a shared file voice agents use to understand how someone speaks
+# Paralingo: real-time turn-taking and speech intelligence for AI voice agents
 
 [![CI](https://github.com/namashworks/paralingo/actions/workflows/ci.yml/badge.svg)](https://github.com/namashworks/paralingo/actions/workflows/ci.yml)
 [![PyPI](https://img.shields.io/pypi/v/paralingo.svg)](https://pypi.org/project/paralingo/)
@@ -9,6 +9,14 @@
 [![Software Heritage](https://archive.softwareheritage.org/badge/origin/https://github.com/namashworks/paralingo/)](https://archive.softwareheritage.org/browse/origin/?origin_url=https://github.com/namashworks/paralingo)
 
 Created and maintained by **[Namash Aggarwal](https://github.com/namashworks)** · ORCID [0009-0008-0274-8545](https://orcid.org/0009-0008-0274-8545)
+
+Paralingo helps any voice agent, on any ASR, TTS or framework:
+
+* **Know when the person has finished speaking**, live, and whether they're interrupting or just saying
+  "mm-hmm", in English, Mandarin, Japanese and Korean. It interrupts far less than a fixed silence timeout at
+  the same speed ([benchmark](validation/TURN_TAKING.md)).
+* **Understand how someone speaks**: a per-speaker file of pitch, pauses, pace, voice quality, fluency,
+  emotion and accent that agents read and write across calls ([validated against Praat](validation/RESULTS.md)).
 
 ## 📖 Documentation
 
